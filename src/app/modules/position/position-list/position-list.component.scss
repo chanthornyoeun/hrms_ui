@@ -1,0 +1,15 @@
+.full-width-table {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  h2 {
+    padding: 0;
+    margin: 0;
+  }
+}

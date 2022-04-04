@@ -9,7 +9,12 @@ const routes: Routes = [
     path: '',
     component: AdminLayoutComponent,
     canActivate: [AuthenticationGuard],
-    children: []
+    children: [
+      {
+        path: 'positions',
+        loadChildren: () => import('./modules/position/position.module').then(m => m.PositionModule)
+      }
+    ]
   },
   {
     path: '',
