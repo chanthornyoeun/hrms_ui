@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_FORM_FIELD_PROVIDER } from './config';
 import { HttpClientModule } from '@angular/common/http';
+import { CoreModule } from './core/core.module';
+import { HTTP_INTERCEPTOR_PROVIDER } from "./core/interceptors/http-interceptor-provider";
 
 @NgModule({
   declarations: [
@@ -15,10 +17,12 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    CoreModule
   ],
   providers: [
-    MAT_FORM_FIELD_PROVIDER
+    MAT_FORM_FIELD_PROVIDER,
+    HTTP_INTERCEPTOR_PROVIDER
   ],
   bootstrap: [AppComponent]
 })
