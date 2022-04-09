@@ -1,0 +1,26 @@
+<div class="list-header">
+  <h2>Departments</h2>
+  
+  <div class="right">
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Search by Name" [formControl]="searchCtl">
+    </mat-form-field>
+
+    <button
+      mat-flat-button
+      color="primary"
+      matTooltip="Add new department"
+      routerLink="create"
+    >
+      <mat-icon class="icon-18">add</mat-icon>
+    </button>
+  </div>
+</div>
+<app-data-grid
+  [columnConfig]="config"
+  [rowData]="department$ | async"
+  [totalRecord]="total"
+  [defaultPageSize]="defaultPageSize"
+  (pageChange$)="pageChange($event)"
+></app-data-grid>

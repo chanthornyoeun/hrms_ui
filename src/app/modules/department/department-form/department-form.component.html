@@ -1,0 +1,55 @@
+<form [formGroup]="departmentForm" (ngSubmit)="submitForm()">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      formControlName="name"
+      autocomplete="off"
+      type="text"
+      required
+      placeholder="Name"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Manager</mat-label>
+    <mat-select formControlName="managerId" placeholder="Manager">
+      <mat-option
+        *ngFor="let manager of manager$ | async"
+        [value]="manager.id"
+        >{{ manager.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+  <mat-slide-toggle formControlName="isActive" color="primary">
+    {{ departmentForm.get("isActive")?.value | activeSlider }}
+  </mat-slide-toggle>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea
+      matInput
+      formControlName="description"
+      placeholder="Description"
+      rows="15"
+    ></textarea>
+  </mat-form-field>
+
+  <div class="actions">
+    <button
+      mat-flat-button
+      type="submit"
+      color="primary"
+      matTooltip="Save"
+      [disabled]="departmentForm.invalid"
+    >
+      Save
+    </button>
+    <button
+      mat-button
+      type="button"
+      matTooltip="Cancel"
+      [routerLink]="'/departments'"
+    >
+      Cancel
+    </button>
+  </div>
+</form>
