@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { MAT_FORM_FIELD_PROVIDER } from 'src/app/config';
 
 type ColumnType = 'normal' | 'actions';
 
@@ -33,12 +35,18 @@ export class DataGridComponent implements OnInit {
 
   @Input() columnConfig!: ColumnConfig;
   @Input() rowData: any;
+  @Input() totalRecord: number = 0;
+  @Input() defaultPageSize: number = 10;
   displayedColumns: string[] = [];
-
-  constructor() { }
+  pageSizeOptions: number[] = [10, 25, 50, 100, 250, 500];
+  @Output() pageChange$: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
 
   ngOnInit(): void {
     this.displayedColumns = this.columnConfig.columnDefs.map(c => c.field);
+  }
+
+  onPageChange($event: PageEvent) {
+    this.pageChange$.emit($event);
   }
 
 }
