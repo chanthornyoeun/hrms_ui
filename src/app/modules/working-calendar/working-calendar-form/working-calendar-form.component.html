@@ -1,0 +1,83 @@
+<form
+  class="form-container"
+  [formGroup]="workingCalendarForm"
+  (ngSubmit)="submitForm()"
+>
+  <mat-form-field>
+    <mat-label>Department</mat-label>
+    <mat-select formControlName="departmentId" placeholder="Department">
+      <mat-option
+        *ngFor="let department of department$ | async"
+        [value]="department.id"
+        >{{ department.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Day</mat-label>
+    <mat-select formControlName="day" placeholder="Day">
+      <mat-option *ngFor="let day of days" [value]="day">{{ day }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Start Time</mat-label>
+      <input
+        matInput
+        [ngxMatTimepicker]="startTimePicker"
+        formControlName="startTime"
+      />
+      <mat-icon matSuffix (click)="startTimePicker.open()">timer</mat-icon>
+      <ngx-mat-timepicker #startTimePicker></ngx-mat-timepicker>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>End Time</mat-label>
+      <input
+        matInput
+        [ngxMatTimepicker]="endTimePicker"
+        formControlName="endTime"
+      />
+      <mat-icon matSuffix (click)="endTimePicker.open()">timer</mat-icon>
+      <ngx-mat-timepicker #endTimePicker></ngx-mat-timepicker>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Duration</mat-label>
+    <input
+      matInput
+      formControlName="workingDuration"
+      autocomplete="off"
+      type="number"
+      required
+      placeholder="Duration"
+    />
+  </mat-form-field>
+
+  <mat-slide-toggle formControlName="isWorking" color="primary">
+    {{ workingCalendarForm.get("isWorking")?.value | working }}
+  </mat-slide-toggle>
+
+  <div class="actions">
+    <button
+      mat-flat-button
+      type="submit"
+      color="primary"
+      matTooltip="Save"
+      [disabled]="workingCalendarForm.invalid"
+    >
+      Save
+    </button>
+    <button
+      mat-button
+      type="button"
+      matTooltip="Cancel"
+      routerLink="/working-calendar"
+    >
+      Cancel
+    </button>
+  </div>
+</form>
