@@ -1,0 +1,50 @@
+<form
+  class="form-container"
+  [formGroup]="dependentTypeForm"
+  (ngSubmit)="submitForm()"
+>
+  <mat-form-field>
+    <mat-label>Short Description</mat-label>
+    <input
+      matInput
+      formControlName="shortDescription"
+      autocomplete="off"
+      type="text"
+      required
+      placeholder="Short Description"
+    />
+  </mat-form-field>
+
+  <mat-slide-toggle formControlName="isActive" color="primary">
+    {{ dependentTypeForm.get("isActive")?.value | activeSlider }}
+  </mat-slide-toggle>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea
+      matInput
+      formControlName="description"
+      placeholder="Description"
+      rows="15"
+    ></textarea>
+  </mat-form-field>
+
+  <div class="actions">
+    <button
+      mat-flat-button
+      type="submit"
+      color="primary"
+      matTooltip="Save"
+      [disabled]="dependentTypeForm.invalid"
+    >
+      Save
+    </button>
+    <button
+      mat-button
+      type="button"
+      matTooltip="Cancel"
+      routerLink="/dependent-types"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

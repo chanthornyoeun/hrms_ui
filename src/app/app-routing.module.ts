@@ -21,6 +21,10 @@ const routes: Routes = [
       {
         path: 'leave-types',
         loadChildren: () => import('./modules/leave-type/leave-type.module').then(m => m.LeaveTypeModule)
+      },
+      {
+        path: 'dependent-types',
+        loadChildren: () => import('./modules/dependent-type/dependent-type.module').then(m => m.DependentTypeModule)
       }
     ]
   },
