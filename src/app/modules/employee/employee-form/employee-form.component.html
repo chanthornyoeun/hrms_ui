@@ -1,0 +1,195 @@
+<form [formGroup]="employeeForm" (ngSubmit)="submitForm()">
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>First Name</mat-label>
+      <input
+        matInput
+        formControlName="firstName"
+        autocomplete="off"
+        type="text"
+        required
+        placeholder="First Name"
+      />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Last Name</mat-label>
+      <input
+        matInput
+        formControlName="lastName"
+        autocomplete="off"
+        type="text"
+        required
+        placeholder="Last Name"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Title</mat-label>
+      <mat-select formControlName="title" placeholder="Title">
+        <mat-option *ngFor="let title of titles" [value]="title">{{
+          title
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Gender</mat-label>
+      <mat-select formControlName="gender" placeholder="Gender">
+        <mat-option *ngFor="let gender of genders" [value]="gender">{{
+          gender
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Deparment</mat-label>
+      <mat-select formControlName="departmentId" placeholder="Department">
+        <mat-option
+          *ngFor="let department of department$ | async"
+          [value]="department.id"
+          >{{ department.name }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Position</mat-label>
+      <mat-select formControlName="positionId" placeholder="Position">
+        <mat-option
+          *ngFor="let position of position$ | async"
+          [value]="position.id"
+          >{{ position.position }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Job Title</mat-label>
+      <input
+        matInput
+        formControlName="jobTitle"
+        autocomplete="off"
+        type="text"
+        required
+        placeholder="Job Title"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Date of Birth</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Date of Birth"
+        formControlName="dateOfBirth"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Phone Number</mat-label>
+      <input
+        matInput
+        formControlName="phone"
+        type="text"
+        required
+        placeholder="Phone Number"
+      />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>E-mail</mat-label>
+      <input
+        matInput
+        formControlName="email"
+        type="email"
+        required
+        placeholder="E-mail"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Marital Status</mat-label>
+      <mat-select formControlName="maritalStatus" placeholder="Marital Status">
+        <mat-option
+          *ngFor="let maritalStatus of maritalStatuses"
+          [value]="maritalStatus"
+          >{{ maritalStatus }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Joined Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="jdPicker"
+        placeholder="Joined Date"
+        formControlName="joinedDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="jdPicker"></mat-datepicker-toggle>
+      <mat-datepicker #jdPicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Current Address</mat-label>
+      <textarea
+        matInput
+        formControlName="currentAddress"
+        autocomplete="off"
+        required
+        rows="10"
+        placeholder="Current Address"
+      ></textarea>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Physical Address</mat-label>
+      <textarea
+        matInput
+        formControlName="physicalAddress"
+        autocomplete="off"
+        required
+        rows="10"
+        placeholder="Physical Address"
+      ></textarea>
+    </mat-form-field>
+  </div>
+
+  <mat-slide-toggle
+    class="full-width"
+    formControlName="isActive"
+    color="primary"
+  >
+    {{ employeeForm.get("isActive")?.value | activeSlider }}
+  </mat-slide-toggle>
+
+  <div class="actions">
+    <button
+      mat-flat-button
+      type="submit"
+      color="primary"
+      matTooltip="Save"
+      [disabled]="employeeForm.invalid"
+    >
+      Save
+    </button>
+    <button
+      mat-button
+      type="button"
+      matTooltip="Cancel"
+      [routerLink]="'/employees'"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

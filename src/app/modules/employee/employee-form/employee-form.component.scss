@@ -1,0 +1,27 @@
+form {
+  display: flex;
+  flex-direction: column;
+
+  mat-slide-toggle {
+    margin-bottom: 1rem;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+//   flex-wrap: wrap;
+  gap: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .row {
+    gap: 0;
+    flex-wrap: wrap;
+  }
+}
