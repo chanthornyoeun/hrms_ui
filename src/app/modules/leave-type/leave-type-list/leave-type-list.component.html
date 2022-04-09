@@ -1,0 +1,18 @@
+<div class="list-header">
+  <h2>Leave Types</h2>
+  <button
+    mat-flat-button
+    color="primary"
+    matTooltip="Add new type"
+    routerLink="create"
+  >
+    <mat-icon class="icon-18">add</mat-icon>
+  </button>
+</div>
+<app-data-grid
+  [columnConfig]="config"
+  [rowData]="leaveType$ | async"
+  [totalRecord]="total"
+  [defaultPageSize]="defaultPageSize"
+  (pageChange$)="pageChange($event)"
+></app-data-grid>
