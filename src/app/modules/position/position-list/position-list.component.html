@@ -12,4 +12,7 @@
 <app-data-grid
   [columnConfig]="config"
   [rowData]="position$ | async"
+  [totalRecord]="total"
+  [defaultPageSize]="defaultPageSize"
+  (pageChange$)="pageChange($event)"
 ></app-data-grid>

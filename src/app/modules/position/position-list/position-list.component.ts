@@ -4,16 +4,16 @@ import { map, Observable } from 'rxjs';
 import { Position } from 'src/app/models/position';
 import { PositionService } from 'src/app/services/position.service';
 import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
+import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 
 @Component({
   selector: 'app-position-list',
   templateUrl: './position-list.component.html',
   styleUrls: ['./position-list.component.scss']
 })
-export class PositionListComponent {
+export class PositionListComponent extends Pagination {
 
-  position$: Observable<Position[]>;
-
+  position$!: Observable<Position[]>;
   config: ColumnConfig = {
     columnDefs: [
       { headerText: 'Id', field: 'id' },
@@ -29,8 +29,16 @@ export class PositionListComponent {
   }
 
   constructor(private positionService: PositionService) {
-    const params: HttpParams = new HttpParams().set('order', 'asc').set('limit', '20');
-    this.position$ = positionService.list({ params }).pipe(map(res => res.data as Position[]));
+    super();
+    this.list(this.params);
+  }
+
+  list(params?: HttpParams): void {
+    this.position$ = this.positionService.list({ params })
+      .pipe(map(res => {
+        this.total = res.total;
+        return res.data as Position[];
+      }));
   }
 
 }
