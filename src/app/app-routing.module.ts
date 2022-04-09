@@ -30,6 +30,10 @@ const routes: Routes = [
         path: 'holiday-groups',
         loadChildren: () => import('./modules/holiday-management/holiday-group/holiday-group.module').then(m => m.HolidayGroupModule)
       },
+      {
+        path: 'holidays',
+        loadChildren: () => import('./modules/holiday-management/holiday/holiday.module').then(m => m.HolidayModule)
+      },
     ]
   },
   {

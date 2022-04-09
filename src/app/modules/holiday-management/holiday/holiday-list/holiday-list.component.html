@@ -1,0 +1,18 @@
+<div class="list-header">
+  <h2>Holidays</h2>
+  <button
+    mat-flat-button
+    color="primary"
+    matTooltip="Add new holiday"
+    routerLink="create"
+  >
+    <mat-icon class="icon-18">add</mat-icon>
+  </button>
+</div>
+<app-data-grid
+  [columnConfig]="config"
+  [rowData]="holiday$ | async"
+  [totalRecord]="total"
+  [defaultPageSize]="defaultPageSize"
+  (pageChange$)="pageChange($event)"
+></app-data-grid>
