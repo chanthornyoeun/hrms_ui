@@ -4,6 +4,7 @@ export enum ApiEndPointEnum {
     DEPARTMENT = '/api/department',
     LEAVE_TYPE = '/api/leave-type',
     DEPENDENT_TYPE = '/api/dependent-type',
+    HOLIDAY_GROUP = '/api/holiday-group',
     LOGIN = '/api/auth/login',
     LOGOUT = '/api/auth/logout'
 }

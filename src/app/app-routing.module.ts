@@ -25,7 +25,11 @@ const routes: Routes = [
       {
         path: 'dependent-types',
         loadChildren: () => import('./modules/dependent-type/dependent-type.module').then(m => m.DependentTypeModule)
-      }
+      },
+      {
+        path: 'holiday-groups',
+        loadChildren: () => import('./modules/holiday-management/holiday-group/holiday-group.module').then(m => m.HolidayGroupModule)
+      },
     ]
   },
   {
