@@ -1,0 +1,43 @@
+<div class="search-area" [formGroup]="searchForm">
+  <mat-form-field class="full-width">
+    <mat-label>Deparment</mat-label>
+    <mat-select placeholder="Department" formControlName="departmentId">
+      <mat-option value="">All</mat-option>
+      <mat-option
+        *ngFor="let department of department$ | async"
+        [value]="department.id"
+        >{{ department.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Position</mat-label>
+    <mat-select placeholder="Position" formControlName="positionId">
+      <mat-option value="">All</mat-option>
+      <mat-option
+        *ngFor="let position of position$ | async"
+        [value]="position.id"
+        >{{ position.position }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Search by Name" formControlName="search" />
+  </mat-form-field>
+
+  <div class="actions">
+    <button
+      mat-button
+      color="primary"
+      (click)="onSearch$.emit(searchForm.value)"
+    >
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+    <button mat-button color="warn" (click)="clear()">
+      <mat-icon>close</mat-icon>
+      Clear
+    </button>
+  </div>
+</div>

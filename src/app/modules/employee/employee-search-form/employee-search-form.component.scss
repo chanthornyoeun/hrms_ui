@@ -1,0 +1,15 @@
+.search-area {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    align-items: center;
+}
+
+.actions {
+    display: flex;
+    gap: .5rem;
+}
+
+button {
+    text-transform: uppercase;
+}

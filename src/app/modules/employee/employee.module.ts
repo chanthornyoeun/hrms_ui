@@ -17,12 +17,14 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { EmployeeSearchFormComponent } from './employee-search-form/employee-search-form.component';
 
 
 @NgModule({
   declarations: [
     EmployeeListComponent,
-    EmployeeFormComponent
+    EmployeeFormComponent,
+    EmployeeSearchFormComponent
   ],
   imports: [
     CommonModule,

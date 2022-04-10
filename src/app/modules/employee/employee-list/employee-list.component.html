@@ -9,6 +9,7 @@
     <mat-icon class="icon-18">add</mat-icon>
   </button>
 </div>
+<app-employee-search-form (onSearch$)="handleSearch($event)" (onClear$)="clear()"></app-employee-search-form>
 <div class="mat-elevation-z2">
     <table mat-table class="full-width-table" aria-label="Elements" [dataSource]="employee$">
       <ng-container matColumnDef="id">
@@ -74,5 +75,13 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <mat-paginator 
+    [pageSizeOptions]="pageSizeOptions"
+    [length]="total"
+    [pageSize]="defaultPageSize"
+    showFirstLastButtons
+    (page)="pageChange($event)"
+    >
+  </mat-paginator>
   </div>
   
