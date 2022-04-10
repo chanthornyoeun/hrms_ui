@@ -1,15 +1,13 @@
-.full-width-table {
-  width: 100%;
+mat-form-field {
+  width: 350px;
 }
 
-.header {
+.right {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  gap: 0.5rem;
+}
 
-  h2 {
-    padding: 0;
-    margin: 0;
-  }
+.list-header {
+  margin-bottom: 0;
 }

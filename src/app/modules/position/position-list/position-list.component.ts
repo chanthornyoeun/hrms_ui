@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, map, Observable } from 'rxjs';
 import { Position } from 'src/app/models/position';
 import { PositionService } from 'src/app/services/position.service';
 import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
@@ -11,8 +12,9 @@ import { Pagination } from 'src/app/shared/components/data-grid/pagination';
   templateUrl: './position-list.component.html',
   styleUrls: ['./position-list.component.scss']
 })
-export class PositionListComponent extends Pagination {
+export class PositionListComponent extends Pagination implements OnInit {
 
+  searchCtl: FormControl = new FormControl();
   position$!: Observable<Position[]>;
   config: ColumnConfig = {
     columnDefs: [
@@ -31,6 +33,16 @@ export class PositionListComponent extends Pagination {
   constructor(private positionService: PositionService) {
     super();
     this.list(this.params);
+  }
+
+  ngOnInit(): void {
+    this.searchCtl.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    ).subscribe((value) => {
+      const params = new HttpParams().set('search', value?.trim());
+      this.list(params);
+    });
   }
 
   list(params?: HttpParams): void {
