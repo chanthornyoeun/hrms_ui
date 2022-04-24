@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { Department } from 'src/app/models/department';
@@ -19,7 +19,7 @@ import { PositionService } from 'src/app/services/position.service';
 export class EmployeeFormComponent implements OnInit {
 
   employeeForm!: FormGroup;
-  private employeeId: number;
+  employeeId: number;
   titles: string[] = ['Mr', 'Ms', 'Mss'];
   genders: string[] = ['Male', 'Female', 'Other'];
   maritalStatuses: string[] = ['Single', 'Married', 'Divorced'];
@@ -45,7 +45,9 @@ export class EmployeeFormComponent implements OnInit {
   ngOnInit(): void {
     if (this.employeeId) {
       this.employeeService.get(this.employeeId).subscribe(res => {
+        const leaveAllowances = res.data.leaveAllowances;
         this.employeeForm.patchValue(res.data);
+        this.generateLeaveAllowances(leaveAllowances);
       });
     }
   }
@@ -67,7 +69,24 @@ export class EmployeeFormComponent implements OnInit {
       currentAddress: '',
       physicalAddress: ['', Validators.required],
       isActive: [true, Validators.required],
+      leaveAllowances: this.fb.array([])
     });
+  }
+
+  get leaveAllowances(): FormArray {
+    return this.employeeForm.get('leaveAllowances') as FormArray;
+  }
+
+  private generateLeaveAllowances(leaveAllowances: any[]): void {
+    leaveAllowances.forEach(leaveAllowance => {
+      const allowanceForm: FormGroup = this.fb.group({
+        id: null,
+        leaveTypeId: [null, Validators.required],
+        allowance: [null, [Validators.required, Validators.min(0)]]
+      });
+      allowanceForm.patchValue(leaveAllowance);
+      this.leaveAllowances.push(allowanceForm);
+    })
   }
 
   submitForm() {

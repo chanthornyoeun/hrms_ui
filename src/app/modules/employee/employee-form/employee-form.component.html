@@ -173,6 +173,8 @@
     {{ employeeForm.get("isActive")?.value | activeSlider }}
   </mat-slide-toggle>
 
+  <app-leave-allowances [leaveAllowanceFormArray]="leaveAllowances" [employeeId]="employeeId"></app-leave-allowances>
+
   <div class="actions">
     <button
       mat-flat-button

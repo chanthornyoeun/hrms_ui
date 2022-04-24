@@ -1,0 +1,11 @@
+.leave-types-container {
+  background-color: #ebebeb;
+  padding: 16px;
+  border-radius: 4px;
+}
+
+.leave-types {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}

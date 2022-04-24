@@ -18,13 +18,15 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { EmployeeSearchFormComponent } from './employee-search-form/employee-search-form.component';
+import { LeaveAllowancesComponent } from './leave-allowances/leave-allowances.component';
 
 
 @NgModule({
   declarations: [
     EmployeeListComponent,
     EmployeeFormComponent,
-    EmployeeSearchFormComponent
+    EmployeeSearchFormComponent,
+    LeaveAllowancesComponent
   ],
   imports: [
     CommonModule,
