@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { MAT_FORM_FIELD_PROVIDER } from 'src/app/config';
 
 type ColumnType = 'normal' | 'actions';
 
@@ -9,6 +8,7 @@ export interface ColumnDef {
   field: string;
   type?: ColumnType;
   format?: any;
+  renderer?: (record: any) => string;
 }
 
 export interface RowAction {

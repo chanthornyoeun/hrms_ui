@@ -1,0 +1,25 @@
+.mat-card-header {
+  align-items: center;
+  justify-content: space-between;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+mat-radio-group {
+  margin-top: -22px;
+  display: flex;
+  gap: 16px;
+}

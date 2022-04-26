@@ -8,5 +8,7 @@ export enum ApiEndPointEnum {
     HOLIDAY_GROUP = '/api/holiday-group',
     HOLIDAY = '/api/holiday',
     LOGIN = '/api/auth/login',
-    LOGOUT = '/api/auth/logout'
+    LOGOUT = '/api/auth/logout',
+    LEAVE_REQUEST = '/api/leave-request',
+    CURRENT_USER = '/api/auth/current-user'
 }

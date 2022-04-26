@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-title class="mat-card-header">
+    <h2>My Leave</h2>
+    <button
+      mat-flat-button
+      color="primary"
+      matTooltip="Add new request"
+      routerLink="create"
+    >
+      <mat-icon class="icon-18">add</mat-icon>
+    </button>
+  </mat-card-title>
+  <mat-card-content>
+    <app-leave-request-filter (onSearch$)="handleSearch($event)" (onClear$)="list()"></app-leave-request-filter>
+    <app-data-grid
+      [columnConfig]="config"
+      [rowData]="leaveRequest$ | async"
+      [totalRecord]="total"
+      [defaultPageSize]="defaultPageSize"
+      (pageChange$)="pageChange($event)"
+    ></app-data-grid>
+  </mat-card-content>
+</mat-card>

@@ -30,9 +30,14 @@
             <ng-container *ngSwitchCase="'excerpt'">
               {{ element[col.field] | excerpt }}
             </ng-container>
-            <ng-container *ngSwitchDefault>{{
-              element[col.field]
-            }}</ng-container>
+            <ng-container *ngSwitchDefault>
+              <ng-container *ngIf="col.renderer; else noRenderer">
+                {{col.renderer(element)}}
+              </ng-container>
+              <ng-template #noRenderer>
+                {{element[col.field]}}
+              </ng-template>
+            </ng-container>
           </ng-container>
         </ng-template>
       </td>
@@ -41,7 +46,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-  <mat-paginator 
+  <mat-paginator
     [pageSizeOptions]="pageSizeOptions"
     [length]="totalRecord"
     [pageSize]="defaultPageSize"

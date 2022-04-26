@@ -1,0 +1,75 @@
+<form [formGroup]="filterForm" class="filter-container">
+  <mat-form-field class="full-width">
+    <mat-label>From Date</mat-label>
+    <input
+      matInput
+      formControlName="fromDate"
+      placeholder="From Date"
+      [matDatepicker]="fromDatePicker"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="fromDatePicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #fromDatePicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>To Date</mat-label>
+    <input
+      matInput
+      formControlName="toDate"
+      placeholder="To Date"
+      [matDatepicker]="toDatePicker"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="toDatePicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #toDatePicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Leave Type</mat-label>
+    <mat-select placeholder="Leave Type" formControlName="leaveTypeId">
+      <mat-option value="All" selected>All</mat-option>
+      <mat-option
+        *ngFor="let leaveType of leaveType$ | async"
+        [value]="leaveType.id"
+        >{{ leaveType.type }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Status</mat-label>
+    <mat-select placeholder="Status" formControlName="status">
+      <mat-option *ngFor="let status of statuses" [value]="status">{{
+        status
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="actions">
+    <button
+      type="button"
+      mat-button
+      color="primary"
+      matTooltip="Search"
+      (click)="search()"
+    >
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+    <button
+      type="button"
+      mat-button
+      color="warn"
+      matTooltip="Clear"
+      (click)="clear()"
+    >
+      <mat-icon>close</mat-icon>
+      Clear
+    </button>
+  </div>
+</form>
