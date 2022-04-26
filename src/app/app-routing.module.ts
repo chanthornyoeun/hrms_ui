@@ -20,7 +20,7 @@ const routes: Routes = [
       },
       {
         path: 'leave-types',
-        loadChildren: () => import('./modules/leave-type/leave-type.module').then(m => m.LeaveTypeModule)
+        loadChildren: () => import('./modules/leave-management/leave-type/leave-type.module').then(m => m.LeaveTypeModule)
       },
       {
         path: 'dependent-types',
