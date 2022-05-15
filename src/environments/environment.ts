@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://128.199.197.229'
+  API_URL: 'http://hrms.api',
+  dateFormat: 'dd-MMM-yyyy',
+  dateTimeFormat: 'dd-MMM-yyyy hh:mm a'
 };
 
 /*
