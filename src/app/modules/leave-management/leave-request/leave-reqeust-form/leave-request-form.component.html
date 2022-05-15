@@ -8,14 +8,34 @@
         <button
           type="button"
           mat-button
-          color="warn"
-          matTooltip="Cancel"
+          matTooltip="Back"
           (click)="navigateToList()"
         >
-          Cancel
+          <mat-icon>arrow_back</mat-icon>
+          Back
         </button>
 
-        <button mat-flat-button color="primary" matTooltip="Save">Save</button>
+        <button
+          *ngIf="leaveRequestForm.value.status === 'Pending' && requestId"
+          type="button"
+          mat-flat-button
+          color="warn"
+          matTooltip="Cancel Request"
+          (click)="cancelRequest()"
+        >
+          <mat-icon>close</mat-icon>
+          Cancel Request
+        </button>
+
+        <button
+          *ngIf="!requestId"
+          mat-flat-button
+          color="primary"
+          matTooltip="Save"
+        >
+          <mat-icon>done</mat-icon>
+          Save
+        </button>
       </div>
     </mat-card-title>
     <mat-card-content>

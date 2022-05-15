@@ -74,7 +74,8 @@ export class LeaveRequestFormComponent implements OnInit {
       reportToId: null,
       reportToName: '',
       isFullDay: [true, Validators.required],
-      reason: ['', Validators.required]
+      reason: ['', Validators.required],
+      status: ''
     });
     this.updateNoOfDay(fromDate, toDate);
   }
@@ -162,6 +163,16 @@ export class LeaveRequestFormComponent implements OnInit {
 
   navigateToList() {
     this.router.navigate(['/leave-request']);
+  }
+
+  cancelRequest() {
+    const agreed = prompt('Are you sure you want ot cancel your leave request?');
+    if (agreed) {
+      this.leaveRequestService.cancel(this.requestId).subscribe(res => {
+        this.navigateToList();
+        this.messageService.show('Your leave request has been canceled.');
+      });
+    }
   }
 
 }
