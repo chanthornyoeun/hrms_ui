@@ -5,8 +5,8 @@ import { Pagination } from "../../../../shared/components/data-grid/pagination";
 import { Observable, map } from "rxjs";
 import { LeaveRequestService } from "../../../../services/leave-request.service";
 import { LeaveRequst } from "../../../../models/leave-requst";
-import {LeaveRequestFilter} from "../leave-reqeust-filter/leave-request-filter";
-import {ParamsBuilder} from "../../../../utilities/params-builder";
+import { LeaveRequestFilter } from "../leave-reqeust-filter/leave-request-filter";
+import { ParamsBuilder } from "../../../../utilities/params-builder";
 
 @Component({
   selector: 'app-leave-request-list',
@@ -20,10 +20,11 @@ export class LeaveRequestListComponent extends Pagination implements OnInit {
   config: ColumnConfig = {
     columnDefs: [
       { headerText: 'Id', field: 'id' },
-      { headerText: 'Type', field: 'leaveTypeId', renderer: record => record.leaveType.type },
-      { headerText: 'Applied On', field: 'createdAt', format: 'date' },
-      { headerText: 'From Date', field: 'fromDate', format: 'date' },
-      { headerText: 'To Date', field: 'toDate', format: 'date' },
+      { headerText: 'Type of Leave', field: 'leaveTypeId', renderer: record => record.leaveType.type },
+      { headerText: 'Employee', field: 'employeeId', renderer: record => record.employee.firstName + ' ' + record.employee.lastName },
+      { headerText: 'Applied On', field: 'createdAt', format: 'dateTimeFormat' },
+      { headerText: 'From Date', field: 'fromDate', format: 'dateFormat' },
+      { headerText: 'To Date', field: 'toDate', format: 'dateFormat' },
       { headerText: 'Day(s)', field: 'day' },
       { headerText: 'Status', field: 'status' },
       { headerText: 'Reason', field: 'reason' },

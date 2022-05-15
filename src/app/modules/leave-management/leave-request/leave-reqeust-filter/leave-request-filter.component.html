@@ -30,6 +30,18 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
+    <mat-label>Employee</mat-label>
+    <mat-select placeholder="Employee" formControlName="employeeId">
+      <mat-option value="All">All</mat-option>
+      <mat-option
+        *ngFor="let employee of employee$ | async"
+        [value]="employee.id"
+        >{{ employee.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
     <mat-label>Leave Type</mat-label>
     <mat-select placeholder="Leave Type" formControlName="leaveTypeId">
       <mat-option value="All" selected>All</mat-option>

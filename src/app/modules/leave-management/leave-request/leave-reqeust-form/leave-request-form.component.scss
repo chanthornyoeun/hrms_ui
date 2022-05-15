@@ -1,6 +1,8 @@
-.mat-card-header {
+.header {
+  display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 0.5rem;
 
   h2 {
     margin: 0;

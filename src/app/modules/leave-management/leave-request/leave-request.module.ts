@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { LeaveRequestRoutingModule } from './leave-request-routing.module';
 import { LeaveRequestListComponent } from './leave-request-list/leave-request-list.component';
@@ -40,6 +40,9 @@ import { LeaveRequestFilterComponent } from './leave-reqeust-filter/leave-reques
     MatTooltipModule,
     MatRadioModule,
     SharedModule
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class LeaveRequestModule { }
