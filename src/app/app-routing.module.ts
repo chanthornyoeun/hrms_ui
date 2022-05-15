@@ -42,7 +42,12 @@ const routes: Routes = [
         path: 'employees',
         loadChildren: () => import('./modules/employee/employee.module').then(m => m.EmployeeModule)
       },
-      { path: 'leave-request',
+      { 
+        path: 'leave-request',
+        loadChildren: () => import('./modules/leave-management/leave-request/leave-request.module').then(m => m.LeaveRequestModule)
+      },
+      { 
+        path: 'employee-leave',
         loadChildren: () => import('./modules/leave-management/leave-request/leave-request.module').then(m => m.LeaveRequestModule)
       },
     ]
