@@ -28,6 +28,7 @@ export class LeaveRequestListComponent extends Pagination implements OnInit {
       { headerText: 'Day(s)', field: 'day' },
       { headerText: 'Status', field: 'status' },
       { headerText: 'Reason', field: 'reason' },
+      { headerText: 'Comment', field: 'comment' },
       { headerText: 'Actions', field: 'actions', type: 'actions' }
     ],
     rowActions: [
