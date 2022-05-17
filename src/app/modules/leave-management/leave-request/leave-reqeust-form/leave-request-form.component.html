@@ -14,27 +14,54 @@
         Back
       </button>
 
-      <button
-        *ngIf="leaveRequestForm.value.status === 'Pending' && requestId"
-        type="button"
-        mat-flat-button
-        color="warn"
-        matTooltip="Cancel Request"
-        (click)="cancelRequest()"
+      <ng-container
+        *ngIf="leaveRequestForm.value.status === 'Pending' && requestId else saveBtn"
       >
-        <mat-icon>close</mat-icon>
-        Cancel Request
-      </button>
+        <button
+          type="button"
+          mat-flat-button
+          color="warn"
+          matTooltip="Cancel"
+          (click)="cancelRequest()"
+        >
+          <mat-icon>close</mat-icon>
+          Cancel
+        </button>
 
-      <button
-        *ngIf="!requestId"
-        mat-flat-button
-        color="primary"
-        matTooltip="Save"
-      >
-        <mat-icon>done</mat-icon>
-        Save
-      </button>
+        <button
+          type="button"
+          mat-flat-button
+          color="warn"
+          matTooltip="Reject"
+          (click)="reject()"
+        >
+          <mat-icon>close</mat-icon>
+          Reject
+        </button>
+
+        <button
+          type="button"
+          mat-flat-button
+          color="primary"
+          matTooltip="Approve"
+          (click)="approve()"
+        >
+          <mat-icon>check_circle</mat-icon>
+          Approve
+        </button>
+      </ng-container>
+
+      <ng-template #saveBtn>
+        <button
+          *ngIf="!leaveRequestForm.get('status')?.value"
+          mat-flat-button
+          color="primary"
+          matTooltip="Save"
+        >
+          <mat-icon>done</mat-icon>
+          Save
+        </button>
+      </ng-template>
     </div>
   </div>
   <div class="row">
@@ -132,6 +159,15 @@
       rows="10"
       formControlName="reason"
       placeholder="Reason"
+    ></textarea>
+  </mat-form-field>
+  <mat-form-field class="full-width" *ngIf="requestId">
+    <mat-label>Comment</mat-label>
+    <textarea
+      matInput
+      rows="5"
+      formControlName="comment"
+      placeholder="Comment"
     ></textarea>
   </mat-form-field>
 </form>

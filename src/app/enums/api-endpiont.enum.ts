@@ -12,5 +12,7 @@ export enum ApiEndPointEnum {
     LEAVE_REQUEST = '/api/leave-request',
     CURRENT_USER = '/api/auth/current-user',
     CANCEL_LEAVE_REQUEST = '/api/leave-request-cancel',
-    CALCULATE_LEAVE_DAY = '/api/calculate-leave-days'
+    CALCULATE_LEAVE_DAY = '/api/calculate-leave-days',
+    REJECT_LEAVE_REQUEST = '/api/leave-request-reject',
+    APPROVE_LEAVE_REQUEST = '/api/leave-request-approve'
 }
