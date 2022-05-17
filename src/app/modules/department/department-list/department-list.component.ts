@@ -20,7 +20,7 @@ export class DepartmentListComponent extends Pagination implements OnInit {
     columnDefs: [
       { headerText: 'Id', field: 'id' },
       { headerText: 'Name', field: 'name' },
-      { headerText: 'Manager', field: 'managerId' },
+      { headerText: 'Manager', field: 'managerId', renderer: record => record.manager?.firstName + ' ' + record.manager?.lastName },
       { headerText: 'Active', field: 'isActive', format: 'active' },
       { headerText: 'Created Date', field: 'createdAt', format: 'date' },
       { headerText: 'Description', field: 'description' },
