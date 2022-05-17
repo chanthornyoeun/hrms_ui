@@ -7,6 +7,7 @@ import { EmployeeService } from 'src/app/services/employee.service';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 import { ParamsBuilder } from 'src/app/utilities/params-builder';
 import { EmployeeSearch } from '../employee-search-form/employee-search';
+import { ColumnConfig } from "../../../shared/components/data-grid/data-grid.component";
 
 @Component({
   selector: 'app-employee-list',
@@ -15,22 +16,37 @@ import { EmployeeSearch } from '../employee-search-form/employee-search';
 })
 export class EmployeeListComponent extends Pagination {
 
-  displayedColumns: string[];
   employee$!: Observable<Employee[]>;
-  pageSizeOptions: number[] = [10, 25, 50, 100, 250, 500];
   searchCtl: FormControl = new FormControl();
+  config: ColumnConfig = {
+    columnDefs: [
+      { headerText: 'Id', field: 'id' },
+      { headerText: 'Name', field: 'name' },
+      { headerText: 'Gender', field: 'gender' },
+      { headerText: 'Date of Birth', field: 'dateOfBirth', format: 'dateFormat' },
+      { headerText: 'Department', field: 'departmentId', renderer: record => record.department?.name },
+      { headerText: 'Position', field: 'positionId', renderer: record => record.position?.position },
+      { headerText: 'Job Title', field: 'jobTitle' },
+      { headerText: 'Joined Date', field: 'joinedDate', format: 'dateFormat' },
+      { headerText: 'Active', field: 'isActive', format: 'active' },
+      { headerText: 'Phone', field: 'phone' },
+      { headerText: 'Email', field: 'email' },
+      { headerText: 'Address', field: 'physicalAddress' },
+      { headerText: 'Actions', field: 'actions', type: 'actions' }
+    ],
+    rowActions: [
+      { icon: 'edit', link: 'update/', tooltip: 'Edit' }
+    ]
+  };
 
-  constructor(
-    private employeeService: EmployeeService
-  ) {
+  constructor(private employeeService: EmployeeService) {
     super();
-    this.displayedColumns = ['id', 'name', 'gender', 'dob', 'department', 'position', 'jobTitle', 'joinedDate', 'isActive', 'phone', 'email', 'address', 'actions'];
     this.list(this.params);
   }
-  
+
   list(params?: HttpParams) {
-    this.employee$ = this.employeeService.list({params}).pipe(
-      map(res => { 
+    this.employee$ = this.employeeService.list({ params }).pipe(
+      map(res => {
         this.total = res.total;
         return res.data as Employee[];
       }));
@@ -39,10 +55,6 @@ export class EmployeeListComponent extends Pagination {
   handleSearch($event: EmployeeSearch) {
     const params: HttpParams = ParamsBuilder.build($event);
     this.list(params);
-  }
-
-  clear() {
-    this.list();
   }
 
 }
