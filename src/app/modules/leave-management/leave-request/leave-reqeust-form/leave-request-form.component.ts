@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LeaveType } from "../../../../models/leave-type";
 import { LeaveTypeService } from "../../../../services/leave-type.service";
 import { EmployeeService } from "../../../../services/employee.service";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DateUtil } from "../../../../utilities/date-util";
 import { LeaveRequestService } from "../../../../services/leave-request.service";
 import { MessageService } from "../../../../shared/services/message.service";
@@ -97,30 +97,6 @@ export class LeaveRequestFormComponent implements OnInit {
     });
   }
 
-  changeFromDate() {
-    const fromDateCtl: FormControl = this.leaveRequestForm.get('fromDate') as FormControl;
-    const toDateCtl: FormControl = this.leaveRequestForm.get('toDate') as FormControl;
-    if (this.isRequestForFullDay()) {
-      this.updateNoOfDay(fromDateCtl.value, DateUtil.addTwentyFourHours(toDateCtl.value));
-    } else {
-      toDateCtl.setValue(new Date(fromDateCtl.value));
-    }
-  }
-
-  changeToDate() {
-    const fromDateCtl: FormControl = this.leaveRequestForm.get('fromDate') as FormControl;
-    const toDateCtl: FormControl = this.leaveRequestForm.get('toDate') as FormControl;
-    if (this.isRequestForFullDay()) {
-      this.updateNoOfDay(fromDateCtl.value, DateUtil.addTwentyFourHours(toDateCtl.value));
-    } else {
-      fromDateCtl.setValue(new Date(toDateCtl.value));
-    }
-  }
-
-  private isRequestForFullDay(): boolean {
-    return this.leaveRequestForm.get('isFullDay')?.value;
-  }
-
   private updateNoOfDay(fromDate: Date, toDate: Date) {
     const days = DateUtil.calculateDaysBetween(fromDate, toDate);
     this.leaveRequestForm.get('day')?.setValue(days);
@@ -129,13 +105,30 @@ export class LeaveRequestFormComponent implements OnInit {
   private onLeaveOptionChange() {
     this.leaveRequestForm.get('isFullDay')?.valueChanges.subscribe(value => {
       const fromDate: Date = this.leaveRequestForm.get('fromDate')?.value;
-      const toDate: Date = this.leaveRequestForm.get('toDate')?.value;
       if (!value) {
-        this.leaveRequestForm.get('day')?.setValue(0.5);
         this.leaveRequestForm.get('toDate')?.setValue(new Date(fromDate));
-      } else {
-        this.updateNoOfDay(fromDate, DateUtil.addTwentyFourHours(toDate));
       }
+      this.getLeaveDays();
+    });
+  }
+
+  getLeaveDays() {
+    const leaveTypeId: number = this.leaveRequestForm.get('leaveTypeId')?.value;
+    if (!leaveTypeId) {
+      return;
+    }
+
+    const dateFormat: string = 'yyyy-MM-dd';
+    const fromDate: string = this.datePipe.transform(this.leaveRequestForm.get('fromDate')?.value, dateFormat) || '';
+    const toDate: string = this.datePipe.transform(this.leaveRequestForm.get('toDate')?.value, dateFormat) || '';
+    const payload: any = {
+      leaveTypeId,
+      fromDate,
+      toDate,
+      isFullDay: this.leaveRequestForm.get('isFullDay')?.value
+    }
+    this.leaveRequestService.calculateDays(payload).subscribe(res => {
+      this.leaveRequestForm.get('day')?.setValue(res.data.leaveDays);
     });
   }
 

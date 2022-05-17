@@ -40,7 +40,11 @@
   <div class="row">
     <mat-form-field class="full-width">
       <mat-label>Leave Type</mat-label>
-      <mat-select placeholder="Leave Type" formControlName="leaveTypeId">
+      <mat-select
+        placeholder="Leave Type"
+        formControlName="leaveTypeId"
+        (selectionChange)="getLeaveDays()"
+      >
         <mat-option
           *ngFor="let leaveType of leaveTypes"
           [value]="leaveType.id"
@@ -69,7 +73,7 @@
         formControlName="fromDate"
         placeholder="From Date"
         [matDatepicker]="fromDatePicker"
-        (dateChange)="changeFromDate()"
+        (dateChange)="getLeaveDays()"
       />
       <mat-datepicker-toggle
         matSuffix
@@ -85,7 +89,7 @@
         formControlName="toDate"
         placeholder="To Date"
         [matDatepicker]="toDatePicker"
-        (dateChange)="changeToDate()"
+        (dateChange)="getLeaveDays()"
       />
       <mat-datepicker-toggle
         matSuffix

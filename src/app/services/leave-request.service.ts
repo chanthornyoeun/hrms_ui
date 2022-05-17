@@ -22,4 +22,8 @@ export class LeaveRequestService extends RestfulService {
     return this.http.post<ResponseDTO>(`${ApiEndPointEnum.CANCEL_LEAVE_REQUEST}/${requestId}`, {});
   }
 
+  calculateDays(payload: any): Observable<ResponseDTO> {
+    return this.http.post<ResponseDTO>(ApiEndPointEnum.CALCULATE_LEAVE_DAY, payload);
+  }
+
 }

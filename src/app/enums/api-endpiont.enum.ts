@@ -11,5 +11,6 @@ export enum ApiEndPointEnum {
     LOGOUT = '/api/auth/logout',
     LEAVE_REQUEST = '/api/leave-request',
     CURRENT_USER = '/api/auth/current-user',
-    CANCEL_LEAVE_REQUEST = '/api/leave-request-cancel'
+    CANCEL_LEAVE_REQUEST = '/api/leave-request-cancel',
+    CALCULATE_LEAVE_DAY = '/api/calculate-leave-days'
 }
