@@ -1,8 +1,8 @@
 <div class="search-area" [formGroup]="searchForm">
   <mat-form-field class="full-width">
-    <mat-label>Deparment</mat-label>
+    <mat-label>Department</mat-label>
     <mat-select placeholder="Department" formControlName="departmentId">
-      <mat-option value="">All</mat-option>
+      <mat-option value="All">All</mat-option>
       <mat-option
         *ngFor="let department of department$ | async"
         [value]="department.id"
@@ -13,7 +13,7 @@
   <mat-form-field class="full-width">
     <mat-label>Position</mat-label>
     <mat-select placeholder="Position" formControlName="positionId">
-      <mat-option value="">All</mat-option>
+      <mat-option value="All">All</mat-option>
       <mat-option
         *ngFor="let position of position$ | async"
         [value]="position.id"
@@ -30,7 +30,7 @@
     <button
       mat-button
       color="primary"
-      (click)="onSearch$.emit(searchForm.value)"
+      (click)="search()"
     >
       <mat-icon>search</mat-icon>
       Search

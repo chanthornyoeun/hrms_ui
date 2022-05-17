@@ -26,19 +26,33 @@ export class EmployeeSearchFormComponent {
     private departmentService: DepartmentService,
     private positionService: PositionService,
     private fb: FormBuilder
-  ) { 
+  ) {
     const params: HttpParams = ParamsBuilder.build({limit: 100});
     this.department$ = this.departmentService.list({params}).pipe(map(res => res.data));
     this.position$ = this.positionService.list({params}).pipe(map(res => res.data));
     this.searchForm = this.fb.group({
-      departmentId: null,
-      positionId: null,
+      departmentId: 'All',
+      positionId: 'All',
       search: ''
     });
   }
 
+  search() {
+      const value: EmployeeSearch = {
+        departmentId: this.searchForm.get('departmentId')?.value === 'All' ? null : this.searchForm.get('departmentId')?.value,
+        positionId: this.searchForm.get('positionId')?.value === 'All' ? null : this.searchForm.get('positionId')?.value,
+        search: this.searchForm.get('search')?.value
+      }
+      this.onSearch$.emit(value);
+  }
+
   clear() {
-    this.searchForm.reset();
+    const defaultFilter: EmployeeSearch = {
+      departmentId: 'All',
+      positionId: 'All',
+      search: ''
+    }
+    this.searchForm.reset(defaultFilter);
     this.onClear$.emit();
   }
 
