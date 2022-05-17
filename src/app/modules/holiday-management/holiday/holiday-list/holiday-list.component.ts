@@ -19,7 +19,7 @@ export class HolidayListComponent extends Pagination {
     columnDefs: [
       { headerText: 'Id', field: 'id' },
       { headerText: 'Name', field: 'name' },
-      { headerText: 'Group', field: 'groupId' },
+      { headerText: 'Group', field: 'groupId', renderer: record => record.group?.name },
       { headerText: 'Date', field: 'holidayDate', format: 'date' },
       { headerText: 'Active', field: 'isActive', format: 'active' },
       { headerText: 'Description', field: 'description' },
