@@ -8,7 +8,9 @@ import { LeaveRequestService } from "../../../../services/leave-request.service"
 import { MessageService } from "../../../../shared/services/message.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DatePipe } from "@angular/common";
-import {Moment} from "moment";
+import { Moment } from "moment";
+import { LoaderService } from "../../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-leave-request-form',
@@ -40,7 +42,8 @@ export class LeaveRequestFormComponent implements OnInit {
     private employeeService: EmployeeService,
     private leaveRequestService: LeaveRequestService,
     private messageService: MessageService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private loaderService: LoaderService
   ) {
     this.requestId = +this.activatedRoute.snapshot.params['id'];
     this.buildForm();
@@ -50,15 +53,18 @@ export class LeaveRequestFormComponent implements OnInit {
     this.getLeaveTypes();
     this.getCurrentEmployee();
     if (this.requestId) {
-      this.leaveRequestService.get(this.requestId).subscribe(res => {
-        const fromDate: Date = new Date(res.data.fromDate);
-        const toDate: Date = new Date(res.data.toDate);
-        const isFullDay: boolean = res.data.isFullDay === 1;
-        const manager = res.data.reportTo;
-        const reportToName = `${manager.firstName} ${manager.lastName}`;
-        this.leaveRequestForm.patchValue(res.data);
-        this.leaveRequestForm.patchValue({ fromDate, toDate, isFullDay, reportToName });
-      });
+      this.loaderService.show();
+      this.leaveRequestService.get(this.requestId)
+        .pipe(finalize(() => this.loaderService.hide()))
+        .subscribe(res => {
+          const fromDate: Date = new Date(res.data.fromDate);
+          const toDate: Date = new Date(res.data.toDate);
+          const isFullDay: boolean = res.data.isFullDay === 1;
+          const manager = res.data.reportTo;
+          const reportToName = `${manager.firstName} ${manager.lastName}`;
+          this.leaveRequestForm.patchValue(res.data);
+          this.leaveRequestForm.patchValue({fromDate, toDate, isFullDay, reportToName});
+        });
     }
     this.onLeaveOptionChange();
   }

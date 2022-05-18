@@ -7,6 +7,8 @@ import { LeaveRequestService } from "../../../../services/leave-request.service"
 import { LeaveRequst } from "../../../../models/leave-requst";
 import { LeaveRequestFilter } from "../leave-reqeust-filter/leave-request-filter";
 import { ParamsBuilder } from "../../../../utilities/params-builder";
+import { LoaderService } from "../../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-leave-request-list',
@@ -36,7 +38,7 @@ export class LeaveRequestListComponent extends Pagination implements OnInit {
     ]
   }
 
-  constructor(private leaveRequestService: LeaveRequestService) {
+  constructor(private leaveRequestService: LeaveRequestService, private loaderService: LoaderService) {
     super();
     this.list(this.params);
   }
@@ -45,11 +47,14 @@ export class LeaveRequestListComponent extends Pagination implements OnInit {
   }
 
   list(params?: HttpParams): void {
-    this.leaveRequest$ = this.leaveRequestService.list({ params })
-      .pipe(map(res => {
+    this.loaderService.show();
+    this.leaveRequest$ = this.leaveRequestService.list({params}).pipe(
+      finalize(() => this.loaderService.hide()),
+      map(res => {
         this.total = res.total;
         return res.data as LeaveRequst[];
-      }));
+      })
+    );
   }
 
   handleSearch($event: LeaveRequestFilter) {
