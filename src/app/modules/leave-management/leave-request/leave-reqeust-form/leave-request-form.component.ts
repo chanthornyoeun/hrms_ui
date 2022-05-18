@@ -11,6 +11,8 @@ import { DatePipe } from "@angular/common";
 import { Moment } from "moment";
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
 import { finalize } from "rxjs/operators";
+import { ConfirmationService } from "../../../../shared/components/confirmation/confirmation.service";
+import { ConfirmationModel } from "../../../../shared/components/confirmation/confirmation.model";
 
 @Component({
   selector: 'app-leave-request-form',
@@ -43,7 +45,8 @@ export class LeaveRequestFormComponent implements OnInit {
     private leaveRequestService: LeaveRequestService,
     private messageService: MessageService,
     private datePipe: DatePipe,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private confirmationService: ConfirmationService
   ) {
     this.requestId = +this.activatedRoute.snapshot.params['id'];
     this.buildForm();
@@ -178,8 +181,12 @@ export class LeaveRequestFormComponent implements OnInit {
     this.router.navigate(['/leave-request']);
   }
 
-  cancelRequest() {
-    const agreed = prompt('Are you sure you want ot cancel your leave request?');
+  async cancel() {
+    const confirmation: ConfirmationModel = {
+      title: 'CANCEL REQUEST?',
+      content: 'Are you sure you want ot cancel your leave request?'
+    };
+    const agreed: boolean = await this.confirmationService.confirm(confirmation).toPromise();
     if (agreed) {
       this.leaveRequestService.cancel(this.requestId).subscribe(res => {
         this.navigateToList();
@@ -188,15 +195,26 @@ export class LeaveRequestFormComponent implements OnInit {
     }
   }
 
-  approve() {
-    this.leaveRequestService.approve(this.requestId, this.leaveRequestForm.value.comment).subscribe(res => {
-      this.navigateToList();
-      this.messageService.show('Employee leave request has been approved.');
-    });
+  async approve() {
+    const confirmation: ConfirmationModel = {
+      title: 'APPROVED REQUEST?',
+      content: `Are you sure you want ot approved employee's request?`
+    };
+    const agreed: boolean = await this.confirmationService.confirm(confirmation).toPromise();
+    if (agreed) {
+      this.leaveRequestService.approve(this.requestId, this.leaveRequestForm.value.comment).subscribe(res => {
+        this.navigateToList();
+        this.messageService.show('Employee leave request has been approved.');
+      });
+    }
   }
 
-  reject() {
-    const agreed = prompt('Are you sure you want ot reject this leave request?');
+  async reject() {
+    const confirmation: ConfirmationModel = {
+      title: 'REJECT REQUEST?',
+      content: 'Are you sure you want ot reject this leave request?'
+    };
+    const agreed: boolean = await this.confirmationService.confirm(confirmation).toPromise();
     if (agreed) {
       this.leaveRequestService.reject(this.requestId, this.leaveRequestForm.value.comment).subscribe(res => {
         this.navigateToList();
