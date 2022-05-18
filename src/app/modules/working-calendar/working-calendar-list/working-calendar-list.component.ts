@@ -5,6 +5,8 @@ import { WorkingCalendar } from 'src/app/models/working-calendar';
 import { WorkingCalendarService } from 'src/app/services/working-calendar.service';
 import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
+import { LoaderService } from "../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-working-calendar-list',
@@ -30,17 +32,23 @@ export class WorkingCalendarListComponent extends Pagination {
     ]
   }
 
-  constructor(private workingCalendarService: WorkingCalendarService) {
+  constructor(
+    private workingCalendarService: WorkingCalendarService,
+    private loaderService: LoaderService
+  ) {
     super();
     this.list(this.params);
   }
 
   list(params: HttpParams): void {
+    this.loaderService.show();
     this.workingCalendar$ = this.workingCalendarService.list({ params }).pipe(
+      finalize(() => this.loaderService.hide()),
       map(res => {
         this.total = res.total;
         return res.data as WorkingCalendar[];
-      }));
+      })
+    );
   }
 
 }

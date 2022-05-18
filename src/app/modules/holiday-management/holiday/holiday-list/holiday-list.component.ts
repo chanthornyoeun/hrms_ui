@@ -5,6 +5,8 @@ import { Holiday } from 'src/app/models/holiday';
 import { HolidayService } from 'src/app/services/holiday.service';
 import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
+import { LoaderService } from "../../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-holiday-list',
@@ -30,16 +32,23 @@ export class HolidayListComponent extends Pagination {
     ]
   }
 
-  constructor(private holidayService: HolidayService) {
+  constructor(
+    private holidayService: HolidayService,
+    private loaderService: LoaderService
+  ) {
     super();
     this.list(this.params);
   }
 
   list(params: HttpParams) {
-    this.holiday$ = this.holidayService.list({ params }).pipe(map(res => {
+    this.loaderService.show();
+    this.holiday$ = this.holidayService.list({ params }).pipe(
+      finalize(() => this.loaderService.hide()),
+      map(res => {
       this.total = res.total;
       return res.data as Holiday[];
-    }));
+    })
+    );
   }
 
 }

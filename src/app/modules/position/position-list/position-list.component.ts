@@ -6,6 +6,8 @@ import { Position } from 'src/app/models/position';
 import { PositionService } from 'src/app/services/position.service';
 import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
+import { LoaderService } from "../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-position-list',
@@ -30,7 +32,10 @@ export class PositionListComponent extends Pagination implements OnInit {
     ]
   }
 
-  constructor(private positionService: PositionService) {
+  constructor(
+    private positionService: PositionService,
+    private loaderService: LoaderService
+  ) {
     super();
     this.list(this.params);
   }
@@ -46,11 +51,14 @@ export class PositionListComponent extends Pagination implements OnInit {
   }
 
   list(params?: HttpParams): void {
-    this.position$ = this.positionService.list({ params })
-      .pipe(map(res => {
+    this.loaderService.show();
+    this.position$ = this.positionService.list({ params }).pipe(
+      finalize(() => this.loaderService.hide()),
+      map(res => {
         this.total = res.total;
         return res.data as Position[];
-      }));
+      })
+    );
   }
 
 }

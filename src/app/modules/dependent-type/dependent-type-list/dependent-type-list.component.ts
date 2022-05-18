@@ -5,6 +5,8 @@ import { DependentType } from 'src/app/models/dependent-type';
 import { DependentTypeService } from 'src/app/services/dependent-type.service';
 import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
+import { LoaderService } from "../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-dependent-type-list',
@@ -29,17 +31,23 @@ export class DependentTypeListComponent extends Pagination {
     ]
   }
 
-  constructor(private dependentTypeService: DependentTypeService) {
+  constructor(
+    private dependentTypeService: DependentTypeService,
+    private loaderService: LoaderService
+  ) {
     super();
     this.list(this.params);
   }
 
   list(params: HttpParams) {
-    this.dependentType$ = this.dependentTypeService.list({ params })
-      .pipe(map(res => {
+    this.loaderService.show();
+    this.dependentType$ = this.dependentTypeService.list({ params }).pipe(
+      finalize(() => this.loaderService.hide()),
+      map(res => {
         this.total = res.total;
         return res.data as DependentType[];
-      }));
+      })
+    );
   }
 
 }

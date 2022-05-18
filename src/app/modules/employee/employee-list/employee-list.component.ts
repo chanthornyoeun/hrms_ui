@@ -8,6 +8,8 @@ import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 import { ParamsBuilder } from 'src/app/utilities/params-builder';
 import { EmployeeSearch } from '../employee-search-form/employee-search';
 import { ColumnConfig } from "../../../shared/components/data-grid/data-grid.component";
+import { LoaderService } from "../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-employee-list',
@@ -39,17 +41,23 @@ export class EmployeeListComponent extends Pagination {
     ]
   };
 
-  constructor(private employeeService: EmployeeService) {
+  constructor(
+    private employeeService: EmployeeService,
+    private loaderService: LoaderService
+  ) {
     super();
     this.list(this.params);
   }
 
   list(params?: HttpParams) {
-    this.employee$ = this.employeeService.list({ params }).pipe(
+    this.loaderService.show();
+    this.employee$ = this.employeeService.list({params}).pipe(
+      finalize(() => this.loaderService.hide()),
       map(res => {
         this.total = res.total;
         return res.data as Employee[];
-      }));
+      })
+    );
   }
 
   handleSearch($event: EmployeeSearch) {

@@ -7,6 +7,8 @@ import { HolidayGroup } from 'src/app/models/holiday-group';
 import { HolidayGroupService } from 'src/app/services/holiday-group.service';
 import { HolidayService } from 'src/app/services/holiday.service';
 import { MessageService } from 'src/app/shared/services/message.service';
+import { LoaderService } from "../../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-holiday-form',
@@ -14,7 +16,7 @@ import { MessageService } from 'src/app/shared/services/message.service';
   styleUrls: ['./holiday-form.component.scss']
 })
 export class HolidayFormComponent implements OnInit {
-  
+
   holidayForm!: FormGroup;
   group$: Observable<HolidayGroup[]>;
   private holidayId: number;
@@ -25,7 +27,8 @@ export class HolidayFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private holidayService: HolidayService,
     private holidayGroupService: HolidayGroupService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loaderService: LoaderService
   ) {
     this.buildForm();
     this.holidayId = +activatedRoute.snapshot.paramMap.get('id')!;
@@ -34,7 +37,9 @@ export class HolidayFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.holidayId) {
+      this.loaderService.show();
       this.holidayService.get(this.holidayId)
+        .pipe(finalize(() => this.loaderService.hide()))
         .subscribe(res => {
           const holiday: Holiday = res.data as Holiday;
           holiday.holidayDate = new Date(holiday.holidayDate);

@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LeaveType } from 'src/app/models/leave-type';
 import { LeaveTypeService } from 'src/app/services/leave-type.service';
 import { MessageService } from 'src/app/shared/services/message.service';
+import { LoaderService } from "../../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-leave-type-form',
@@ -20,7 +22,8 @@ export class LeaveTypeFormComponent implements OnInit {
     private route: Router,
     private activatedRoute: ActivatedRoute,
     private leaveTypeService: LeaveTypeService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loaderService: LoaderService
   ) {
     this.buildForm();
     this.leaveTypeId = +activatedRoute.snapshot.paramMap.get('id')!;
@@ -28,7 +31,9 @@ export class LeaveTypeFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.leaveTypeId) {
+      this.loaderService.show();
       this.leaveTypeService.get(this.leaveTypeId)
+        .pipe(finalize(() => this.loaderService.hide()))
         .subscribe(res => {
           const leaveType: LeaveType = res.data as LeaveType;
           this.leaveTypeForm.patchValue(leaveType);

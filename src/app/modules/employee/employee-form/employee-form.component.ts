@@ -10,6 +10,8 @@ import { DepartmentService } from 'src/app/services/department.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { PositionService } from 'src/app/services/position.service';
+import { LoaderService } from "../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-employee-form',
@@ -34,7 +36,8 @@ export class EmployeeFormComponent implements OnInit {
     private employeeService: EmployeeService,
     private departmentService: DepartmentService,
     private positionService: PositionService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loaderService: LoaderService
   ) {
     this.employeeId = +this.activatedRoute.snapshot.paramMap.get('id')!;
     this.buildForm();
@@ -44,11 +47,14 @@ export class EmployeeFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.employeeId) {
-      this.employeeService.get(this.employeeId).subscribe(res => {
-        const leaveAllowances = res.data.leaveAllowances;
-        this.employeeForm.patchValue(res.data);
-        this.generateLeaveAllowances(leaveAllowances);
-      });
+      this.loaderService.show();
+      this.employeeService.get(this.employeeId)
+        .pipe(finalize(() => this.loaderService.hide()))
+        .subscribe(res => {
+          const leaveAllowances = res.data.leaveAllowances;
+          this.employeeForm.patchValue(res.data);
+          this.generateLeaveAllowances(leaveAllowances);
+        });
     }
   }
 

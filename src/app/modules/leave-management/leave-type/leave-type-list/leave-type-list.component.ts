@@ -5,6 +5,8 @@ import { LeaveType } from 'src/app/models/leave-type';
 import { LeaveTypeService } from 'src/app/services/leave-type.service';
 import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
+import { LoaderService } from "../../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-leave-type-list',
@@ -30,17 +32,23 @@ export class LeaveTypeListComponent extends Pagination {
     ]
   }
 
-  constructor(private leaveTypeService: LeaveTypeService) {
+  constructor(
+    private leaveTypeService: LeaveTypeService,
+    private loaderService: LoaderService
+  ) {
     super();
     this.list(this.params);
   }
 
   list(params?: HttpParams): void {
-    this.leaveType$ = this.leaveTypeService.list({ params })
-      .pipe(map(res => {
+    this.loaderService.show();
+    this.leaveType$ = this.leaveTypeService.list({ params }).pipe(
+      finalize(() => this.loaderService.hide()),
+      map(res => {
         this.total = res.total;
         return res.data as LeaveType[];
-      }));
+      })
+    );
   }
 
 }

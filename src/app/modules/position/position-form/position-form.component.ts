@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Position } from 'src/app/models/position';
 import { PositionService } from 'src/app/services/position.service';
 import { MessageService } from 'src/app/shared/services/message.service';
+import { LoaderService } from "../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-position-form',
@@ -20,7 +22,8 @@ export class PositionFormComponent implements OnInit {
     private route: Router,
     private activatedRoute: ActivatedRoute,
     private positionService: PositionService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loaderService: LoaderService
   ) {
     this.buildForm();
     this.positionId = +activatedRoute.snapshot.paramMap.get('id')!;
@@ -28,7 +31,9 @@ export class PositionFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.positionId) {
+      this.loaderService.show();
       this.positionService.get(this.positionId)
+        .pipe(finalize(() => this.loaderService.hide()))
         .subscribe(res => {
           const position: Position = res.data as Position;
           this.positionForm.patchValue(position);

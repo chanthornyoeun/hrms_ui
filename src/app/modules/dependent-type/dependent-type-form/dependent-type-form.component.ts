@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DependentType } from 'src/app/models/dependent-type';
 import { DependentTypeService } from 'src/app/services/dependent-type.service';
 import { MessageService } from 'src/app/shared/services/message.service';
+import { LoaderService } from "../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-dependent-type-form',
@@ -20,7 +22,8 @@ export class DependentTypeFormComponent implements OnInit {
     private route: Router,
     private activatedRoute: ActivatedRoute,
     private dependentTypeService: DependentTypeService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loaderService: LoaderService
   ) {
     this.buildForm();
     this.typeId = +activatedRoute.snapshot.paramMap.get('id')!;
@@ -28,7 +31,9 @@ export class DependentTypeFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.typeId) {
+      this.loaderService.show();
       this.dependentTypeService.get(this.typeId)
+        .pipe(finalize(() => this.loaderService.hide()))
         .subscribe(res => {
           const leaveType: DependentType = res.data as DependentType;
           this.dependentTypeForm.patchValue(leaveType);

@@ -7,6 +7,8 @@ import { Employee } from 'src/app/models/employee';
 import { DepartmentService } from 'src/app/services/department.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { MessageService } from 'src/app/shared/services/message.service';
+import { LoaderService } from "../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-department-form',
@@ -25,7 +27,8 @@ export class DepartmentFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private departmentService: DepartmentService,
     private employeeService: EmployeeService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loaderService: LoaderService
   ) {
     this.buildForm();
     this.positionId = +activatedRoute.snapshot.paramMap.get('id')!;
@@ -34,7 +37,9 @@ export class DepartmentFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.positionId) {
+      this.loaderService.show();
       this.departmentService.get(this.positionId)
+        .pipe(finalize(() => this.loaderService.hide()))
         .subscribe(res => {
           const position: Department = res.data as Department;
           this.departmentForm.patchValue(position);

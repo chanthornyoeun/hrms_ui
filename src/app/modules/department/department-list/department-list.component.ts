@@ -6,6 +6,8 @@ import { Department } from 'src/app/models/department';
 import { DepartmentService } from 'src/app/services/department.service';
 import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
+import { LoaderService } from "../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-department-list',
@@ -31,7 +33,10 @@ export class DepartmentListComponent extends Pagination implements OnInit {
     ]
   }
 
-  constructor(private departmentService: DepartmentService) {
+  constructor(
+    private departmentService: DepartmentService,
+    private loaderService: LoaderService
+  ) {
     super();
     this.list(this.params);
   }
@@ -47,15 +52,19 @@ export class DepartmentListComponent extends Pagination implements OnInit {
   }
 
   list(params: HttpParams) {
+    this.loaderService.show();
     const query: string = this.searchCtl.value;
     if (query) {
       params = params.set('search', query.trim());
     }
 
-    this.department$ = this.departmentService.list({params}).pipe(map(res => {
-      this.total = res.total;
-      return res.data as Department[]
-    }));
+    this.department$ = this.departmentService.list({ params }).pipe(
+      finalize(() => this.loaderService.hide()),
+      map(res => {
+        this.total = res.total;
+        return res.data as Department[]
+      })
+    );
   }
 
 }

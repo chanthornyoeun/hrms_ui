@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HolidayGroup } from 'src/app/models/holiday-group';
 import { HolidayGroupService } from 'src/app/services/holiday-group.service';
 import { MessageService } from 'src/app/shared/services/message.service';
+import { LoaderService } from "../../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-holiday-group-form',
@@ -20,7 +22,8 @@ export class HolidayGroupFormComponent implements OnInit {
     private route: Router,
     private activatedRoute: ActivatedRoute,
     private holidayGroupService: HolidayGroupService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loaderService: LoaderService
   ) {
     this.buildForm();
     this.holidayGroupId = +activatedRoute.snapshot.paramMap.get('id')!;
@@ -28,7 +31,9 @@ export class HolidayGroupFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.holidayGroupId) {
+      this.loaderService.show();
       this.holidayGroupService.get(this.holidayGroupId)
+        .pipe(finalize(() => this.loaderService.hide()))
         .subscribe(res => {
           const holidayGroup: HolidayGroup = res.data as HolidayGroup;
           this.holidayGroupForm.patchValue(holidayGroup);

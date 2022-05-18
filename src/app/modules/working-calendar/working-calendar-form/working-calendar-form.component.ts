@@ -7,6 +7,8 @@ import { WorkingCalendar } from 'src/app/models/working-calendar';
 import { DepartmentService } from 'src/app/services/department.service';
 import { WorkingCalendarService } from 'src/app/services/working-calendar.service';
 import { MessageService } from 'src/app/shared/services/message.service';
+import { LoaderService } from "../../../shared/components/loader/loader.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-working-calendar-form',
@@ -26,7 +28,8 @@ export class WorkingCalendarFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private workingCalendarService: WorkingCalendarService,
     private departmentService: DepartmentService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loaderService: LoaderService
   ) {
     this.buildForm();
     this.calendarId = +activatedRoute.snapshot.paramMap.get('id')!;
@@ -35,7 +38,9 @@ export class WorkingCalendarFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.calendarId) {
+      this.loaderService.show();
       this.workingCalendarService.get(this.calendarId)
+        .pipe(finalize(() => this.loaderService.hide()))
         .subscribe(res => {
           const workingCalendar: WorkingCalendar = res.data as WorkingCalendar;
           this.workingCalendarForm.patchValue(workingCalendar);
