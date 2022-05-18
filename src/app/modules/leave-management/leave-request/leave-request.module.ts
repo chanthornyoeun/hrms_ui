@@ -16,7 +16,11 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatRadioModule } from "@angular/material/radio";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatBadgeModule } from '@angular/material/badge';
+
 import { LeaveRequestFilterComponent } from './leave-reqeust-filter/leave-request-filter.component';
+import { DATEPICKER_PROVIDER } from "../../../config";
 
 
 @NgModule({
@@ -39,10 +43,13 @@ import { LeaveRequestFilterComponent } from './leave-reqeust-filter/leave-reques
     MatNativeDateModule,
     MatTooltipModule,
     MatRadioModule,
+    MatTabsModule,
+    MatBadgeModule,
     SharedModule
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    DATEPICKER_PROVIDER
   ]
 })
 export class LeaveRequestModule { }

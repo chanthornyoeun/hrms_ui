@@ -8,6 +8,7 @@ import { LeaveRequestService } from "../../../../services/leave-request.service"
 import { MessageService } from "../../../../shared/services/message.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DatePipe } from "@angular/common";
+import {Moment} from "moment";
 
 @Component({
   selector: 'app-leave-request-form',
@@ -96,6 +97,18 @@ export class LeaveRequestFormComponent implements OnInit {
       this.leaveRequestForm.get('reportToName')?.setValue(managerName);
       this.leaveRequestForm.get('employeeId')?.setValue(employee.id);
     });
+  }
+
+  changeDate(date: Moment) {
+    if (this.isRequestForHalfDay()) {
+      this.leaveRequestForm.get('fromDate')?.setValue(date);
+      this.leaveRequestForm.get('toDate')?.setValue(date);
+    }
+    this.getLeaveDays();
+  }
+
+  private isRequestForHalfDay(): boolean {
+    return !this.leaveRequestForm.get('isFullDay')?.value;
   }
 
   private updateNoOfDay(fromDate: Date, toDate: Date) {

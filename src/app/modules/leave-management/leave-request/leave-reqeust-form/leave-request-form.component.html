@@ -100,7 +100,7 @@
         formControlName="fromDate"
         placeholder="From Date"
         [matDatepicker]="fromDatePicker"
-        (dateChange)="getLeaveDays()"
+        (dateChange)="changeDate($event.value)"
       />
       <mat-datepicker-toggle
         matSuffix
@@ -116,7 +116,7 @@
         formControlName="toDate"
         placeholder="To Date"
         [matDatepicker]="toDatePicker"
-        (dateChange)="getLeaveDays()"
+        (dateChange)="changeDate($event.value)"
       />
       <mat-datepicker-toggle
         matSuffix
