@@ -13,10 +13,13 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { RouterModule } from '@angular/router';
 import { LoaderComponent } from "./loader/loader.component";
 import { LoaderService } from "./loader/loader.service";
+import { ConfirmationComponent } from "./confirmation/confirmation.component";
+import { ConfirmationService } from './confirmation/confirmation.service';
 
 const comps = [
   DataGridComponent,
-  LoaderComponent
+  LoaderComponent,
+  ConfirmationComponent
 ];
 
 @NgModule({
@@ -35,6 +38,6 @@ const comps = [
     PipesModule
   ],
   exports: comps,
-  providers: [LoaderService]
+  providers: [LoaderService, ConfirmationService]
 })
 export class ComponentsModule { }
