@@ -8,10 +8,15 @@ import { PipesModule } from '../pipes/pipes.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatDialogModule } from "@angular/material/dialog";
 import { RouterModule } from '@angular/router';
+import { LoaderComponent } from "./loader/loader.component";
+import { LoaderService } from "./loader/loader.service";
 
 const comps = [
-  DataGridComponent
+  DataGridComponent,
+  LoaderComponent
 ];
 
 @NgModule({
@@ -24,9 +29,12 @@ const comps = [
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
     RouterModule,
     PipesModule
   ],
-  exports: comps
+  exports: comps,
+  providers: [LoaderService]
 })
 export class ComponentsModule { }
