@@ -23,7 +23,7 @@ export class LeaveTypeListComponent extends Pagination {
       { headerText: 'Type', field: 'type' },
       { headerText: 'Allowance Days', field: 'allowanceDay' },
       { headerText: 'Active', field: 'isActive', format: 'active' },
-      { headerText: 'Created Date', field: 'createdAt', format: 'date' },
+      { headerText: 'Created Date', field: 'createdAt', format: 'dateFormat' },
       { headerText: 'Description', field: 'description', format: 'excerpt' },
       { headerText: 'Actions', field: 'actions', type: 'actions' }
     ],

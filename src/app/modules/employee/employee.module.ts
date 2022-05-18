@@ -19,6 +19,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { EmployeeSearchFormComponent } from './employee-search-form/employee-search-form.component';
 import { LeaveAllowancesComponent } from './leave-allowances/leave-allowances.component';
+import { DATEPICKER_PROVIDER } from "../../config";
 
 
 @NgModule({
@@ -44,6 +45,9 @@ import { LeaveAllowancesComponent } from './leave-allowances/leave-allowances.co
     MatDatepickerModule,
     ReactiveFormsModule,
     SharedModule
+  ],
+  providers: [
+    DATEPICKER_PROVIDER
   ]
 })
 export class EmployeeModule { }

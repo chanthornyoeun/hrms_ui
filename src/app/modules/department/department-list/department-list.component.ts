@@ -24,7 +24,7 @@ export class DepartmentListComponent extends Pagination implements OnInit {
       { headerText: 'Name', field: 'name' },
       { headerText: 'Manager', field: 'managerId', renderer: record => record.manager?.firstName + ' ' + record.manager?.lastName },
       { headerText: 'Active', field: 'isActive', format: 'active' },
-      { headerText: 'Created Date', field: 'createdAt', format: 'date' },
+      { headerText: 'Created Date', field: 'createdAt', format: 'dateFormat' },
       { headerText: 'Description', field: 'description' },
       { headerText: 'Actions', field: 'actions', type: 'actions' }
     ],

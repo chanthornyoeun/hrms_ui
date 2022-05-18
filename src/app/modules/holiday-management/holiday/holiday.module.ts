@@ -17,6 +17,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
+import { DATEPICKER_PROVIDER } from "../../../config";
 
 
 @NgModule({
@@ -40,6 +41,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSelectModule,
     ReactiveFormsModule,
     SharedModule
+  ],
+  providers: [
+    DATEPICKER_PROVIDER
   ]
 })
 export class HolidayModule { }

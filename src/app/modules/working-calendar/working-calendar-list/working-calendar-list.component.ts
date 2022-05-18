@@ -24,7 +24,7 @@ export class WorkingCalendarListComponent extends Pagination {
       { headerText: 'Start Time', field: 'startTime' },
       { headerText: 'End Time', field: 'endTime' },
       { headerText: 'Working', field: 'isWorking', format: 'active' },
-      { headerText: 'Created Date', field: 'createdAt', format: 'date' },
+      { headerText: 'Created Date', field: 'createdAt', format: 'dateFormat' },
       { headerText: 'Actions', field: 'actions', type: 'actions' }
     ],
     rowActions: [

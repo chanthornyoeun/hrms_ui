@@ -22,7 +22,7 @@ export class DependentTypeListComponent extends Pagination {
       { headerText: 'Id', field: 'id' },
       { headerText: 'Short Description', field: 'shortDescription' },
       { headerText: 'Active', field: 'isActive', format: 'active' },
-      { headerText: 'Created Date', field: 'createdAt', format: 'date' },
+      { headerText: 'Created Date', field: 'createdAt', format: 'dateFormat' },
       { headerText: 'Description', field: 'description', format: 'excerpt' },
       { headerText: 'Actions', field: 'actions', type: 'actions' }
     ],

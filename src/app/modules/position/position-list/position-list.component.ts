@@ -23,7 +23,7 @@ export class PositionListComponent extends Pagination implements OnInit {
       { headerText: 'Id', field: 'id' },
       { headerText: 'Name', field: 'position' },
       { headerText: 'Active', field: 'isActive', format: 'active' },
-      { headerText: 'Created Date', field: 'createdAt', format: 'date' },
+      { headerText: 'Created Date', field: 'createdAt', format: 'dateFormat' },
       { headerText: 'Description', field: 'description' },
       { headerText: 'Actions', field: 'actions', type: 'actions' }
     ],

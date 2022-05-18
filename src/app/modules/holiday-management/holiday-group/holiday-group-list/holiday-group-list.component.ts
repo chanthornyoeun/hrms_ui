@@ -22,7 +22,7 @@ export class HolidayGroupListComponent extends Pagination {
       { headerText: 'Id', field: 'id' },
       { headerText: 'Name', field: 'name' },
       { headerText: 'Description', field: 'description' },
-      { headerText: 'Created Date', field: 'createdAt', format: 'date' },
+      { headerText: 'Created Date', field: 'createdAt', format: 'dateFormat' },
       { headerText: 'Actions', field: 'actions', type: 'actions' }
     ],
     rowActions: [
