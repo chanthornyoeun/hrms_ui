@@ -25,3 +25,17 @@ form {
     flex-wrap: wrap;
   }
 }
+
+.profile {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-img {
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+input[type='file'] {
+  visibility: hidden;
+}

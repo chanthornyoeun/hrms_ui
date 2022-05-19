@@ -1,4 +1,8 @@
 <form [formGroup]="employeeForm" (ngSubmit)="submitForm()">
+  <div class="profile">
+    <img class="profile-img" width="250px" height="250px" [src]="employeeForm.get('profilePhoto')?.value" alt="" (click)="fileRef.click()"/>
+  </div>
+  <input type="file" #fileRef (change)="upload($event.target)">
   <div class="row">
     <mat-form-field class="full-width">
       <mat-label>First Name</mat-label>

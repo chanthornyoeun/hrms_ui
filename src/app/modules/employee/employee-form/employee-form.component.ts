@@ -12,6 +12,7 @@ import { MessageService } from 'src/app/shared/services/message.service';
 import { PositionService } from 'src/app/services/position.service';
 import { LoaderService } from "../../../shared/components/loader/loader.service";
 import { finalize } from "rxjs/operators";
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   selector: 'app-employee-form',
@@ -37,12 +38,13 @@ export class EmployeeFormComponent implements OnInit {
     private departmentService: DepartmentService,
     private positionService: PositionService,
     private messageService: MessageService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private fileService: FileService
   ) {
     this.employeeId = +this.activatedRoute.snapshot.paramMap.get('id')!;
     this.buildForm();
-    this.department$ = this.departmentService.list({params: this.params}).pipe(map(res => res.data as Department[]));
-    this.position$ = this.positionService.list({params: this.params}).pipe(map(res => res.data as Position[]));
+    this.department$ = this.departmentService.list({ params: this.params }).pipe(map(res => res.data as Department[]));
+    this.position$ = this.positionService.list({ params: this.params }).pipe(map(res => res.data as Position[]));
   }
 
   ngOnInit(): void {
@@ -63,6 +65,7 @@ export class EmployeeFormComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       title: ['', Validators.required],
+      profilePhoto: '',
       gender: ['', Validators.required],
       dateOfBirth: [null, Validators.required],
       joinedDate: [null, Validators.required],
@@ -116,6 +119,12 @@ export class EmployeeFormComponent implements OnInit {
 
   private navigateToList() {
     this.router.navigate(['/employees']);
+  }
+
+  upload($event: any) {
+    this.fileService.upload($event.files[0]).subscribe(res => {
+      this.employeeForm.get('profilePhoto')?.setValue(res.data['url']);
+    });
   }
 
 }

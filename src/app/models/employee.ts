@@ -3,6 +3,7 @@ import { Position } from "./position";
 
 export interface Employee {
     id: number;
+    profilePhoto: string;
     firstName: string;
     lastName: string;
     name: string;
