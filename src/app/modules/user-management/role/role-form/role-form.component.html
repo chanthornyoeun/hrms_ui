@@ -1,0 +1,40 @@
+<form [formGroup]="roleForm" (ngSubmit)="submitForm()">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      formControlName="name"
+      autocomplete="off"
+      type="text"
+      required
+      placeholder="Name"
+    />
+  </mat-form-field>
+  <mat-slide-toggle formControlName="isActive" color="primary">
+    {{ roleForm.get("isActive")?.value | activeSlider }}
+  </mat-slide-toggle>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea
+      matInput
+      formControlName="description"
+      placeholder="Description"
+      rows="15"
+    ></textarea>
+  </mat-form-field>
+
+  <div class="actions">
+    <button
+      mat-flat-button
+      type="submit"
+      color="primary"
+      matTooltip="Save"
+      [disabled]="roleForm.invalid"
+    >
+      Save
+    </button>
+    <button mat-button type="button" matTooltip="Cancel" routerLink="/roles">
+      Cancel
+    </button>
+  </div>
+</form>

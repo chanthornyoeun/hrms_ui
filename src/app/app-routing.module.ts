@@ -50,6 +50,10 @@ const routes: Routes = [
         path: 'employee-leave',
         loadChildren: () => import('./modules/leave-management/leave-request/leave-request.module').then(m => m.LeaveRequestModule)
       },
+      { 
+        path: 'roles',
+        loadChildren: () => import('./modules/user-management/role/role.module').then(m => m.RoleModule)
+     }
     ]
   },
   {
