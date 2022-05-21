@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   API_URL: 'http://hrms.api',
   dateFormat: 'dd-MMM-yyyy',
-  dateTimeFormat: 'dd-MMM-yyyy hh:mm a'
+  dateTimeFormat: 'dd-MMM-yyyy hh:mm a',
+  fileDestination: 'LOCAL'
 };
 
 /*
