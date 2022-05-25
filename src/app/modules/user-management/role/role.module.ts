@@ -14,6 +14,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 
 
 @NgModule({
@@ -34,6 +35,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatSlideToggleModule,
     ReactiveFormsModule,
     SharedModule
+  ],
+  providers: [
+    PaginationHistoryService
   ]
 })
 export class RoleModule { }

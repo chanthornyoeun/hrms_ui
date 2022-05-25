@@ -1,9 +1,8 @@
-import { HttpParams } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { finalize, map, Observable } from 'rxjs';
+import { Component, ViewChild } from '@angular/core';
 import { Role } from 'src/app/models/role';
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 import { RoleService } from 'src/app/services/role.service';
-import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
+import { ColumnConfig, DataGridComponent } from 'src/app/shared/components/data-grid/data-grid.component';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 import { LoaderService } from 'src/app/shared/components/loader/loader.service';
 
@@ -12,9 +11,10 @@ import { LoaderService } from 'src/app/shared/components/loader/loader.service';
   templateUrl: './role-list.component.html',
   styleUrls: ['./role-list.component.scss']
 })
-export class RoleListComponent extends Pagination {
+export class RoleListComponent extends Pagination<Role> {
 
-  role$!: Observable<Role[]>;
+  @ViewChild(DataGridComponent) grid!: DataGridComponent;
+
   config: ColumnConfig = {
     columnDefs: [
       { headerText: 'Id', field: 'id' },
@@ -31,21 +31,10 @@ export class RoleListComponent extends Pagination {
 
   constructor(
     private positionService: RoleService,
-    private loaderService: LoaderService
+    protected override loaderService: LoaderService,
+    private pg: PaginationHistoryService
   ) {
-    super();
-    this.list(this.params);
-  }
-
-  list(params?: HttpParams): void {
-    this.loaderService.show();
-    this.role$ = this.positionService.list({ params }).pipe(
-      finalize(() => this.loaderService.hide()),
-      map(res => {
-        this.total = res.total;
-        return res.data as Role[];
-      })
-    );
+    super(positionService, loaderService, pg);
   }
 
 }
