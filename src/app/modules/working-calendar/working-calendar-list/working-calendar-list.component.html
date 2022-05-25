@@ -11,7 +11,7 @@
 </div>
 <app-data-grid
   [columnConfig]="config"
-  [rowData]="workingCalendar$ | async"
+  [rowData]="data"
   [totalRecord]="total"
   [defaultPageSize]="defaultPageSize"
   (pageChange$)="pageChange($event)"

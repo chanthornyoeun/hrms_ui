@@ -17,6 +17,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { WorkingPipe } from './working.pipe';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker'; 
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 
 
 @NgModule({
@@ -40,6 +41,9 @@ import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
     ReactiveFormsModule,
     NgxMatTimepickerModule,
     SharedModule
+  ],
+  providers: [
+    PaginationHistoryService
   ]
 })
 export class WorkingCalendarModule { }

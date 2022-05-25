@@ -1,21 +1,20 @@
-import { HttpParams } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Component, ViewChild } from '@angular/core';
 import { WorkingCalendar } from 'src/app/models/working-calendar';
 import { WorkingCalendarService } from 'src/app/services/working-calendar.service';
-import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
+import { ColumnConfig, DataGridComponent } from 'src/app/shared/components/data-grid/data-grid.component';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 import { LoaderService } from "../../../shared/components/loader/loader.service";
-import { finalize } from "rxjs/operators";
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 
 @Component({
   selector: 'app-working-calendar-list',
   templateUrl: './working-calendar-list.component.html',
   styleUrls: ['./working-calendar-list.component.scss']
 })
-export class WorkingCalendarListComponent extends Pagination {
+export class WorkingCalendarListComponent extends Pagination<WorkingCalendar> {
 
-  workingCalendar$!: Observable<WorkingCalendar[]>;
+  @ViewChild(DataGridComponent) grid!: DataGridComponent;
+
   config: ColumnConfig = {
     columnDefs: [
       { headerText: 'Id', field: 'id' },
@@ -34,21 +33,10 @@ export class WorkingCalendarListComponent extends Pagination {
 
   constructor(
     private workingCalendarService: WorkingCalendarService,
-    private loaderService: LoaderService
+    protected override loaderService: LoaderService,
+    private pg: PaginationHistoryService
   ) {
-    super();
-    this.list(this.params);
-  }
-
-  list(params: HttpParams): void {
-    this.loaderService.show();
-    this.workingCalendar$ = this.workingCalendarService.list({ params }).pipe(
-      finalize(() => this.loaderService.hide()),
-      map(res => {
-        this.total = res.total;
-        return res.data as WorkingCalendar[];
-      })
-    );
+    super(workingCalendarService, loaderService, pg);
   }
 
 }
