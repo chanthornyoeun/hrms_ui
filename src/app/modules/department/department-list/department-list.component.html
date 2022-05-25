@@ -1,10 +1,10 @@
 <div class="list-header">
   <h2>Departments</h2>
   
-  <div class="right">
+  <div [formGroup]="searchForm" class="right">
     <mat-form-field>
       <mat-label>Search</mat-label>
-      <input matInput placeholder="Search by Name" [formControl]="searchCtl">
+      <input matInput placeholder="Search by Name" formControlName="search">
     </mat-form-field>
 
     <button
@@ -19,7 +19,7 @@
 </div>
 <app-data-grid
   [columnConfig]="config"
-  [rowData]="department$ | async"
+  [rowData]="data"
   [totalRecord]="total"
   [defaultPageSize]="defaultPageSize"
   (pageChange$)="pageChange($event)"

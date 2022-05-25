@@ -1,23 +1,25 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map, Observable } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { Department } from 'src/app/models/department';
 import { DepartmentService } from 'src/app/services/department.service';
-import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
+import { ColumnConfig, DataGridComponent } from 'src/app/shared/components/data-grid/data-grid.component';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 import { LoaderService } from "../../../shared/components/loader/loader.service";
-import { finalize } from "rxjs/operators";
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
+import { Searchable } from 'src/app/shared/components/data-grid/searchable';
+import { ParamsBuilder } from 'src/app/utilities/params-builder';
 
 @Component({
   selector: 'app-department-list',
   templateUrl: './department-list.component.html',
   styleUrls: ['./department-list.component.scss']
 })
-export class DepartmentListComponent extends Pagination implements OnInit {
+export class DepartmentListComponent extends Pagination<Department> implements OnInit, Searchable {
 
-  searchCtl: FormControl = new FormControl();
-  department$!: Observable<Department[]>;
+  searchForm = this.fb.group({ search: '' });
+  @ViewChild(DataGridComponent) grid!: DataGridComponent;
+
   config: ColumnConfig = {
     columnDefs: [
       { headerText: 'Id', field: 'id' },
@@ -34,37 +36,34 @@ export class DepartmentListComponent extends Pagination implements OnInit {
   }
 
   constructor(
+    private fb: FormBuilder,
     private departmentService: DepartmentService,
-    private loaderService: LoaderService
+    protected override loaderService: LoaderService,
+    private pg: PaginationHistoryService
   ) {
-    super();
-    this.list(this.params);
+    super(departmentService, loaderService, pg);
+    this.searchForm.patchValue(this.pg.getQueryParams());
   }
 
   ngOnInit() {
-    this.searchCtl.valueChanges.pipe(
+    this.search();
+  }
+
+  search(queryParams?: object): void {
+    this.searchForm.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged()
     ).subscribe((value) => {
-      const params = new HttpParams().set('search', value?.trim());
-      this.list(params);
+      this.paginationHistoryService.updateQueryParams(value);
+      if (value.search) {
+        this.paginationHistoryService.setPreviousPagination({ ...this.pagination });
+        this.pagination.pageIndex = 0;
+        this.pagination.offset = 0;
+      } else {
+        this.pagination = this.paginationHistoryService.getPreviousPagination();
+      }
+      this.list(this.pagination, ParamsBuilder.build(value));
     });
-  }
-
-  list(params: HttpParams) {
-    this.loaderService.show();
-    const query: string = this.searchCtl.value;
-    if (query) {
-      params = params.set('search', query.trim());
-    }
-
-    this.department$ = this.departmentService.list({ params }).pipe(
-      finalize(() => this.loaderService.hide()),
-      map(res => {
-        this.total = res.total;
-        return res.data as Department[]
-      })
-    );
   }
 
 }

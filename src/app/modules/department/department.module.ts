@@ -6,15 +6,13 @@ import { DepartmentListComponent } from './department-list/department-list.compo
 import { DepartmentFormComponent } from './department-form/department-form.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 
 
 @NgModule({
@@ -33,6 +31,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatSlideToggleModule,
     ReactiveFormsModule,
     SharedModule
+  ],
+  providers: [
+    PaginationHistoryService
   ]
 })
 export class DepartmentModule { }
