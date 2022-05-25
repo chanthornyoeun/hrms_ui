@@ -8,6 +8,7 @@ import { LeaveRequestFilter } from "./leave-request-filter";
 import { Employee } from 'src/app/models/employee';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { DatePipe } from '@angular/common';
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 
 @Component({
   selector: 'app-leave-request-filter',
@@ -28,12 +29,22 @@ export class LeaveRequestFilterComponent implements OnInit {
     private leaveTypeService: LeaveTypeService,
     private fb: FormBuilder,
     private employeeService: EmployeeService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private paginationHistoryService: PaginationHistoryService
   ) {
     this.buildForm();
   }
 
   ngOnInit(): void {
+    const params: {[key: string]: any} = this.paginationHistoryService.getQueryParams();
+    if (params) {
+      Object.keys(params).forEach((key: string) => {
+        if (params.hasOwnProperty(key) && params[key] === null) {
+          params[key] = 'All';
+        }
+      });
+      this.filterForm.patchValue(params);
+    }
   }
 
   private buildForm() {

@@ -1,23 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { ColumnConfig } from "../../../../shared/components/data-grid/data-grid.component";
-import { HttpParams } from "@angular/common/http";
+import { Component, ViewChild } from '@angular/core';
+import { ColumnConfig, DataGridComponent } from "../../../../shared/components/data-grid/data-grid.component";
 import { Pagination } from "../../../../shared/components/data-grid/pagination";
-import { Observable, map } from "rxjs";
 import { LeaveRequestService } from "../../../../services/leave-request.service";
-import { LeaveRequst } from "../../../../models/leave-requst";
 import { LeaveRequestFilter } from "../leave-reqeust-filter/leave-request-filter";
-import { ParamsBuilder } from "../../../../utilities/params-builder";
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
-import { finalize } from "rxjs/operators";
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
+import { ParamsBuilder } from 'src/app/utilities/params-builder';
+import { Searchable } from 'src/app/shared/components/data-grid/searchable';
+import { LeaveRequst } from 'src/app/models/leave-requst';
 
 @Component({
   selector: 'app-leave-request-list',
   templateUrl: './leave-request-list.component.html',
   styleUrls: ['./leave-request-list.component.scss']
 })
-export class LeaveRequestListComponent extends Pagination implements OnInit {
+export class LeaveRequestListComponent extends Pagination<LeaveRequst> implements Searchable {
 
-  leaveRequest$!: Observable<LeaveRequst[]>;
+  @ViewChild(DataGridComponent) grid!: DataGridComponent;
 
   config: ColumnConfig = {
     columnDefs: [
@@ -38,28 +37,26 @@ export class LeaveRequestListComponent extends Pagination implements OnInit {
     ]
   }
 
-  constructor(private leaveRequestService: LeaveRequestService, private loaderService: LoaderService) {
-    super();
-    this.list(this.params);
+  constructor(
+    private leaveRequestService: LeaveRequestService,
+    protected override loaderService: LoaderService,
+    private pg: PaginationHistoryService
+  ) {
+    super(leaveRequestService, loaderService, pg);
   }
 
-  ngOnInit(): void {
+  search($event: LeaveRequestFilter) {
+    this.pg.updateQueryParams($event);
+    this.pg.setPreviousPagination({ ...this.pagination });
+    this.pagination.pageIndex = 0;
+    this.pagination.offset = 0;
+    this.list(this.pagination, ParamsBuilder.build($event));
   }
 
-  list(params?: HttpParams): void {
-    this.loaderService.show();
-    this.leaveRequest$ = this.leaveRequestService.list({params}).pipe(
-      finalize(() => this.loaderService.hide()),
-      map(res => {
-        this.total = res.total;
-        return res.data as LeaveRequst[];
-      })
-    );
-  }
-
-  handleSearch($event: LeaveRequestFilter) {
-    const params: HttpParams = ParamsBuilder.build($event);
-    this.list(params);
+  clear() {
+    this.pg.updateQueryParams({});
+    this.pagination = this.pg.getPreviousPagination();
+    this.list(this.pagination);
   }
 
 }

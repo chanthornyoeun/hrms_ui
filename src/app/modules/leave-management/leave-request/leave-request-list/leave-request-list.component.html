@@ -11,12 +11,12 @@
 </div>
 
 <app-leave-request-filter
-  (onSearch$)="handleSearch($event)"
-  (onClear$)="list()"
+  (onSearch$)="search($event)"
+  (onClear$)="clear()"
 ></app-leave-request-filter>
 <app-data-grid
   [columnConfig]="config"
-  [rowData]="leaveRequest$ | async"
+  [rowData]="data"
   [totalRecord]="total"
   [defaultPageSize]="defaultPageSize"
   (pageChange$)="pageChange($event)"

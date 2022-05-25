@@ -21,6 +21,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 
 import { LeaveRequestFilterComponent } from './leave-reqeust-filter/leave-request-filter.component';
 import { DATEPICKER_PROVIDER } from "../../../config";
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { DATEPICKER_PROVIDER } from "../../../config";
   ],
   providers: [
     DatePipe,
-    DATEPICKER_PROVIDER
+    DATEPICKER_PROVIDER,
+    PaginationHistoryService
   ]
 })
 export class LeaveRequestModule { }
