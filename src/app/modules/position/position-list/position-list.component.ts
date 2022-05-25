@@ -1,23 +1,25 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map, Observable } from 'rxjs';
-import { Position } from 'src/app/models/position';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { PositionService } from 'src/app/services/position.service';
-import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
+import { ColumnConfig, DataGridComponent } from 'src/app/shared/components/data-grid/data-grid.component';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 import { LoaderService } from "../../../shared/components/loader/loader.service";
-import { finalize } from "rxjs/operators";
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
+import { Searchable } from 'src/app/shared/components/data-grid/searchable';
+import { ParamsBuilder } from 'src/app/utilities/params-builder';
+import { Position } from 'src/app/models/position';
 
 @Component({
   selector: 'app-position-list',
   templateUrl: './position-list.component.html',
   styleUrls: ['./position-list.component.scss']
 })
-export class PositionListComponent extends Pagination implements OnInit {
+export class PositionListComponent extends Pagination<Position> implements OnInit, Searchable {
 
-  searchCtl: FormControl = new FormControl();
-  position$!: Observable<Position[]>;
+  searchForm: FormGroup = this.fb.group({ search: '' });
+  @ViewChild(DataGridComponent) grid!: DataGridComponent;
+
   config: ColumnConfig = {
     columnDefs: [
       { headerText: 'Id', field: 'id' },
@@ -33,32 +35,34 @@ export class PositionListComponent extends Pagination implements OnInit {
   }
 
   constructor(
+    private fb: FormBuilder,
     private positionService: PositionService,
-    private loaderService: LoaderService
+    protected override loaderService: LoaderService,
+    protected pg: PaginationHistoryService
   ) {
-    super();
-    this.list(this.params);
+    super(positionService, loaderService, pg);
+    this.searchForm.patchValue(this.pg.getQueryParams());
   }
 
   ngOnInit(): void {
-    this.searchCtl.valueChanges.pipe(
+    this.search();
+  }
+
+  search(queryParams?: object): void {
+    this.searchForm.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged()
     ).subscribe((value) => {
-      const params = new HttpParams().set('search', value?.trim());
-      this.list(params);
+      this.paginationHistoryService.updateQueryParams(value);
+      if (value.search) {
+        this.paginationHistoryService.setPreviousPagination({ ...this.pagination });
+        this.pagination.pageIndex = 0;
+        this.pagination.offset = 0;
+      } else {
+        this.pagination = this.paginationHistoryService.getPreviousPagination();
+      }
+      this.list(this.pagination, ParamsBuilder.build(value));
     });
-  }
-
-  list(params?: HttpParams): void {
-    this.loaderService.show();
-    this.position$ = this.positionService.list({ params }).pipe(
-      finalize(() => this.loaderService.hide()),
-      map(res => {
-        this.total = res.total;
-        return res.data as Position[];
-      })
-    );
   }
 
 }

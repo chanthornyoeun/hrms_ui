@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 
 
 @NgModule({
@@ -34,6 +35,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatSlideToggleModule,
     ReactiveFormsModule,
     SharedModule
+  ],
+  providers: [
+    PaginationHistoryService
   ]
 })
 export class PositionModule { }
