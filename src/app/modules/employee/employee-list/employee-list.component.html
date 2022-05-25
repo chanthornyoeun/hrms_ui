@@ -10,12 +10,12 @@
   </button>
 </div>
 <app-employee-search-form
-  (onSearch$)="handleSearch($event)"
-  (onClear$)="list()"
+  (onSearch$)="search($event)"
+  (onClear$)="clear()"
 ></app-employee-search-form>
 <app-data-grid
   [columnConfig]="config"
-  [rowData]="employee$ | async"
+  [rowData]="data"
   [totalRecord]="total"
   [defaultPageSize]="defaultPageSize"
   (pageChange$)="pageChange($event)"

@@ -20,6 +20,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { EmployeeSearchFormComponent } from './employee-search-form/employee-search-form.component';
 import { LeaveAllowancesComponent } from './leave-allowances/leave-allowances.component';
 import { DATEPICKER_PROVIDER } from "../../config";
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { DATEPICKER_PROVIDER } from "../../config";
     SharedModule
   ],
   providers: [
-    DATEPICKER_PROVIDER
+    DATEPICKER_PROVIDER,
+    PaginationHistoryService
   ]
 })
 export class EmployeeModule { }

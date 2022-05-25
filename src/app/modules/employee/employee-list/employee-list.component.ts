@@ -1,25 +1,23 @@
-import { HttpParams } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { map, Observable } from 'rxjs';
+import { Component, ViewChild } from '@angular/core';
 import { Employee } from 'src/app/models/employee';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 import { ParamsBuilder } from 'src/app/utilities/params-builder';
 import { EmployeeSearch } from '../employee-search-form/employee-search';
-import { ColumnConfig } from "../../../shared/components/data-grid/data-grid.component";
+import { ColumnConfig, DataGridComponent } from "../../../shared/components/data-grid/data-grid.component";
 import { LoaderService } from "../../../shared/components/loader/loader.service";
-import { finalize } from "rxjs/operators";
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
+import { Searchable } from 'src/app/shared/components/data-grid/searchable';
 
 @Component({
   selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.scss']
 })
-export class EmployeeListComponent extends Pagination {
+export class EmployeeListComponent extends Pagination<Employee> implements Searchable {
 
-  employee$!: Observable<Employee[]>;
-  searchCtl: FormControl = new FormControl();
+  @ViewChild(DataGridComponent) grid!: DataGridComponent;
+
   config: ColumnConfig = {
     columnDefs: [
       { headerText: 'Id', field: 'id' },
@@ -43,26 +41,24 @@ export class EmployeeListComponent extends Pagination {
 
   constructor(
     private employeeService: EmployeeService,
-    private loaderService: LoaderService
+    protected override loaderService: LoaderService,
+    private pg: PaginationHistoryService
   ) {
-    super();
-    this.list(this.params);
+    super(employeeService, loaderService, pg);
   }
 
-  list(params?: HttpParams) {
-    this.loaderService.show();
-    this.employee$ = this.employeeService.list({params}).pipe(
-      finalize(() => this.loaderService.hide()),
-      map(res => {
-        this.total = res.total;
-        return res.data as Employee[];
-      })
-    );
+  search($event: EmployeeSearch) {
+    this.pg.updateQueryParams($event);
+    this.pg.setPreviousPagination({ ...this.pagination });
+    this.pagination.pageIndex = 0;
+    this.pagination.offset = 0;
+    this.list(this.pagination, ParamsBuilder.build($event));
   }
 
-  handleSearch($event: EmployeeSearch) {
-    const params: HttpParams = ParamsBuilder.build($event);
-    this.list(params);
+  clear() {
+    this.pg.updateQueryParams({});
+    this.pagination = this.pg.getPreviousPagination();
+    this.list(this.pagination);
   }
 
 }
