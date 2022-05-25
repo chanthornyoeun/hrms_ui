@@ -1,21 +1,19 @@
-import { HttpParams } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Component, ViewChild } from '@angular/core';
 import { LeaveType } from 'src/app/models/leave-type';
 import { LeaveTypeService } from 'src/app/services/leave-type.service';
-import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
+import { ColumnConfig, DataGridComponent } from 'src/app/shared/components/data-grid/data-grid.component';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
-import { finalize } from "rxjs/operators";
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 
 @Component({
   selector: 'app-leave-type-list',
   templateUrl: './leave-type-list.component.html',
   styleUrls: ['./leave-type-list.component.scss']
 })
-export class LeaveTypeListComponent extends Pagination {
+export class LeaveTypeListComponent extends Pagination<LeaveType> {
 
-  leaveType$!: Observable<LeaveType[]>;
+  @ViewChild(DataGridComponent) grid!: DataGridComponent;
 
   config: ColumnConfig = {
     columnDefs: [
@@ -34,21 +32,10 @@ export class LeaveTypeListComponent extends Pagination {
 
   constructor(
     private leaveTypeService: LeaveTypeService,
-    private loaderService: LoaderService
+    protected override loaderService: LoaderService,
+    private pg: PaginationHistoryService
   ) {
-    super();
-    this.list(this.params);
-  }
-
-  list(params?: HttpParams): void {
-    this.loaderService.show();
-    this.leaveType$ = this.leaveTypeService.list({ params }).pipe(
-      finalize(() => this.loaderService.hide()),
-      map(res => {
-        this.total = res.total;
-        return res.data as LeaveType[];
-      })
-    );
+    super(leaveTypeService, loaderService, pg);
   }
 
 }
