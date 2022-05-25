@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { PaginationHistory } from 'src/app/services/pagination-history.service';
 
 type ColumnType = 'normal' | 'actions';
 
@@ -39,14 +40,29 @@ export class DataGridComponent implements OnInit {
   @Input() defaultPageSize: number = 10;
   displayedColumns: string[] = [];
   pageSizeOptions: number[] = [10, 25, 50, 100, 250, 500];
-  @Output() pageChange$: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
+  @Output() pageChange$: EventEmitter<PaginationHistory> = new EventEmitter<PaginationHistory>();
+  @ViewChild(MatPaginator) private paginator!: MatPaginator;
+  private pagination: PaginationHistory = {
+    pageIndex: 0,
+    pageSize: 10,
+    offset: 0
+  };
 
   ngOnInit(): void {
     this.displayedColumns = this.columnConfig.columnDefs.map(c => c.field);
   }
 
   onPageChange($event: PageEvent) {
-    this.pageChange$.emit($event);
+    this.pagination.pageSize = $event.pageSize;
+    this.pagination.offset = $event.pageSize * $event.pageIndex;
+    this.pagination.pageIndex = $event.pageIndex;
+    this.pageChange$.emit(this.pagination);
+  }
+
+  updatePagination(pagination: PaginationHistory) {
+    this.pagination = pagination;
+    this.paginator.pageIndex = pagination.pageIndex;
+    this.paginator.pageSize = pagination.pageSize;
   }
 
 }
