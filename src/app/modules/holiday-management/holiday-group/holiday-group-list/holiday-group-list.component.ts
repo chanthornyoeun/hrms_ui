@@ -1,21 +1,19 @@
-import { HttpParams } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Component, ViewChild } from '@angular/core';
 import { HolidayGroup } from 'src/app/models/holiday-group';
 import { HolidayGroupService } from 'src/app/services/holiday-group.service';
-import { ColumnConfig } from 'src/app/shared/components/data-grid/data-grid.component';
+import { ColumnConfig, DataGridComponent } from 'src/app/shared/components/data-grid/data-grid.component';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
-import { finalize } from "rxjs/operators";
+import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 
 @Component({
   selector: 'app-holiday-group-list',
   templateUrl: './holiday-group-list.component.html',
   styleUrls: ['./holiday-group-list.component.scss']
 })
-export class HolidayGroupListComponent extends Pagination {
+export class HolidayGroupListComponent extends Pagination<HolidayGroup> {
 
-  holidayGroup$!: Observable<HolidayGroup[]>;
+  @ViewChild(DataGridComponent) grid!: DataGridComponent;
 
   config: ColumnConfig = {
     columnDefs: [
@@ -32,21 +30,11 @@ export class HolidayGroupListComponent extends Pagination {
 
   constructor(
     private holidayGroupService: HolidayGroupService,
-    private loaderService: LoaderService
+    protected override loaderService: LoaderService,
+    private pg: PaginationHistoryService
   ) {
-    super();
-    this.list(this.params);
+    super(holidayGroupService, loaderService, pg);
   }
 
-  list(params: HttpParams) {
-    this.loaderService.show();
-    this.holidayGroup$ = this.holidayGroupService.list({ params }).pipe(
-      finalize(() => this.loaderService.hide()),
-      map(res => {
-        this.total = res.total;
-        return res.data as HolidayGroup[]
-      })
-    );
-  }
 
 }
