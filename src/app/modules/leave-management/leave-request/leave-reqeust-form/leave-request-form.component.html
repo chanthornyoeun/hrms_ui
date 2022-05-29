@@ -15,7 +15,10 @@
       </button>
 
       <ng-container
-        *ngIf="leaveRequestForm.value.status === 'Pending' && requestId else saveBtn"
+        *ngIf="
+          leaveRequestForm.value.status === 'Pending' && requestId;
+          else saveBtn
+        "
       >
         <button
           type="button"
@@ -70,7 +73,7 @@
       <mat-select
         placeholder="Leave Type"
         formControlName="leaveTypeId"
-        (selectionChange)="getLeaveDays()"
+        (selectionChange)="selectLeaveType($event.source.value)"
       >
         <mat-option
           *ngFor="let leaveType of leaveTypes"
@@ -171,3 +174,39 @@
     ></textarea>
   </mat-form-field>
 </form>
+
+<ng-container *ngIf="leaveSummary">
+  <h1>Leave Summary</h1>
+  <table class="leave-summary">
+    <tbody>
+    <tr>
+      <td>Leave Allowance</td>
+      <td>:</td>
+      <td>
+        <span>{{ leaveSummary.allowanceDay }}</span>
+      </td>
+    </tr>
+    <tr>
+      <td>Leave Taken</td>
+      <td>:</td>
+      <td>
+        <span>{{ leaveSummary.usedLeave }}</span>
+      </td>
+    </tr>
+    <tr>
+      <td>Being Apply</td>
+      <td>:</td>
+      <td>
+        <span>{{ leaveRequestForm.get("day")?.value }}</span>
+      </td>
+    </tr>
+    <tr>
+      <td>Leave Balance</td>
+      <td>:</td>
+      <td>
+        <span>{{ leaveSummary.availableLeave }}</span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</ng-container>

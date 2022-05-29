@@ -13,6 +13,7 @@ import { LoaderService } from "../../../../shared/components/loader/loader.servi
 import { finalize } from "rxjs/operators";
 import { ConfirmationService } from "../../../../shared/components/confirmation/confirmation.service";
 import { ConfirmationModel } from "../../../../shared/components/confirmation/confirmation.model";
+import { LeaveSummary } from 'src/app/models/leave-summary';
 
 @Component({
   selector: 'app-leave-request-form',
@@ -35,6 +36,8 @@ export class LeaveRequestFormComponent implements OnInit {
   ];
   leaveRequestForm!: FormGroup;
   requestId!: number;
+  employee: any;
+  leaveSummary!: LeaveSummary;
 
   constructor(
     private router: Router,
@@ -99,12 +102,12 @@ export class LeaveRequestFormComponent implements OnInit {
 
   private getCurrentEmployee() {
     this.employeeService.getCurrentEmployee().subscribe(res => {
-      const employee = res.data.employee;
-      const manager = employee.department.manager;
+      this.employee = res.data.employee;
+      const manager = this.employee.department.manager;
       const managerName = `${manager.firstName} ${manager.lastName}`;
       this.leaveRequestForm.get('reportToId')?.setValue(manager.id);
       this.leaveRequestForm.get('reportToName')?.setValue(managerName);
-      this.leaveRequestForm.get('employeeId')?.setValue(employee.id);
+      this.leaveRequestForm.get('employeeId')?.setValue(this.employee.id);
     });
   }
 
@@ -133,6 +136,11 @@ export class LeaveRequestFormComponent implements OnInit {
       }
       this.getLeaveDays();
     });
+  }
+
+  selectLeaveType(leaveTypeId: number) {
+    this.getLeaveDays();
+    this.getLeaveSummary(leaveTypeId);
   }
 
   getLeaveDays() {
@@ -179,6 +187,11 @@ export class LeaveRequestFormComponent implements OnInit {
 
   navigateToList() {
     this.router.navigate(['/leave-request']);
+  }
+
+  getLeaveSummary(leaveTypeId: number) {
+    this.employeeService.getLeaveSummary(leaveTypeId, this.employee.id)
+      .subscribe(res => this.leaveSummary = res.data[0]);
   }
 
   async cancel() {
