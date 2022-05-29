@@ -22,13 +22,15 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { LeaveRequestFilterComponent } from './leave-reqeust-filter/leave-request-filter.component';
 import { DATEPICKER_PROVIDER } from "../../../config";
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
+import { AvailableLeavePipe } from './available-leave.pipe';
 
 
 @NgModule({
   declarations: [
     LeaveRequestListComponent,
     LeaveRequestFormComponent,
-    LeaveRequestFilterComponent
+    LeaveRequestFilterComponent,
+    AvailableLeavePipe
   ],
   imports: [
     CommonModule,

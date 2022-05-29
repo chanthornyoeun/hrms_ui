@@ -179,34 +179,34 @@
   <h1>Leave Summary</h1>
   <table class="leave-summary">
     <tbody>
-    <tr>
-      <td>Leave Allowance</td>
-      <td>:</td>
-      <td>
-        <span>{{ leaveSummary.allowanceDay }}</span>
-      </td>
-    </tr>
-    <tr>
-      <td>Leave Taken</td>
-      <td>:</td>
-      <td>
-        <span>{{ leaveSummary.usedLeave }}</span>
-      </td>
-    </tr>
-    <tr>
-      <td>Being Apply</td>
-      <td>:</td>
-      <td>
-        <span>{{ leaveRequestForm.get("day")?.value }}</span>
-      </td>
-    </tr>
-    <tr>
-      <td>Leave Balance</td>
-      <td>:</td>
-      <td>
-        <span>{{ leaveSummary.availableLeave }}</span>
-      </td>
-    </tr>
+      <tr>
+        <td>Leave Allowance</td>
+        <td>:</td>
+        <td>
+          <span>{{ leaveSummary.allowanceDay }}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Leave Taken</td>
+        <td>:</td>
+        <td>
+          <span>{{ leaveSummary.usedLeave }}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Being Apply</td>
+        <td>:</td>
+        <td>
+          <span>{{ leaveRequestForm.get("day")?.value }}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Leave Balance</td>
+        <td>:</td>
+        <td>
+          <span>{{ leaveSummary.availableLeave | availableLeave: leaveRequestForm.get("day")?.value }}</span>
+        </td>
+      </tr>
     </tbody>
   </table>
 </ng-container>
