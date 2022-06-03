@@ -21,4 +21,5 @@ export enum ApiEndPointEnum {
     EXPERIENCE = '/api/experience',
     EDUCATION = '/api/education',
     TRAINING = '/api/employee-training',
+    DEPENDENT = '/api/dependent',
 }

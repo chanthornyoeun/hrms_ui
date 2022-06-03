@@ -1,0 +1,69 @@
+<div class="action">
+  <button mat-button color="primary" (click)="openDependentForm()">
+    <mat-icon>add</mat-icon>
+    Add Dependent
+  </button>
+</div>
+<table mat-table [dataSource]="dependent$" class="mat-elevation-z2">
+  <ng-container matColumnDef="no">
+    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <td mat-cell *matCellDef="let dependent; let i = index">
+      {{ i + 1 }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="relationship">
+    <th mat-header-cell *matHeaderCellDef>Relationship</th>
+    <td mat-cell *matCellDef="let dependent">
+      {{ dependent.dependentType.shortDescription }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let dependent">
+      {{ dependent.firstName }} {{ dependent.lastName }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dob">
+    <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+    <td mat-cell *matCellDef="let dependent">
+      {{ dependent.dateOfBirth | dateFormat }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="phone">
+    <th mat-header-cell *matHeaderCellDef>Phone</th>
+    <td mat-cell *matCellDef="let dependent">{{ dependent.phone }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="address">
+    <th mat-header-cell *matHeaderCellDef>Address</th>
+    <td mat-cell *matCellDef="let dependent">{{ dependent.address }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>Action</th>
+    <td mat-cell *matCellDef="let dependent">
+      <button
+        mat-icon-button
+        matTooltip="Edit"
+        (click)="openDependentForm(dependent)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="warn"
+        matTooltip="Delete"
+        (click)="delete(dependent.id)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

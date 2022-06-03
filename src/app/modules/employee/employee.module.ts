@@ -38,6 +38,11 @@ import { TrainingDialogComponent } from './trainings/training-dialog/training-di
 import { TrainingListComponent } from './trainings/training-list/training-list.component';
 import { TrainingFormService } from './trainings/services/training-form.service';
 import { TrainingDialogService } from './trainings/services/training-dialog.service';
+import { DependentFormComponent } from './dependents/dependent-form/dependent-form.component';
+import { DependentDialogComponent } from './dependents/dependent-dialog/dependent-dialog.component';
+import { DependentListComponent } from './dependents/dependent-list/dependent-list.component';
+import { DependentFormService } from './dependents/services/dependent-form.service';
+import { DependentDialogService } from './dependents/services/dependent-dialog.service';
 
 @NgModule({
   declarations: [
@@ -54,6 +59,9 @@ import { TrainingDialogService } from './trainings/services/training-dialog.serv
     TrainingFormComponent,
     TrainingDialogComponent,
     TrainingListComponent,
+    DependentFormComponent,
+    DependentDialogComponent,
+    DependentListComponent,
   ],
   imports: [
     CommonModule,
@@ -83,6 +91,8 @@ import { TrainingDialogService } from './trainings/services/training-dialog.serv
     EducationDialogService,
     TrainingFormService,
     TrainingDialogService,
+    DependentFormService,
+    DependentDialogService,
   ]
 })
 export class EmployeeModule { }
