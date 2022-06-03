@@ -18,5 +18,6 @@ export enum ApiEndPointEnum {
     ROLE = '/api/role',
     FILE_UPLOAD = '/api/file-storage/upload',
     LEAVE_SUMMARY = '/api/leave-summary',
-    EXPERIENCE = '/api/experience'
+    EXPERIENCE = '/api/experience',
+    EDUCATION = '/api/education',
 }

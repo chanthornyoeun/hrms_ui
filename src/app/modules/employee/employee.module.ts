@@ -28,6 +28,11 @@ import { ExperienceDialogComponent } from './experiences/experience-dialog/exper
 import { ExperienceDialogService } from './experiences/services/experience-dialog.service';
 import { ExperienceFormService } from './experiences/services/experience-form.service';
 import { ExperienceListComponent } from './experiences/experience-list/experience-list.component';
+import { EducationFormComponent } from './education/education-form/education-form.component';
+import { EducationDialogComponent } from './education/education-dialog/education-dialog.component';
+import { EducationListComponent } from './education/education-list/education-list.component';
+import { EducationFormService } from './education/services/education-form.service';
+import { EducationDialogService } from './education/services/education-dialog.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,10 @@ import { ExperienceListComponent } from './experiences/experience-list/experienc
     LeaveAllowancesComponent,
     ExperienceFormComponent,
     ExperienceDialogComponent,
-    ExperienceListComponent
+    ExperienceListComponent,
+    EducationFormComponent,
+    EducationDialogComponent,
+    EducationListComponent,
   ],
   imports: [
     CommonModule,
@@ -63,6 +71,8 @@ import { ExperienceListComponent } from './experiences/experience-list/experienc
     PaginationHistoryService,
     ExperienceDialogService,
     ExperienceFormService,
+    EducationFormService,
+    EducationDialogService
   ]
 })
 export class EmployeeModule { }
