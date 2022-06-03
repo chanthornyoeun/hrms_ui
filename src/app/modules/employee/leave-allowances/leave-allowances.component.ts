@@ -23,7 +23,6 @@ export class LeaveAllowancesComponent implements OnInit {
 
   private async getLeaveTypes() {
     this.leaveTypes = await this.leaveTypeService.getActiveLeaveTypes().pipe(map(res => res.data)).toPromise();
-    console.log(this.employeeId);
     if (!this.employeeId) {
       this.generateLeaveAllowances(this.leaveTypes);
     }
