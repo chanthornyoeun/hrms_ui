@@ -222,4 +222,11 @@
       </div>
     </form>
   </mat-tab>
+  <ng-container *ngIf="employeeId">
+    <mat-tab label="Experience">
+      <div class="tab-container">
+        <app-experience-list [employeeId]="employeeId"></app-experience-list>
+      </div>
+    </mat-tab>
+  </ng-container>
 </mat-tab-group>

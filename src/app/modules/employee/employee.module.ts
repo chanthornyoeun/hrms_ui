@@ -21,14 +21,23 @@ import { EmployeeSearchFormComponent } from './employee-search-form/employee-sea
 import { LeaveAllowancesComponent } from './leave-allowances/leave-allowances.component';
 import { DATEPICKER_PROVIDER } from "../../config";
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
-
+import { MatTabsModule } from '@angular/material/tabs';
+import { ExperienceFormComponent } from './experiences/experience-form/experience-form.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ExperienceDialogComponent } from './experiences/experience-dialog/experience-dialog.component';
+import { ExperienceDialogService } from './experiences/services/experience-dialog.service';
+import { ExperienceFormService } from './experiences/services/experience-form.service';
+import { ExperienceListComponent } from './experiences/experience-list/experience-list.component';
 
 @NgModule({
   declarations: [
     EmployeeListComponent,
     EmployeeFormComponent,
     EmployeeSearchFormComponent,
-    LeaveAllowancesComponent
+    LeaveAllowancesComponent,
+    ExperienceFormComponent,
+    ExperienceDialogComponent,
+    ExperienceListComponent
   ],
   imports: [
     CommonModule,
@@ -43,13 +52,17 @@ import { PaginationHistoryService } from 'src/app/services/pagination-history.se
     MatSelectModule,
     MatSlideToggleModule,
     MatNativeDateModule,
+    MatTabsModule,
+    MatDialogModule,
     MatDatepickerModule,
     ReactiveFormsModule,
     SharedModule
   ],
   providers: [
     DATEPICKER_PROVIDER,
-    PaginationHistoryService
+    PaginationHistoryService,
+    ExperienceDialogService,
+    ExperienceFormService,
   ]
 })
 export class EmployeeModule { }

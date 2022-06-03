@@ -17,5 +17,6 @@ export enum ApiEndPointEnum {
     APPROVE_LEAVE_REQUEST = '/api/leave-request-approve',
     ROLE = '/api/role',
     FILE_UPLOAD = '/api/file-storage/upload',
-    LEAVE_SUMMARY = '/api/leave-summary'
+    LEAVE_SUMMARY = '/api/leave-summary',
+    EXPERIENCE = '/api/experience'
 }
