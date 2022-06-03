@@ -33,6 +33,11 @@ import { EducationDialogComponent } from './education/education-dialog/education
 import { EducationListComponent } from './education/education-list/education-list.component';
 import { EducationFormService } from './education/services/education-form.service';
 import { EducationDialogService } from './education/services/education-dialog.service';
+import { TrainingFormComponent } from './trainings/training-form/training-form.component';
+import { TrainingDialogComponent } from './trainings/training-dialog/training-dialog.component';
+import { TrainingListComponent } from './trainings/training-list/training-list.component';
+import { TrainingFormService } from './trainings/services/training-form.service';
+import { TrainingDialogService } from './trainings/services/training-dialog.service';
 
 @NgModule({
   declarations: [
@@ -46,6 +51,9 @@ import { EducationDialogService } from './education/services/education-dialog.se
     EducationFormComponent,
     EducationDialogComponent,
     EducationListComponent,
+    TrainingFormComponent,
+    TrainingDialogComponent,
+    TrainingListComponent,
   ],
   imports: [
     CommonModule,
@@ -72,7 +80,9 @@ import { EducationDialogService } from './education/services/education-dialog.se
     ExperienceDialogService,
     ExperienceFormService,
     EducationFormService,
-    EducationDialogService
+    EducationDialogService,
+    TrainingFormService,
+    TrainingDialogService,
   ]
 })
 export class EmployeeModule { }

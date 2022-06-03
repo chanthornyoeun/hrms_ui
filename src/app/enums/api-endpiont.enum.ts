@@ -20,4 +20,5 @@ export enum ApiEndPointEnum {
     LEAVE_SUMMARY = '/api/leave-summary',
     EXPERIENCE = '/api/experience',
     EDUCATION = '/api/education',
+    TRAINING = '/api/employee-training',
 }
