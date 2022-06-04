@@ -1,0 +1,19 @@
+form {
+    display: flex;
+    flex-direction: column;
+
+    mat-slide-toggle {
+        margin-bottom: 1rem;
+    }
+
+    .actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}

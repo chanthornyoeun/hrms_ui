@@ -6,6 +6,7 @@ import { ActiveSliderPipe } from './active-slider.pipe';
 import { ExcerptPipe } from './excerpt.pipe';
 import { DateFormatPipe } from "./date-format.pipe";
 import { DateTimeFormatPipe } from "./date-time-format.pipe";
+import { DirtyPipe } from './dirty.pipe';
 
 const pipes = [
   ActivePipe,
@@ -13,7 +14,8 @@ const pipes = [
   ActiveSliderPipe,
   ExcerptPipe,
   DateFormatPipe,
-  DateTimeFormatPipe
+  DateTimeFormatPipe,
+  DirtyPipe
 ];
 
 @NgModule({

@@ -1,0 +1,81 @@
+<form [formGroup]="experienceForm">
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Position</mat-label>
+      <input
+        appFocus
+        matInput
+        formControlName="position"
+        autocomplete="off"
+        type="text"
+        required
+        placeholder="Position"
+      />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Company</mat-label>
+      <input
+        matInput
+        formControlName="companyName"
+        autocomplete="off"
+        type="text"
+        required
+        placeholder="Company"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>From Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="fromDatePicker"
+        placeholder="From Date"
+        formControlName="fromDate"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="fromDatePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #fromDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>To Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="toDatePicker"
+        placeholder="To Date"
+        formControlName="toDate"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="toDatePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #toDatePicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Company Website</mat-label>
+      <input
+        matInput
+        formControlName="companyWebsite"
+        autocomplete="off"
+        type="text"
+        placeholder="Company Website"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Description"
+      ></textarea>
+    </mat-form-field>
+  </div>
+</form>

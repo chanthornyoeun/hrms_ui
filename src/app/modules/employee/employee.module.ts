@@ -21,14 +21,50 @@ import { EmployeeSearchFormComponent } from './employee-search-form/employee-sea
 import { LeaveAllowancesComponent } from './leave-allowances/leave-allowances.component';
 import { DATEPICKER_PROVIDER } from "../../config";
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
-
+import { MatTabsModule } from '@angular/material/tabs';
+import { ExperienceFormComponent } from './experiences/experience-form/experience-form.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ExperienceDialogComponent } from './experiences/experience-dialog/experience-dialog.component';
+import { ExperienceDialogService } from './experiences/services/experience-dialog.service';
+import { ExperienceFormService } from './experiences/services/experience-form.service';
+import { ExperienceListComponent } from './experiences/experience-list/experience-list.component';
+import { EducationFormComponent } from './education/education-form/education-form.component';
+import { EducationDialogComponent } from './education/education-dialog/education-dialog.component';
+import { EducationListComponent } from './education/education-list/education-list.component';
+import { EducationFormService } from './education/services/education-form.service';
+import { EducationDialogService } from './education/services/education-dialog.service';
+import { TrainingFormComponent } from './trainings/training-form/training-form.component';
+import { TrainingDialogComponent } from './trainings/training-dialog/training-dialog.component';
+import { TrainingListComponent } from './trainings/training-list/training-list.component';
+import { TrainingFormService } from './trainings/services/training-form.service';
+import { TrainingDialogService } from './trainings/services/training-dialog.service';
+import { DependentFormComponent } from './dependents/dependent-form/dependent-form.component';
+import { DependentDialogComponent } from './dependents/dependent-dialog/dependent-dialog.component';
+import { DependentListComponent } from './dependents/dependent-list/dependent-list.component';
+import { DependentFormService } from './dependents/services/dependent-form.service';
+import { DependentDialogService } from './dependents/services/dependent-dialog.service';
+import { MatCardModule } from '@angular/material/card';
+import { EmergencyContactFormComponent } from './emergency-contact-form/emergency-contact-form.component';
 
 @NgModule({
   declarations: [
     EmployeeListComponent,
     EmployeeFormComponent,
     EmployeeSearchFormComponent,
-    LeaveAllowancesComponent
+    LeaveAllowancesComponent,
+    ExperienceFormComponent,
+    ExperienceDialogComponent,
+    ExperienceListComponent,
+    EducationFormComponent,
+    EducationDialogComponent,
+    EducationListComponent,
+    TrainingFormComponent,
+    TrainingDialogComponent,
+    TrainingListComponent,
+    DependentFormComponent,
+    DependentDialogComponent,
+    DependentListComponent,
+    EmergencyContactFormComponent,
   ],
   imports: [
     CommonModule,
@@ -43,13 +79,24 @@ import { PaginationHistoryService } from 'src/app/services/pagination-history.se
     MatSelectModule,
     MatSlideToggleModule,
     MatNativeDateModule,
+    MatTabsModule,
+    MatDialogModule,
+    MatCardModule,
     MatDatepickerModule,
     ReactiveFormsModule,
     SharedModule
   ],
   providers: [
     DATEPICKER_PROVIDER,
-    PaginationHistoryService
+    PaginationHistoryService,
+    ExperienceDialogService,
+    ExperienceFormService,
+    EducationFormService,
+    EducationDialogService,
+    TrainingFormService,
+    TrainingDialogService,
+    DependentFormService,
+    DependentDialogService,
   ]
 })
 export class EmployeeModule { }

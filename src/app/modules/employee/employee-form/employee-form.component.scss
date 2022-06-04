@@ -15,7 +15,6 @@ form {
 .row {
   display: flex;
   justify-content: space-between;
-//   flex-wrap: wrap;
   gap: 1rem;
 }
 
@@ -28,7 +27,6 @@ form {
 
 .profile {
   display: flex;
-  justify-content: center;
 }
 
 .profile-img {
@@ -38,4 +36,17 @@ form {
 
 input[type='file'] {
   visibility: hidden;
+}
+
+.tab-container {
+  padding: 1px;
+}
+
+.emergency-contact {
+  margin: 1rem 0;
+
+  .contact-wrapper {
+    display: flex;
+    gap: 1rem;
+  }
 }

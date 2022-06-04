@@ -1,0 +1,20 @@
+<div matDialogTitle>
+  <h1>Education</h1>
+  <button
+    mat-icon-button
+    color="warn"
+    matTooltip="Close"
+    (click)="closeDialog()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <app-education-form [educationForm]="educationForm"></app-education-form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button color="primary" (click)="submit()">Save</button>
+  <button mat-button color="warn" (click)="closeDialog()">Cancel</button>
+</mat-dialog-actions>

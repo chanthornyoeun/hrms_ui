@@ -29,6 +29,7 @@ export class EmployeeFormComponent implements OnInit {
   department$: Observable<Department[]>;
   position$: Observable<Position[]>;
   params: HttpParams = new HttpParams().set('order', 'asc').set('limit', '100');
+  currentDate: Date = new Date();
 
   constructor(
     private fb: FormBuilder,
@@ -78,12 +79,34 @@ export class EmployeeFormComponent implements OnInit {
       currentAddress: '',
       physicalAddress: ['', Validators.required],
       isActive: [true, Validators.required],
-      leaveAllowances: this.fb.array([])
+      leaveAllowances: this.fb.array([]),
+      emergencyContacts: this.fb.array([
+        this.fb.group({
+          id: null,
+          name: '',
+          phoneNumber: '',
+          email: '',
+          address: '',
+          description: ''
+        }),
+        this.fb.group({
+          id: null,
+          name: '',
+          phoneNumber: '',
+          email: '',
+          address: '',
+          description: ''
+        })
+      ])
     });
   }
 
   get leaveAllowances(): FormArray {
     return this.employeeForm.get('leaveAllowances') as FormArray;
+  }
+
+  get emergencyContacts(): FormArray {
+    return this.employeeForm.get('emergencyContacts') as FormArray;
   }
 
   private generateLeaveAllowances(leaveAllowances: any[]): void {

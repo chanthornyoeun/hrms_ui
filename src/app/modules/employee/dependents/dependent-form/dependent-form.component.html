@@ -1,0 +1,79 @@
+<form [formGroup]="dependentForm">
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>First Name</mat-label>
+      <input
+        matInput
+        formControlName="firstName"
+        autocomplete="off"
+        type="text"
+        required
+        appFocus
+        placeholder="First Name"
+      />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Last Name</mat-label>
+      <input
+        matInput
+        formControlName="lastName"
+        autocomplete="off"
+        type="text"
+        required
+        placeholder="Last Name"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Date of Birth</mat-label>
+      <input
+        matInput
+        [matDatepicker]="datePicker"
+        placeholder="Date of Birth"
+        formControlName="dateOfBirth"
+        [max]="currentDate"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="datePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #datePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Relationship</mat-label>
+      <mat-select formControlName="dependentTypeId" placeholder="Relationship">
+        <mat-option
+          [value]="dependentType.id"
+          *ngFor="let dependentType of dependentType$ | async"
+        >
+          {{ dependentType.shortDescription }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Phone</mat-label>
+      <input
+        matInput
+        formControlName="phone"
+        autocomplete="off"
+        type="tel"
+        placeholder="Phone"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Address</mat-label>
+      <textarea
+        matInput
+        formControlName="address"
+        placeholder="Address"
+      ></textarea>
+    </mat-form-field>
+  </div>
+</form>

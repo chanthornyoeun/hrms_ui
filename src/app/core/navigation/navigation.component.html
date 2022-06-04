@@ -40,7 +40,7 @@
           <mat-icon>account_circle</mat-icon>
       </button>
       <mat-menu #menuRef="matMenu">
-          <button mat-menu-item>
+          <button mat-menu-item (click)="goToProfile()">
             <mat-icon>account_circle</mat-icon> Profile
           </button>
           <mat-divider></mat-divider>
