@@ -1,5 +1,9 @@
 import { Department } from "./department";
 import { Position } from "./position";
+import { Dependent } from "./dependent";
+import { Training } from "./training";
+import { Experience } from "./experience";
+import { EmergencyContact } from "./emergency-contact";
 
 export interface Employee {
     id: number;
@@ -27,4 +31,8 @@ export interface Employee {
     updatedAt: Date;
     position: Position;
     department: Department;
+    dependents: Dependent[];
+    trainings: Training[];
+    experiences: Experience[];
+    emergencyContacts: EmergencyContact[];
 }

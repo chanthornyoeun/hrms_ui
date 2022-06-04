@@ -41,3 +41,12 @@ input[type='file'] {
 .tab-container {
   padding: 1px;
 }
+
+.emergency-contact {
+  margin: 1rem 0;
+
+  .contact-wrapper {
+    display: flex;
+    gap: 1rem;
+  }
+}

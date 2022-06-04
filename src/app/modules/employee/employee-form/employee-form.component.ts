@@ -86,14 +86,16 @@ export class EmployeeFormComponent implements OnInit {
           name: '',
           phoneNumber: '',
           email: '',
-          address: ''
+          address: '',
+          description: ''
         }),
         this.fb.group({
           id: null,
           name: '',
           phoneNumber: '',
           email: '',
-          address: ''
+          address: '',
+          description: ''
         })
       ])
     });
@@ -101,6 +103,10 @@ export class EmployeeFormComponent implements OnInit {
 
   get leaveAllowances(): FormArray {
     return this.employeeForm.get('leaveAllowances') as FormArray;
+  }
+
+  get emergencyContacts(): FormArray {
+    return this.employeeForm.get('emergencyContacts') as FormArray;
   }
 
   private generateLeaveAllowances(leaveAllowances: any[]): void {

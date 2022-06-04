@@ -201,6 +201,28 @@
         [employeeId]="employeeId"
       ></app-leave-allowances>
 
+      <mat-card class="emergency-contact" formArrayName="emergencyContacts">
+        <mat-card-header>
+          <mat-card-title>Emergency Contact</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="contact-wrapper">
+            <div
+              class="full-width"
+              *ngFor="
+                let emergencyContact of emergencyContacts.controls;
+                let i = index
+              "
+            >
+              <h3>{{ i === 0 ? "Primary" : "Secondary" }}</h3>
+              <app-emergency-contact-form
+                [emergencyForm]="emergencyContact"
+              ></app-emergency-contact-form>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
       <div class="actions">
         <button
           mat-flat-button

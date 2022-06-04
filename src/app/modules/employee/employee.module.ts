@@ -43,6 +43,8 @@ import { DependentDialogComponent } from './dependents/dependent-dialog/dependen
 import { DependentListComponent } from './dependents/dependent-list/dependent-list.component';
 import { DependentFormService } from './dependents/services/dependent-form.service';
 import { DependentDialogService } from './dependents/services/dependent-dialog.service';
+import { MatCardModule } from '@angular/material/card';
+import { EmergencyContactFormComponent } from './emergency-contact-form/emergency-contact-form.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,7 @@ import { DependentDialogService } from './dependents/services/dependent-dialog.s
     DependentFormComponent,
     DependentDialogComponent,
     DependentListComponent,
+    EmergencyContactFormComponent,
   ],
   imports: [
     CommonModule,
@@ -78,6 +81,7 @@ import { DependentDialogService } from './dependents/services/dependent-dialog.s
     MatNativeDateModule,
     MatTabsModule,
     MatDialogModule,
+    MatCardModule,
     MatDatepickerModule,
     ReactiveFormsModule,
     SharedModule
