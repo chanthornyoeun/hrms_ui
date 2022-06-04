@@ -17,7 +17,7 @@ import { LoaderService } from 'src/app/shared/components/loader/loader.service';
 })
 export class TrainingListComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'level', 'offerBy', 'startDate', 'endDate', 'action'];
+  displayedColumns: string[] = ['no', 'name', 'level', 'offerBy', 'startDate', 'endDate', 'action'];
   training$!: Observable<Training[]>;
   @Input() employeeId!: number;
 
