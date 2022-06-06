@@ -3,9 +3,9 @@ import { Employee } from 'src/app/models/employee';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 import { ParamsBuilder } from 'src/app/utilities/params-builder';
-import { EmployeeSearch } from '../employee-search-form/employee-search';
-import { ColumnConfig, DataGridComponent } from "../../../shared/components/data-grid/data-grid.component";
-import { LoaderService } from "../../../shared/components/loader/loader.service";
+import { EmployeeSearch } from '../../employee-search-form/employee-search';
+import { ColumnConfig, DataGridComponent } from "../../../../shared/components/data-grid/data-grid.component";
+import { LoaderService } from "../../../../shared/components/loader/loader.service";
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 import { Searchable } from 'src/app/shared/components/data-grid/searchable';
 
