@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-card-content>
+    <section class="card-container">
+      <figure>
+        <img [src]="employee.profilePhoto" alt="Picture" />
+      </figure>
+
+      <div class="head">
+        <span class="name"
+          >{{ employee.firstName }} {{ employee.lastName }}</span
+        >
+        <span class="position">{{ employee.position.position }}</span>
+        <div class="badge" [class]="employee.isActive ? 'active' : 'inactive'">
+          {{ employee.isActive ? "Active" : "Inactive" }}
+        </div>
+      </div>
+
+      <div class="details">
+        <div class="item">
+          <mat-icon class="mat-18">email</mat-icon>
+          <span>{{ employee.email }}</span>
+        </div>
+        <div class="item">
+          <mat-icon class="mat-18">phone</mat-icon>
+          <span>{{ employee.phone }}</span>
+        </div>
+        <div class="item">
+          <mat-icon class="mat-18">place</mat-icon>
+          <span>{{ employee.currentAddress }}</span>
+        </div>
+      </div>
+
+      <button
+        mat-stroked-button
+        class="full-width"
+        [routerLink]="['/employees/update/' + employee.id]"
+      >
+        View Profile
+      </button>
+    </section>
+  </mat-card-content>
+</mat-card>

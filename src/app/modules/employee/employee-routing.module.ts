@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
-import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { EmployeeViewsComponent } from './employee-views/employee-views.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: EmployeeListComponent
+    component: EmployeeViewsComponent
   },
   {
     path: 'create',

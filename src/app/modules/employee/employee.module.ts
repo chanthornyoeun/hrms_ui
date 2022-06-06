@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { EmployeeRoutingModule } from './employee-routing.module';
-import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { EmployeeListComponent } from './employee-views/employee-list/employee-list.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -45,6 +45,10 @@ import { DependentFormService } from './dependents/services/dependent-form.servi
 import { DependentDialogService } from './dependents/services/dependent-dialog.service';
 import { MatCardModule } from '@angular/material/card';
 import { EmergencyContactFormComponent } from './emergency-contact-form/emergency-contact-form.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { CardViewComponent } from './employee-views/card-view/card-view.component';
+import { EmployeeCardComponent } from './employee-views/employee-card/employee-card.component';
+import { EmployeeViewsComponent } from './employee-views/employee-views.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +69,9 @@ import { EmergencyContactFormComponent } from './emergency-contact-form/emergenc
     DependentDialogComponent,
     DependentListComponent,
     EmergencyContactFormComponent,
+    CardViewComponent,
+    EmployeeCardComponent,
+    EmployeeViewsComponent
   ],
   imports: [
     CommonModule,
@@ -82,6 +89,7 @@ import { EmergencyContactFormComponent } from './emergency-contact-form/emergenc
     MatTabsModule,
     MatDialogModule,
     MatCardModule,
+    MatButtonToggleModule,
     MatDatepickerModule,
     ReactiveFormsModule,
     SharedModule
