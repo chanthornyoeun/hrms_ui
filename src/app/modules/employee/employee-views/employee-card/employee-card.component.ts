@@ -10,6 +10,5 @@ import { Employee } from 'src/app/models/employee';
 export class EmployeeCardComponent {
 
   @Input() employee!: Employee;
-  defaultImage: string = './assets/images/deafult-image.png'
-  
+
 }

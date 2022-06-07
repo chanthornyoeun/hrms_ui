@@ -1,9 +1,13 @@
 <mat-card>
   <mat-card-content>
     <section class="card-container">
-      <figure>
+      <figure *ngIf="employee.profilePhoto; else avatarContent">
         <img [src]="employee.profilePhoto" alt="Picture" />
       </figure>
+
+      <ng-template #avatarContent>
+        <div class="avatar-content">{{ employee.name | initials }}</div>
+      </ng-template>
 
       <div class="head">
         <span class="name"

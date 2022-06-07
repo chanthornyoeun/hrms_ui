@@ -7,6 +7,7 @@ import { ExcerptPipe } from './excerpt.pipe';
 import { DateFormatPipe } from "./date-format.pipe";
 import { DateTimeFormatPipe } from "./date-time-format.pipe";
 import { DirtyPipe } from './dirty.pipe';
+import { InitialsPipe } from './initials.pipe';
 
 const pipes = [
   ActivePipe,
@@ -15,7 +16,8 @@ const pipes = [
   ExcerptPipe,
   DateFormatPipe,
   DateTimeFormatPipe,
-  DirtyPipe
+  DirtyPipe,
+  InitialsPipe
 ];
 
 @NgModule({
