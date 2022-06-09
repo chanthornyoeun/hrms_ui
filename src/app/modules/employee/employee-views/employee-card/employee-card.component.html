@@ -13,7 +13,7 @@
         <span class="name"
           >{{ employee.firstName }} {{ employee.lastName }}</span
         >
-        <span class="position">{{ employee.position.position }}</span>
+        <span class="position">{{ employee.position?.position }}</span>
         <div class="badge" [class]="employee.isActive ? 'active' : 'inactive'">
           {{ employee.isActive ? "Active" : "Inactive" }}
         </div>
