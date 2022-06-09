@@ -18,7 +18,7 @@ export class FileService {
     }
     const payload = new FormData();
     payload.append('fileUpload', file);
-    payload.append('destination', destination);
+    // payload.append('destination', destination);
     return this.http.post<ResponseDTO>(ApiEndPointEnum.FILE_UPLOAD, payload);
   }
 
