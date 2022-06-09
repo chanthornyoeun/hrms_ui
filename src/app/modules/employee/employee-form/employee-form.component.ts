@@ -145,9 +145,12 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   upload($event: any) {
-    this.fileService.upload($event.files[0]).subscribe(res => {
-      this.employeeForm.get('profilePhoto')?.setValue(res.data['url']);
-    });
+    this.loaderService.show();
+    this.fileService.upload($event.files[0])
+      .pipe(finalize(() => this.loaderService.hide()))
+      .subscribe(res => {
+        this.employeeForm.get('profilePhoto')?.setValue(res.data['url']);
+      });
   }
 
 }
