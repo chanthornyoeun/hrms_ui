@@ -27,7 +27,7 @@ export class NavigationComponent {
   ) { }
 
   goToProfile() {
-    this.router.navigate(['employees/update', this.credentialService.getCredential().id]);
+    this.router.navigate(['employees/update', this.credentialService.getCredential().employeeId]);
   }
 
   logout() {

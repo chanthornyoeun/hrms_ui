@@ -21,7 +21,7 @@ export class AuthenticationService {
     return this.http.post<ResponseDTO>(ApiEndPointEnum.LOGIN, credential)
       .pipe(
         tap(res =>
-          this.credentialService.setCredential({ id: res['data'].id, username: res.data.username, token: res.data.token })
+          this.credentialService.setCredential({ id: res['data'].id, username: res.data.username, token: res.data.token, employeeId: res.data.employeeId })
         )
       )
   }

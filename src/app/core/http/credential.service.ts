@@ -4,13 +4,14 @@ interface Credential {
     id: number;
     username: string;
     token: string;
+    employeeId: number;
 }
 
 @Injectable({providedIn: 'root'})
 export class CredentialService {
 
     private CREDENTIAL_KEY = 'credential';
-    
+
     constructor() {
     }
 
@@ -29,5 +30,5 @@ export class CredentialService {
     removeCredential(): void {
         localStorage.removeItem(this.CREDENTIAL_KEY);
     }
-    
+
 }
