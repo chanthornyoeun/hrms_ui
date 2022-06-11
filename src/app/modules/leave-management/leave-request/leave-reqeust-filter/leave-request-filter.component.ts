@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LeaveTypeService } from "../../../../services/leave-type.service";
 import { Observable, map } from "rxjs";
 import { LeaveType } from "../../../../models/leave-type";
@@ -22,6 +22,7 @@ export class LeaveRequestFilterComponent implements OnInit {
   statuses: string[] = ['All', 'Pending', 'Approved', 'Rejected', 'Canceled'];
   employee$: Observable<Employee[]> = this.employeeService.list().pipe(map(res => res.data));
 
+  @Input() selfLeave!: number;
   @Output() onSearch$: EventEmitter<LeaveRequestFilter> = new EventEmitter<LeaveRequestFilter>();
   @Output() onClear$: EventEmitter<void> = new EventEmitter<void>();
 

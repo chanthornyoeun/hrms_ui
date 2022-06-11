@@ -29,7 +29,7 @@
     <mat-datepicker #toDatePicker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
+  <mat-form-field class="full-width" *ngIf="!selfLeave">
     <mat-label>Employee</mat-label>
     <mat-select placeholder="Employee" formControlName="employeeId">
       <mat-option value="All">All</mat-option>

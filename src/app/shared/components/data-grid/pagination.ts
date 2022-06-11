@@ -20,10 +20,13 @@ export abstract class Pagination<T> {
     constructor(
         protected apiService: any,
         protected loaderService: LoaderService,
-        protected paginationHistoryService: PaginationHistoryService
+        protected paginationHistoryService: PaginationHistoryService,
+        protected shouldNotLoad?: boolean
     ) {
         this.pagination = paginationHistoryService.getPagination();
-        this.list(this.pagination, ParamsBuilder.build(paginationHistoryService.getQueryParams()));
+        if (!shouldNotLoad) {
+          this.list(this.pagination, ParamsBuilder.build(paginationHistoryService.getQueryParams()));
+        }
     }
 
     pageChange($event: any) {

@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DatePipe } from "@angular/common";
 import { Moment } from "moment";
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
-import { finalize } from "rxjs/operators";
+import { finalize, pluck } from "rxjs/operators";
 import { ConfirmationService } from "../../../../shared/components/confirmation/confirmation.service";
 import { ConfirmationModel } from "../../../../shared/components/confirmation/confirmation.model";
 import { LeaveSummary } from 'src/app/models/leave-summary';
@@ -23,6 +23,7 @@ import { LeaveSummary } from 'src/app/models/leave-summary';
 })
 export class LeaveRequestFormComponent implements OnInit {
 
+  backToURL: string = '';
   leaveTypes: LeaveType[] = [];
   leaveOption: { display: string, isFullDay: boolean }[] = [
     {
@@ -69,10 +70,19 @@ export class LeaveRequestFormComponent implements OnInit {
           const manager = res.data.reportTo;
           const reportToName = `${manager.firstName} ${manager.lastName}`;
           this.leaveRequestForm.patchValue(res.data);
-          this.leaveRequestForm.patchValue({fromDate, toDate, isFullDay, reportToName});
+          this.leaveRequestForm.patchValue({ fromDate, toDate, isFullDay, reportToName });
         });
     }
     this.onLeaveOptionChange();
+    this.getListURL();
+  }
+
+  private getListURL() {
+    this.activatedRoute.data
+      .pipe(pluck('url'))
+      .subscribe((url: string) => {
+        this.backToURL = url;
+      });
   }
 
   private buildForm() {
@@ -186,7 +196,7 @@ export class LeaveRequestFormComponent implements OnInit {
   }
 
   navigateToList() {
-    this.router.navigate(['/leave-request']);
+    this.router.navigate([this.backToURL]);
   }
 
   getLeaveSummary(leaveTypeId: number) {
