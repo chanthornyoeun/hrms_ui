@@ -1,5 +1,5 @@
 <mat-tab-group [disableRipple]="false">
-  <form [formGroup]="employeeForm" (ngSubmit)="submitForm()">
+  <form [formGroup]="employeeForm">
     <mat-tab label="Personal Information">
       <div class="personal-information">
         <div class="first">
@@ -14,6 +14,7 @@
           <mat-form-field class="full-width">
             <mat-label>First Name</mat-label>
             <input
+              appFocus
               matInput
               formControlName="firstName"
               autocomplete="off"
@@ -239,6 +240,7 @@
       type="submit"
       color="primary"
       matTooltip="Save"
+      (click)="submitForm()"
       [disabled]="employeeForm.invalid"
     >
       Save
