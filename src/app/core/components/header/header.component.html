@@ -1,0 +1,24 @@
+<mat-toolbar color="primary" class="header-top">
+  <button
+    type="button"
+    aria-label="Toggle sidenav"
+    mat-icon-button
+    (click)="toggle.emit()"
+    *ngIf="isHandset$ | async"
+  >
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+  <span>HRMS</span>
+  <button mat-icon-button [matMenuTriggerFor]="menuRef">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #menuRef="matMenu">
+    <button mat-menu-item (click)="goToProfile()">
+      <mat-icon>account_circle</mat-icon> Profile
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon> Logout
+    </button>
+  </mat-menu>
+</mat-toolbar>

@@ -1,0 +1,21 @@
+<mat-nav-list *ngFor="let page of pages">
+  <ng-container *ngIf="page.type === 'Dropdown'; else linkTemplate">
+    <h3>{{ page.name }}</h3>
+    <a
+      mat-list-item
+      routerLinkActive="router-link-active"
+      [routerLink]="childPage.url"
+      *ngFor="let childPage of page.children"
+      >{{ childPage.name }}</a
+    >
+    <mat-divider></mat-divider>
+  </ng-container>
+  <ng-template #linkTemplate>
+    <a
+      mat-list-item
+      routerLinkActive="router-link-active"
+      [routerLink]="page.url"
+      >{{ page.name }}</a
+    >
+  </ng-template>
+</mat-nav-list>

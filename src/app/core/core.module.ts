@@ -10,7 +10,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
-import { NavigationComponent } from "./navigation/navigation.component";
+import { NavigationComponent } from "./components/navigation/navigation.component";
+import { HeaderComponent } from './components/header/header.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 
 
@@ -18,7 +20,9 @@ import { NavigationComponent } from "./navigation/navigation.component";
   declarations: [
     AuthLayoutComponent,
     AdminLayoutComponent,
-    NavigationComponent
+    NavigationComponent,
+    HeaderComponent,
+    MenuComponent
   ],
   imports: [
     CommonModule,

@@ -10,16 +10,6 @@
   background: inherit;
 }
 
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-mat-toolbar {
-  height: 56px;
-}
-
 mat-sidenav-content .content{
   padding: 1rem;
 }
@@ -28,13 +18,4 @@ mat-sidenav-content .content{
   width: 32px;
   height: 32px;
   border-radius: 50%;
-}
-
-.header-top {
-  display: flex;
-  justify-content: space-between;
-}
-
-h2 {
-  margin: 0;
 }

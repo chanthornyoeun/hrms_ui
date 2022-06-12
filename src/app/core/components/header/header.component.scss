@@ -1,0 +1,18 @@
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+mat-toolbar {
+  height: 56px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+h2 {
+  margin: 0;
+}
