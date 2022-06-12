@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  h2 {
+    margin: 0;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+
+.leave-view {
+  display: flex;
+  gap: 1rem;
+}
+
+table {
+  line-height: 1.8;
+  font-size: 16px;
+
+  th {
+    letter-spacing: 1px;
+    text-align: left;
+    vertical-align: top;
+    width: 200px;
+  }
+
+  td {
+    vertical-align: top;
+  }
+}

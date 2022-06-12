@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LeaveRequestListComponent } from './leave-request-list/leave-request-list.component';
 import { LeaveRequestFormComponent } from "./leave-reqeust-form/leave-request-form.component";
+import { LeaveRequestViewComponent } from './leave-request-view/leave-request-view.component';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'view/:id',
-    component: LeaveRequestFormComponent
+    component: LeaveRequestViewComponent
   }
 ];
 
