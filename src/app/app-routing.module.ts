@@ -63,7 +63,11 @@ const routes: Routes = [
       {
         path: 'roles',
         loadChildren: () => import('./modules/user-management/role/role.module').then(m => m.RoleModule)
-     }
+     },
+      {
+        path: 'daily-attendant',
+        loadChildren: () => import('./modules/daily-attendant/daily-attendant.module').then(m => m.DailyAttendantModule)
+      }
     ]
   },
   {

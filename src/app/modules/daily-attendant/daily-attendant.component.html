@@ -1,0 +1,31 @@
+<div class="list-header">
+  <h2>Attendance</h2>
+
+  <div class="actions">
+    <button
+      mat-flat-button
+      color="primary"
+      matTooltip="Check In"
+      (click)="checkIn()"
+    >
+      <mat-icon class="icon-18">done</mat-icon>
+      Check In
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      matTooltip="Check Out"
+      (click)="checkOut()"
+    >
+      <mat-icon class="icon-18">done</mat-icon>
+      Check Out
+    </button>
+  </div>
+</div>
+<app-data-grid
+  [columnConfig]="config"
+  [rowData]="data"
+  [totalRecord]="total"
+  [defaultPageSize]="defaultPageSize"
+  (pageChange$)="pageChange($event)"
+></app-data-grid>

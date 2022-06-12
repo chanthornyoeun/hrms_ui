@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResponseDTO } from 'src/app/models/response-dto';
 
-interface IRequestOptions {
+export interface IRequestOptions {
   headers?: HttpHeaders | {
       [header: string]: string | string[];
   };

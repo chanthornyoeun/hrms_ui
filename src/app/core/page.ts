@@ -35,6 +35,11 @@ const USER_PAGES: Array<Page> = [
         name: 'Leave Request',
         url: 'leave-request',
         type: "Link"
+      },
+      {
+        name: 'Daily Attendant',
+        url: 'daily-attendant',
+        type: 'Link'
       }
     ]
   }
@@ -106,6 +111,11 @@ const HR_PAGES: Array<Page> = [
         name: 'Employee Leave',
         url: 'employee-leave',
         type: "Link"
+      },
+      {
+        name: 'Daily Attendant',
+        url: 'daily-attendant',
+        type: 'Link'
       }
     ]
   }
@@ -146,6 +156,11 @@ const MANAGER_PAGES: Array<Page> = [
         name: 'Employee Leave',
         url: 'employee-leave',
         type: "Link"
+      },
+      {
+        name: 'Daily Attendant',
+        url: 'daily-attendant',
+        type: 'Link'
       }
     ]
   }
@@ -217,6 +232,11 @@ const ADMIN_PAGES: Array<Page> = [
         name: 'Employee Leave',
         url: 'employee-leave',
         type: "Link"
+      },
+      {
+        name: 'Daily Attendant',
+        url: 'daily-attendant',
+        type: 'Link'
       }
     ]
   },
