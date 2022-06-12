@@ -10,9 +10,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DatePipe } from "@angular/common";
 import { Moment } from "moment";
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
-import { finalize } from "rxjs/operators";
-import { ConfirmationService } from "../../../../shared/components/confirmation/confirmation.service";
-import { ConfirmationModel } from "../../../../shared/components/confirmation/confirmation.model";
+import { finalize, pluck } from "rxjs/operators";
 import { LeaveSummary } from 'src/app/models/leave-summary';
 
 @Component({
@@ -23,6 +21,7 @@ import { LeaveSummary } from 'src/app/models/leave-summary';
 })
 export class LeaveRequestFormComponent implements OnInit {
 
+  backToURL: string = '';
   leaveTypes: LeaveType[] = [];
   leaveOption: { display: string, isFullDay: boolean }[] = [
     {
@@ -48,8 +47,7 @@ export class LeaveRequestFormComponent implements OnInit {
     private leaveRequestService: LeaveRequestService,
     private messageService: MessageService,
     private datePipe: DatePipe,
-    private loaderService: LoaderService,
-    private confirmationService: ConfirmationService
+    private loaderService: LoaderService
   ) {
     this.requestId = +this.activatedRoute.snapshot.params['id'];
     this.buildForm();
@@ -69,10 +67,19 @@ export class LeaveRequestFormComponent implements OnInit {
           const manager = res.data.reportTo;
           const reportToName = `${manager.firstName} ${manager.lastName}`;
           this.leaveRequestForm.patchValue(res.data);
-          this.leaveRequestForm.patchValue({fromDate, toDate, isFullDay, reportToName});
+          this.leaveRequestForm.patchValue({ fromDate, toDate, isFullDay, reportToName });
         });
     }
     this.onLeaveOptionChange();
+    this.getListURL();
+  }
+
+  private getListURL() {
+    this.activatedRoute.data
+      .pipe(pluck('url'))
+      .subscribe((url: string) => {
+        this.backToURL = url;
+      });
   }
 
   private buildForm() {
@@ -186,54 +193,12 @@ export class LeaveRequestFormComponent implements OnInit {
   }
 
   navigateToList() {
-    this.router.navigate(['/leave-request']);
+    this.router.navigate([this.backToURL]);
   }
 
   getLeaveSummary(leaveTypeId: number) {
     this.employeeService.getLeaveSummary(leaveTypeId, this.employee.id)
       .subscribe(res => this.leaveSummary = res.data[0]);
-  }
-
-  async cancel() {
-    const confirmation: ConfirmationModel = {
-      title: 'CANCEL REQUEST?',
-      content: 'Are you sure you want ot cancel your leave request?'
-    };
-    const agreed: boolean = await this.confirmationService.confirm(confirmation).toPromise();
-    if (agreed) {
-      this.leaveRequestService.cancel(this.requestId).subscribe(res => {
-        this.navigateToList();
-        this.messageService.show('Your leave request has been canceled.');
-      });
-    }
-  }
-
-  async approve() {
-    const confirmation: ConfirmationModel = {
-      title: 'APPROVED REQUEST?',
-      content: `Are you sure you want ot approved employee's request?`
-    };
-    const agreed: boolean = await this.confirmationService.confirm(confirmation).toPromise();
-    if (agreed) {
-      this.leaveRequestService.approve(this.requestId, this.leaveRequestForm.value.comment).subscribe(res => {
-        this.navigateToList();
-        this.messageService.show('Employee leave request has been approved.');
-      });
-    }
-  }
-
-  async reject() {
-    const confirmation: ConfirmationModel = {
-      title: 'REJECT REQUEST?',
-      content: 'Are you sure you want ot reject this leave request?'
-    };
-    const agreed: boolean = await this.confirmationService.confirm(confirmation).toPromise();
-    if (agreed) {
-      this.leaveRequestService.reject(this.requestId, this.leaveRequestForm.value.comment).subscribe(res => {
-        this.navigateToList();
-        this.messageService.show('Employee leave request has been rejected.');
-      });
-    }
   }
 
 }

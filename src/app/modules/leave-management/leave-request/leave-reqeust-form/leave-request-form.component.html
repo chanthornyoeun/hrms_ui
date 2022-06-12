@@ -14,63 +14,17 @@
         Back
       </button>
 
-      <ng-container
-        *ngIf="
-          leaveRequestForm.value.status === 'Pending' && requestId;
-          else saveBtn
-        "
-      >
-        <button
-          type="button"
-          mat-flat-button
-          color="warn"
-          matTooltip="Cancel"
-          (click)="cancel()"
-        >
-          <mat-icon>close</mat-icon>
-          Cancel
-        </button>
-
-        <button
-          type="button"
-          mat-flat-button
-          color="warn"
-          matTooltip="Reject"
-          (click)="reject()"
-        >
-          <mat-icon>close</mat-icon>
-          Reject
-        </button>
-
-        <button
-          type="button"
-          mat-flat-button
-          color="primary"
-          matTooltip="Approve"
-          (click)="approve()"
-        >
-          <mat-icon>check_circle</mat-icon>
-          Approve
-        </button>
-      </ng-container>
-
-      <ng-template #saveBtn>
-        <button
-          *ngIf="!leaveRequestForm.get('status')?.value"
-          mat-flat-button
-          color="primary"
-          matTooltip="Save"
-        >
-          <mat-icon>done</mat-icon>
-          Save
-        </button>
-      </ng-template>
+      <button mat-flat-button color="primary" matTooltip="Save">
+        <mat-icon>done</mat-icon>
+        Save
+      </button>
     </div>
   </div>
   <div class="row">
     <mat-form-field class="full-width">
       <mat-label>Leave Type</mat-label>
       <mat-select
+        appFocus
         placeholder="Leave Type"
         formControlName="leaveTypeId"
         (selectionChange)="selectLeaveType($event.source.value)"

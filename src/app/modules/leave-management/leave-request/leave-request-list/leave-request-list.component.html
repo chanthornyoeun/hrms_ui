@@ -1,5 +1,5 @@
 <div class="header">
-  <h2>My Leave</h2>
+  <h2>{{ breadcrumb }}</h2>
   <button
     mat-flat-button
     color="primary"
@@ -11,6 +11,7 @@
 </div>
 
 <app-leave-request-filter
+  [selfLeave]="configuration?.selfLeave || 0"
   (onSearch$)="search($event)"
   (onClear$)="clear()"
 ></app-leave-request-filter>

@@ -23,6 +23,7 @@ import { LeaveRequestFilterComponent } from './leave-reqeust-filter/leave-reques
 import { DATEPICKER_PROVIDER } from "../../../config";
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 import { AvailableLeavePipe } from './available-leave.pipe';
+import { LeaveRequestViewComponent } from './leave-request-view/leave-request-view.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AvailableLeavePipe } from './available-leave.pipe';
     LeaveRequestListComponent,
     LeaveRequestFormComponent,
     LeaveRequestFilterComponent,
-    AvailableLeavePipe
+    AvailableLeavePipe,
+    LeaveRequestViewComponent
   ],
   imports: [
     CommonModule,

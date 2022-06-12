@@ -42,15 +42,25 @@ const routes: Routes = [
         path: 'employees',
         loadChildren: () => import('./modules/employee/employee.module').then(m => m.EmployeeModule)
       },
-      { 
+      {
         path: 'leave-request',
-        loadChildren: () => import('./modules/leave-management/leave-request/leave-request.module').then(m => m.LeaveRequestModule)
+        loadChildren: () => import('./modules/leave-management/leave-request/leave-request.module').then(m => m.LeaveRequestModule),
+        data: {
+          params: { selfLeave: 1 },
+          url: '/leave-request',
+          breadcrumb: 'Leave Request'
+        }
       },
-      { 
+      {
         path: 'employee-leave',
-        loadChildren: () => import('./modules/leave-management/leave-request/leave-request.module').then(m => m.LeaveRequestModule)
+        loadChildren: () => import('./modules/leave-management/leave-request/leave-request.module').then(m => m.LeaveRequestModule),
+        data: {
+          params: { reportToMe: 1 },
+          url: '/employee-leave',
+          breadcrumb: 'Employee Leave'
+        }
       },
-      { 
+      {
         path: 'roles',
         loadChildren: () => import('./modules/user-management/role/role.module').then(m => m.RoleModule)
      }
