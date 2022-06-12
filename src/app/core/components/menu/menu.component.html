@@ -1,6 +1,7 @@
 <mat-nav-list *ngFor="let page of pages">
   <ng-container *ngIf="page.type === 'Dropdown'; else linkTemplate">
-    <h3>{{ page.name }}</h3>
+    <h3 class="group">{{ page.name }}</h3>
+    <mat-divider></mat-divider>
     <a
       mat-list-item
       routerLinkActive="router-link-active"
@@ -8,7 +9,6 @@
       *ngFor="let childPage of page.children"
       >{{ childPage.name }}</a
     >
-    <mat-divider></mat-divider>
   </ng-container>
   <ng-template #linkTemplate>
     <a
