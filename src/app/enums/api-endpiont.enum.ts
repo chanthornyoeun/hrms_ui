@@ -22,4 +22,7 @@ export enum ApiEndPointEnum {
     EDUCATION = '/api/education',
     TRAINING = '/api/employee-training',
     DEPENDENT = '/api/dependent',
+    ATTENDANCE = '/api/attendant',
+    CHECK_IN = '/api/attendant-check-in',
+    CHECK_OUT = '/api/attendant-check-out',
 }
