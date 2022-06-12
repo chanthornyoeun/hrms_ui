@@ -32,8 +32,8 @@ export class LeaveRequestListComponent extends Pagination<LeaveRequst> implement
       { headerText: 'To Date', field: 'toDate', format: 'dateFormat' },
       { headerText: 'Day(s)', field: 'day' },
       { headerText: 'Status', field: 'status' },
-      { headerText: 'Reason', field: 'reason' },
-      { headerText: 'Comment', field: 'comment' },
+      { headerText: 'Reason', field: 'reason', format: 'excerpt' },
+      { headerText: 'Comment', field: 'comment', format: 'excerpt' },
       { headerText: 'Actions', field: 'actions', type: 'actions' }
     ],
     rowActions: [
