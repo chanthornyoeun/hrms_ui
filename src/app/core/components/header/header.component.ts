@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
+  profilePicture: string = '';
   @Output() toggle: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
@@ -28,6 +29,7 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.profilePicture = this.credentialService.getCredential().profile;
   }
 
   goToProfile() {

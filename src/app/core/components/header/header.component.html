@@ -9,9 +9,7 @@
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
   </button>
   <span>HRMS</span>
-  <button mat-icon-button [matMenuTriggerFor]="menuRef">
-    <mat-icon>account_circle</mat-icon>
-  </button>
+  <img class="avatar" [src]="profilePicture" [matMenuTriggerFor]="menuRef"/>
   <mat-menu #menuRef="matMenu">
     <button mat-menu-item (click)="goToProfile()">
       <mat-icon>account_circle</mat-icon> Profile

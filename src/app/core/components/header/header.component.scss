@@ -16,3 +16,10 @@ mat-toolbar {
 h2 {
   margin: 0;
 }
+
+.avatar {
+  width: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+}

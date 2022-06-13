@@ -5,6 +5,7 @@ interface Credential {
     username: string;
     token: string;
     employeeId: number;
+    profile: string;
 }
 
 @Injectable({providedIn: 'root'})
