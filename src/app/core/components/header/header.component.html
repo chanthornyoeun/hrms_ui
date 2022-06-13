@@ -9,7 +9,13 @@
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
   </button>
   <span>HRMS</span>
-  <img class="avatar" [src]="profilePicture" [matMenuTriggerFor]="menuRef"/>
+  <img class="avatar" [src]="profilePicture" [matMenuTriggerFor]="menuRef" *ngIf="profilePicture; else normalBtn"/>
+  <ng-template #normalBtn>
+    <button mat-icon-button [matMenuTriggerFor]="menuRef">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </ng-template>
+
   <mat-menu #menuRef="matMenu">
     <button mat-menu-item (click)="goToProfile()">
       <mat-icon>account_circle</mat-icon> Profile
