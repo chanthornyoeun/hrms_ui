@@ -61,13 +61,17 @@ const routes: Routes = [
         }
       },
       {
-        path: 'roles',
-        loadChildren: () => import('./modules/user-management/role/role.module').then(m => m.RoleModule)
-     },
-      {
         path: 'daily-attendant',
         loadChildren: () => import('./modules/daily-attendant/daily-attendant.module').then(m => m.DailyAttendantModule)
-      }
+      },
+      {
+        path: 'roles',
+        loadChildren: () => import('./modules/user-management/role/role.module').then(m => m.RoleModule)
+      },
+      {
+        path: 'email-configure',
+        loadChildren: () => import('./modules/configuration/email-configure/email-configure.module').then(m => m.EmailConfigureModule)
+      },
     ]
   },
   {

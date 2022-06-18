@@ -255,6 +255,16 @@ const ADMIN_PAGES: Array<Page> = [
         url: 'users'
       }
     ]
+  },{
+    name: 'CONFIGURATION',
+    type: 'Dropdown',
+    children: [
+      {
+        name: 'Email',
+        type: 'Link',
+        url: 'email-configure'
+      }
+    ]
   }
 ];
 

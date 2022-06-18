@@ -25,4 +25,6 @@ export enum ApiEndPointEnum {
     ATTENDANCE = '/api/attendant',
     CHECK_IN = '/api/attendant-check-in',
     CHECK_OUT = '/api/attendant-check-out',
+    EMAIL_CONFIGURE = '/api/email-configure',
+    EMAIL_TESTER = '/api/sent-email-test',
 }

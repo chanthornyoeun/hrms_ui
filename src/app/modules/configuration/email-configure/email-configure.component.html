@@ -1,0 +1,120 @@
+<div class="list-header">
+  <h2>Email Configure</h2>
+  <div class="right">
+    <button
+      mat-stroked-button
+      matTooltip="Testing mail"
+      (click)="openMailTestingForm()"
+    >
+      <mat-icon class="icon-18">email</mat-icon>
+      Test
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      matTooltip="Update"
+      *ngIf="previousConfig | dirty: emailForm.value"
+      (click)="updateConfig()"
+    >
+      <mat-icon class="icon-18">save</mat-icon>
+      Update
+    </button>
+  </div>
+</div>
+<form [formGroup]="emailForm" class="form-container">
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Driver</mat-label>
+      <input
+        appFocus
+        matInput
+        formControlName="driver"
+        type="text"
+        required
+        placeholder="Driver"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Encryption</mat-label>
+      <mat-select
+        matInput
+        formControlName="encryption"
+        required
+        placeholder="Encryption"
+      >
+        <mat-option
+          *ngFor="let encryption of encryptions"
+          [value]="encryption"
+          >{{ encryption }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Host</mat-label>
+      <input
+        matInput
+        formControlName="host"
+        type="text"
+        required
+        placeholder="Host"
+      />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Port</mat-label>
+      <input
+        matInput
+        formControlName="port"
+        type="number"
+        required
+        placeholder="Port"
+      />
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>From Address</mat-label>
+      <input
+        matInput
+        formControlName="fromAddress"
+        type="email"
+        required
+        placeholder="example@gmail.com"
+      />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>From Name</mat-label>
+      <input
+        matInput
+        formControlName="fromName"
+        type="text"
+        required
+        placeholder="From Name"
+      />
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="full-width">
+      <mat-label>Username</mat-label>
+      <input
+        matInput
+        formControlName="username"
+        type="text"
+        required
+        placeholder="Username"
+      />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        type="password"
+        required
+        placeholder="Password"
+      />
+    </mat-form-field>
+  </div>
+</form>

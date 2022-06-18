@@ -1,0 +1,41 @@
+<div matDialogTitle>
+  <h1>Sending Mail</h1>
+  <button
+    mat-icon-button
+    color="warn"
+    matTooltip="Close"
+    (click)="closeDialog()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <form [formGroup]="testForm">
+    <mat-form-field class="full-width">
+      <mat-label>Sending To</mat-label>
+      <input
+        appFocus
+        matInput
+        formControlName="to"
+        type="text"
+        required
+        placeholder="example@gmail.com"
+      />
+      <mat-error *ngIf="testForm.get('to')?.hasError('email')">Invalid email format.</mat-error>
+    </mat-form-field>
+
+    <quill-editor
+      class="full-width"
+      [styles]="{ height: '400px' }"
+      formControlName="text"
+      placeholder="Content..."
+    >
+    </quill-editor>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button color="primary" (click)="sendMail()">Send</button>
+  <button mat-button color="warn" (click)="closeDialog()">Close</button>
+</mat-dialog-actions>
