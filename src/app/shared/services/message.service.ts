@@ -7,7 +7,7 @@ export class MessageService {
   constructor(private snackbar: MatSnackBar) { }
 
   show(message: string) {
-    this.snackbar.open(message, 'Ok', { duration: 3000, horizontalPosition: 'left'});
+    this.snackbar.open(message, 'Ok', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end'});
   }
 
 }
