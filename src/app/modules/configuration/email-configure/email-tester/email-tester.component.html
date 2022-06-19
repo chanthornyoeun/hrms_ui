@@ -13,7 +13,7 @@
 <mat-dialog-content>
   <form [formGroup]="testForm">
     <mat-form-field class="full-width">
-      <mat-label>Sending To</mat-label>
+      <mat-label>Recipient</mat-label>
       <input
         appFocus
         matInput
@@ -22,12 +22,31 @@
         required
         placeholder="example@gmail.com"
       />
-      <mat-error *ngIf="testForm.get('to')?.hasError('email')">Invalid email format.</mat-error>
+      <mat-error *ngIf="testForm.get('to')?.hasError('required')"
+        >Recipient is required.</mat-error
+      >
+      <mat-error *ngIf="testForm.get('to')?.hasError('email')"
+        >Invalid email format.</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Subject</mat-label>
+      <input
+        matInput
+        formControlName="title"
+        type="text"
+        required
+        placeholder="Subject"
+      />
+      <mat-error *ngIf="testForm.get('title')?.hasError('required')"
+        >Subject is required.</mat-error
+      >
     </mat-form-field>
 
     <quill-editor
       class="full-width"
-      [styles]="{ height: '400px' }"
+      [styles]="{ height: '350px' }"
       formControlName="text"
       placeholder="Content..."
     >

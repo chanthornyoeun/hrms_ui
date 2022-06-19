@@ -15,6 +15,7 @@ export class EmailTesterComponent {
 
   testForm: FormGroup = this.fb.group({
     to: ['', [Validators.required, Validators.email]],
+    title: ['', Validators.required],
     text: ['', Validators.required]
   });
 
