@@ -1,5 +1,5 @@
 <form [formGroup]="trainingForm">
-  <div class="row">
+  <div class="item" [ngClass]="{ 'is-small': responsive.isSmall }">
     <mat-form-field class="full-width">
       <mat-label>Course Name</mat-label>
       <input
@@ -25,7 +25,7 @@
     </mat-form-field>
   </div>
 
-  <div class="row">
+  <div class="item" [ngClass]="{ 'is-small': responsive.isSmall }">
     <mat-form-field class="full-width">
       <mat-label>Start Date</mat-label>
       <input
@@ -57,7 +57,7 @@
     </mat-form-field>
   </div>
 
-  <div class="row">
+  <div class="item" [ngClass]="{ 'is-small': responsive.isSmall }">
     <mat-form-field class="full-width">
       <mat-label>Offer By</mat-label>
       <input

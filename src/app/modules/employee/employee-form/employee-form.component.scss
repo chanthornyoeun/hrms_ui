@@ -7,10 +7,19 @@ input[type='file'] {
 }
 
 .personal-information {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 1rem;
   padding-top: 1rem;
+
+  &.is-handset {
+    flex-wrap: wrap;
+    gap: 0;
+
+    .item:nth-child(2),
+    .item:last-child {
+      padding-bottom: 1rem;
+    }
+  }
 }
 
 .profile {

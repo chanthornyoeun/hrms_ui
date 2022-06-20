@@ -3,6 +3,7 @@ import { LeaveType } from "../../../models/leave-type";
 import { LeaveTypeService } from "../../../services/leave-type.service";
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { map } from "rxjs/operators";
+import { ResponsiveService } from '../../../services/responsive.service';
 
 @Component({
   selector: 'app-leave-allowances',
@@ -15,7 +16,11 @@ export class LeaveAllowancesComponent implements OnInit {
   @Input() employeeId!: number | null;
   leaveTypes!: LeaveType[];
 
-  constructor(private leaveTypeService: LeaveTypeService, private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private leaveTypeService: LeaveTypeService,
+    public responsive: ResponsiveService
+  ) { }
 
   ngOnInit(): void {
     this.getLeaveTypes();

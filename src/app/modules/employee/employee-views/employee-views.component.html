@@ -1,7 +1,7 @@
 <div class="list-header">
   <h2>Employees</h2>
   <div class="actions">
-    <mat-button-toggle-group>
+    <mat-button-toggle-group *ngIf="responsive.isLarge">
       <mat-button-toggle
         [value]="view"
         [checked]="view.checked"

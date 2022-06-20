@@ -1,5 +1,5 @@
 <form [formGroup]="dependentForm">
-  <div class="row">
+  <div class="item" [ngClass]="{ 'is-small': responsive.isSmall }">
     <mat-form-field class="full-width">
       <mat-label>First Name</mat-label>
       <input
@@ -25,7 +25,7 @@
     </mat-form-field>
   </div>
 
-  <div class="row">
+  <div class="item" [ngClass]="{ 'is-small': responsive.isSmall }">
     <mat-form-field class="full-width">
       <mat-label>Date of Birth</mat-label>
       <input
@@ -55,7 +55,7 @@
     </mat-form-field>
   </div>
 
-  <div class="row">
+  <div class="item" [ngClass]="{ 'is-small': responsive.isSmall }">
     <mat-form-field class="full-width">
       <mat-label>Phone</mat-label>
       <input

@@ -13,6 +13,7 @@ import { PositionService } from 'src/app/services/position.service';
 import { LoaderService } from "../../../shared/components/loader/loader.service";
 import { finalize } from "rxjs/operators";
 import { FileService } from 'src/app/services/file.service';
+import { ResponsiveService } from '../../../services/responsive.service';
 
 @Component({
   selector: 'app-employee-form',
@@ -40,7 +41,8 @@ export class EmployeeFormComponent implements OnInit {
     private positionService: PositionService,
     private messageService: MessageService,
     private loaderService: LoaderService,
-    private fileService: FileService
+    private fileService: FileService,
+    public responsive: ResponsiveService
   ) {
     this.employeeId = +this.activatedRoute.snapshot.paramMap.get('id')!;
     this.buildForm();

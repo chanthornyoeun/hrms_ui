@@ -1,9 +1,10 @@
-.leave-types-container {
-  padding-top: 16px;
-}
-
 .leave-types {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  &.is-small {
+    flex-direction: column;
+    gap: 0;
+  }
 }

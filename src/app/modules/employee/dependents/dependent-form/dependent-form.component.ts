@@ -3,11 +3,12 @@ import { FormGroup } from '@angular/forms';
 import { map, Observable } from 'rxjs';
 import { DependentType } from 'src/app/models/dependent-type';
 import { DependentTypeService } from 'src/app/services/dependent-type.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-dependent-form',
   templateUrl: './dependent-form.component.html',
-  styleUrls: ['./dependent-form.component.scss']
+  styleUrls: ['./../../popup-form.scss']
 })
 export class DependentFormComponent {
 
@@ -15,6 +16,6 @@ export class DependentFormComponent {
   currentDate: Date = new Date();
   dependentType$: Observable<DependentType[]> = this.dependentTypeService.list().pipe(map(res => res.data));
 
-  constructor(private dependentTypeService: DependentTypeService) { }
+  constructor(private dependentTypeService: DependentTypeService, public responsive: ResponsiveService) { }
 
 }

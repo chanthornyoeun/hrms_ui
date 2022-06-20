@@ -1,4 +1,10 @@
-<div class="grid-view">
+<div
+  class="card-view"
+  [ngClass]="{
+    'is-phone-portrait': responsive.isSmall,
+    'is-handset': responsive.isHandset
+  }"
+>
   <app-employee-card
     [employee]="employee"
     *ngFor="let employee of employees"

@@ -12,8 +12,13 @@ form {
     }
 }
 
-.row {
+.item {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
+
+    &.is-small {
+        flex-direction: column;
+        gap: 0;
+    }
 }

@@ -3,6 +3,7 @@ import { finalize } from 'rxjs';
 import { Employee } from 'src/app/models/employee';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { LoaderService } from 'src/app/shared/components/loader/loader.service';
+import { ResponsiveService } from '../../../../services/responsive.service';
 
 @Component({
   selector: 'app-card-view',
@@ -15,7 +16,8 @@ export class CardViewComponent implements OnInit {
 
   constructor(
     private employeeService: EmployeeService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    public responsive: ResponsiveService
   ) { }
 
   ngOnInit(): void {

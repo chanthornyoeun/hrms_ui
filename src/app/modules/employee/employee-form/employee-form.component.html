@@ -1,8 +1,13 @@
 <mat-tab-group [disableRipple]="false">
   <form [formGroup]="employeeForm">
     <mat-tab label="Personal Information">
-      <div class="personal-information">
-        <div class="first">
+      <div
+        class="personal-information"
+        [ngClass]="{
+          'is-handset': responsive.isHandset || responsive.isSmall
+        }"
+      >
+        <div class="item full-width">
           <div class="profile">
             <img
               [src]="employeeForm.get('profilePhoto')?.value"
@@ -99,7 +104,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="second">
+        <div class="item full-width">
           <mat-form-field class="full-width">
             <mat-label>Department</mat-label>
             <mat-select formControlName="departmentId" placeholder="Department">
@@ -175,7 +180,7 @@
             {{ employeeForm.get("isActive")?.value | activeSlider }}
           </mat-slide-toggle>
         </div>
-        <div class="third">
+        <div class="item full-width">
           <mat-card class="emergency-contact" formArrayName="emergencyContacts">
             <mat-card-header>
               <mat-card-title>Emergency Contact</mat-card-title>
@@ -203,6 +208,7 @@
     </mat-tab>
     <mat-tab label="Leave Allowance">
       <app-leave-allowances
+        class="tab-container"
         [leaveAllowanceFormArray]="leaveAllowances"
         [employeeId]="employeeId"
       ></app-leave-allowances>
