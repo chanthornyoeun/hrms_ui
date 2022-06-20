@@ -23,7 +23,7 @@ import { ResponsiveService } from '../../../services/responsive.service';
 export class EmployeeFormComponent implements OnInit {
 
   employeeForm!: FormGroup;
-  employeeId: number;
+  employeeId!: number;
   titles: string[] = ['Mr', 'Ms', 'Mss'];
   genders: string[] = ['Male', 'Female', 'Other'];
   maritalStatuses: string[] = ['Single', 'Married', 'Divorced'];
@@ -44,23 +44,27 @@ export class EmployeeFormComponent implements OnInit {
     private fileService: FileService,
     public responsive: ResponsiveService
   ) {
-    this.employeeId = +this.activatedRoute.snapshot.paramMap.get('id')!;
     this.buildForm();
     this.department$ = this.departmentService.list({ params: this.params }).pipe(map(res => res.data as Department[]));
     this.position$ = this.positionService.list({ params: this.params }).pipe(map(res => res.data as Position[]));
   }
 
   ngOnInit(): void {
-    if (this.employeeId) {
-      this.loaderService.show();
-      this.employeeService.get(this.employeeId)
-        .pipe(finalize(() => this.loaderService.hide()))
-        .subscribe(res => {
-          const leaveAllowances = res.data.leaveAllowances;
-          this.employeeForm.patchValue(res.data);
-          this.generateLeaveAllowances(leaveAllowances);
-        });
-    }
+    this.activatedRoute.params.subscribe(param => {
+      this.employeeId = param['id'];
+      this.getEmployeeById(this.employeeId);
+    });
+  }
+
+  private getEmployeeById(employeeId: number) {
+    this.loaderService.show();
+    this.employeeService.get(employeeId)
+      .pipe(finalize(() => this.loaderService.hide()))
+      .subscribe(res => {
+        const leaveAllowances = res.data.leaveAllowances;
+        this.employeeForm.patchValue(res.data);
+        this.generateLeaveAllowances(leaveAllowances);
+      });
   }
 
   private buildForm() {
