@@ -10,8 +10,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DatePipe } from "@angular/common";
 import { Moment } from "moment";
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
-import { finalize, pluck } from "rxjs/operators";
+import { finalize, map, pluck } from "rxjs/operators";
 import { LeaveSummary } from 'src/app/models/leave-summary';
+import { ResponsiveService } from 'src/app/services/responsive.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-leave-request-form',
@@ -47,15 +49,15 @@ export class LeaveRequestFormComponent implements OnInit {
     private leaveRequestService: LeaveRequestService,
     private messageService: MessageService,
     private datePipe: DatePipe,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    public responsive: ResponsiveService
   ) {
     this.requestId = +this.activatedRoute.snapshot.params['id'];
     this.buildForm();
   }
 
   ngOnInit(): void {
-    this.getLeaveTypes();
-    this.getCurrentEmployee();
+    this.loadData()
     if (this.requestId) {
       this.loaderService.show();
       this.leaveRequestService.get(this.requestId)
@@ -101,21 +103,30 @@ export class LeaveRequestFormComponent implements OnInit {
     this.updateNoOfDay(fromDate, toDate);
   }
 
+  private loadData() {
+    this.loaderService.show();
+    forkJoin({
+      leaveTypes: this.getLeaveTypes(),
+      currentEmployee: this.getCurrentEmployee()
+    })
+      .pipe(finalize(() => this.loaderService.hide()))
+      .subscribe(data => {
+        this.leaveTypes = data.leaveTypes;
+        this.employee = data.currentEmployee;
+        const manager = this.employee.department.manager;
+        const managerName = `${manager.firstName} ${manager.lastName}`;
+        this.leaveRequestForm.get('reportToId')?.setValue(manager.id);
+        this.leaveRequestForm.get('reportToName')?.setValue(managerName);
+        this.leaveRequestForm.get('employeeId')?.setValue(this.employee.id);
+      })
+  }
+
   private getLeaveTypes() {
-    this.leaveTypeService.getActiveLeaveTypes().subscribe(res => {
-      this.leaveTypes = res.data;
-    });
+    return this.leaveTypeService.getActiveLeaveTypes().pipe(map(res => res.data))
   }
 
   private getCurrentEmployee() {
-    this.employeeService.getCurrentEmployee().subscribe(res => {
-      this.employee = res.data.employee;
-      const manager = this.employee.department.manager;
-      const managerName = `${manager.firstName} ${manager.lastName}`;
-      this.leaveRequestForm.get('reportToId')?.setValue(manager.id);
-      this.leaveRequestForm.get('reportToName')?.setValue(managerName);
-      this.leaveRequestForm.get('employeeId')?.setValue(this.employee.id);
-    });
+    return this.employeeService.getCurrentEmployee().pipe(map(res => res.data['employee']));
   }
 
   changeDate(date: Moment) {
@@ -147,15 +158,10 @@ export class LeaveRequestFormComponent implements OnInit {
 
   selectLeaveType(leaveTypeId: number) {
     this.getLeaveDays();
-    this.getLeaveSummary(leaveTypeId);
   }
 
   getLeaveDays() {
     const leaveTypeId: number = this.leaveRequestForm.get('leaveTypeId')?.value;
-    if (!leaveTypeId) {
-      return;
-    }
-
     const dateFormat: string = 'yyyy-MM-dd';
     const fromDate: string = this.datePipe.transform(this.leaveRequestForm.get('fromDate')?.value, dateFormat) || '';
     const toDate: string = this.datePipe.transform(this.leaveRequestForm.get('toDate')?.value, dateFormat) || '';
@@ -164,7 +170,12 @@ export class LeaveRequestFormComponent implements OnInit {
       fromDate,
       toDate,
       isFullDay: this.leaveRequestForm.get('isFullDay')?.value
+    };
+
+    if (!leaveTypeId || !fromDate || !toDate) {
+      return;
     }
+
     this.leaveRequestService.calculateDays(payload).subscribe(res => {
       this.leaveRequestForm.get('day')?.setValue(res.data.leaveDays);
     });
@@ -194,11 +205,6 @@ export class LeaveRequestFormComponent implements OnInit {
 
   navigateToList() {
     this.router.navigate([this.backToURL]);
-  }
-
-  getLeaveSummary(leaveTypeId: number) {
-    this.employeeService.getLeaveSummary(leaveTypeId, this.employee.id)
-      .subscribe(res => this.leaveSummary = res.data[0]);
   }
 
 }
