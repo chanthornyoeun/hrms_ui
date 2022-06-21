@@ -52,7 +52,7 @@ export class EmployeeFormComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(param => {
       this.employeeId = param['id'];
-      this.getEmployeeById(this.employeeId);
+      this.employeeId && this.getEmployeeById(this.employeeId);
     });
   }
 
