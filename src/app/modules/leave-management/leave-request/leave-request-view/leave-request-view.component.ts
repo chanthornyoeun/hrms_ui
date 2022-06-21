@@ -9,6 +9,7 @@ import { ConfirmationModel } from "../../../../shared/components/confirmation/co
 import { MessageService } from "../../../../shared/services/message.service";
 import { ConfirmationService } from "../../../../shared/components/confirmation/confirmation.service";
 import { CredentialService } from "../../../../core/http/credential.service";
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 enum LeaveStatus {
   PENDING = 'Pending',
@@ -41,7 +42,8 @@ export class LeaveRequestViewComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private leaveRequestService: LeaveRequestService,
-    private credentialService: CredentialService
+    private credentialService: CredentialService,
+    public responsive: ResponsiveService
   ) {
     this.buildForm();
     this.requestId = this.activatedRoute.snapshot.params['id'];

@@ -7,16 +7,19 @@
   h2 {
     margin: 0;
   }
-
-  .actions {
-    display: flex;
-    gap: 0.5rem;
-  }
 }
+
 
 .leave-view {
   display: flex;
   gap: 1rem;
+  padding-bottom: 1rem;
+
+  &.is-small {
+    flex-direction: column;
+    gap: 0;
+    padding-bottom: 0;
+  }
 }
 
 table {
@@ -33,4 +36,13 @@ table {
   td {
     vertical-align: top;
   }
+}
+
+mat-divider {
+  padding-bottom: 1rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
 }

@@ -24,6 +24,7 @@ import { DATEPICKER_PROVIDER } from "../../../config";
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 import { AvailableLeavePipe } from './available-leave.pipe';
 import { LeaveRequestViewComponent } from './leave-request-view/leave-request-view.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { LeaveRequestViewComponent } from './leave-request-view/leave-request-vi
     MatRadioModule,
     MatTabsModule,
     MatBadgeModule,
+    MatDividerModule,
     SharedModule
   ],
   providers: [

@@ -1,33 +1,9 @@
 <form [formGroup]="leaveRequestForm" (ngSubmit)="submit()">
   <div class="header">
-    <div>
-      <h2>{{ breadcrumb }} / View</h2>
-    </div>
-
-    <div class="actions">
-      <button
-        type="button"
-        mat-button
-        matTooltip="Back"
-        (click)="navigateToList()"
-      >
-        <mat-icon>arrow_back</mat-icon>
-        Back
-      </button>
-      <button
-        *ngIf="leaveRequest?.status === LeaveStatus.PENDING"
-        mat-flat-button
-        type="submit"
-        color="primary"
-        matTooltip="Submit"
-      >
-        <mat-icon>save</mat-icon>
-        Submit
-      </button>
-    </div>
+    <h2>{{ breadcrumb }} / View</h2>
   </div>
 
-  <div class="leave-view">
+  <div class="leave-view" [ngClass]="{ 'is-small': responsive.isSmall }">
     <table class="full-width" *ngIf="leaveRequest">
       <tbody>
         <tr>
@@ -71,6 +47,7 @@
         </tr>
       </tbody>
     </table>
+    <mat-divider *ngIf="responsive.isSmall"></mat-divider>
     <div class="full-width">
       <mat-form-field class="full-width">
         <mat-label>Status</mat-label>
@@ -108,12 +85,34 @@
         <mat-label>Comment</mat-label>
         <textarea
           matInput
-          rows="10"
+          rows="5"
           formControlName="comment"
           placeholder="Comment"
           [readonly]="leaveRequest?.status !== LeaveStatus.PENDING"
         ></textarea>
       </mat-form-field>
     </div>
+  </div>
+  <div class="actions">
+    <button
+      *ngIf="leaveRequest?.status === LeaveStatus.PENDING"
+      mat-flat-button
+      type="submit"
+      color="primary"
+      matTooltip="Submit"
+    >
+      <mat-icon>save</mat-icon>
+      Submit
+    </button>
+
+    <button
+      type="button"
+      mat-button
+      matTooltip="Back"
+      (click)="navigateToList()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
   </div>
 </form>
