@@ -14,7 +14,7 @@ export class ResponsiveService implements OnDestroy {
   isLarge: boolean = false;
 
   constructor(private breakpoints: BreakpointObserver) {
-    this.breakpoints.observe([Breakpoints.Handset, Breakpoints.Small, Breakpoints.XSmall, Breakpoints.Large])
+    this.breakpoints.observe([Breakpoints.Handset, Breakpoints.Small, Breakpoints.XSmall, Breakpoints.Large, Breakpoints.XLarge])
       .pipe(takeUntil(this.subject))
       .subscribe(match => {
         this.resetState();
@@ -24,7 +24,7 @@ export class ResponsiveService implements OnDestroy {
         if (match.breakpoints[Breakpoints.XSmall]) {
           this.isSmall = match.matches;
         }
-        if (match.breakpoints[Breakpoints.Large]) {
+        if (match.breakpoints[Breakpoints.Large] || match.breakpoints[Breakpoints.XLarge]) {
           this.isLarge = match.matches;
         }
       });
