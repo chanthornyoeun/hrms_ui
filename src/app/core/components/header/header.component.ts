@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { CredentialService } from "../../http/credential.service";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../http/authentication.service";
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-header',
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private credentialService: CredentialService,
     private authService: AuthenticationService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -37,7 +39,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    this.notificationService.getToken().then(token => this.authService.logout(token!));
   }
 
 }

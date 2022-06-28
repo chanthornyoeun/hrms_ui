@@ -8,6 +8,9 @@ import { MAT_FORM_FIELD_PROVIDER } from './config';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTOR_PROVIDER } from "./core/interceptors/http-interceptor-provider";
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import { HTTP_INTERCEPTOR_PROVIDER } from "./core/interceptors/http-interceptor-
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    CoreModule
+    CoreModule,
+    AngularFireMessagingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
   providers: [
     MAT_FORM_FIELD_PROVIDER,

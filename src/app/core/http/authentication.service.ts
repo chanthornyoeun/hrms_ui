@@ -32,8 +32,8 @@ export class AuthenticationService {
       )
   }
 
-  logout(): void {
-    this.http.post(ApiEndPointEnum.LOGOUT, {}).subscribe(_ => {
+  logout(deviceToken: string): void {
+    this.http.post(ApiEndPointEnum.LOGOUT, { deviceToken }).subscribe(_ => {
       this.credentialService.removeCredential();
       this.router.navigate(['/auth/login']);
     });

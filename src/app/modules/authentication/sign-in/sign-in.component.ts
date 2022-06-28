@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/http/authentication.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class SignInComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: AuthenticationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private notificationService: NotificationService
   ) {
     this.signinForm = this.fb.group({
       username: ['', Validators.required],
@@ -26,8 +28,10 @@ export class SignInComponent {
     })
   }
 
-  login() {
-    this.authService.login(this.signinForm.value).subscribe(_ => {
+  async login() {
+    const deviceToken = await this.notificationService.getToken();
+    const payload = { ...this.signinForm.value, deviceToken };
+    this.authService.login(payload).subscribe(_ => {
       const url: string = this.activatedRoute.snapshot.queryParamMap.get('redirect') || '/';
       this.router.navigate([url], { replaceUrl: true });
       this.messageService.show('Login successful');
