@@ -20,7 +20,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { UserListComponent } from './user-list/user-list.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { NgSelectModule } from '@ng-select/ng-select';
 import { SelectCompsModule } from 'src/app/shared/select-comps/select-comps.module';
 
 @NgModule({
@@ -44,7 +43,6 @@ import { SelectCompsModule } from 'src/app/shared/select-comps/select-comps.modu
     MatCardModule,
     MatChipsModule,
     MatProgressSpinnerModule,
-    NgSelectModule,
     ReactiveFormsModule,
     SharedModule,
     SelectCompsModule
