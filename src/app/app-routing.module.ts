@@ -68,6 +68,10 @@ const routes: Routes = [
         path: 'roles',
         loadChildren: () => import('./modules/user-management/role/role.module').then(m => m.RoleModule)
       },
+      { 
+        path: 'users',
+        loadChildren: () => import('./modules/user-management/users/users.module').then(m => m.UsersModule)
+      },
       {
         path: 'email-configure',
         loadChildren: () => import('./modules/configuration/email-configure/email-configure.module').then(m => m.EmailConfigureModule)

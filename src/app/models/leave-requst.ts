@@ -4,9 +4,11 @@ export interface Employee {
   id: number;
   firstName: string;
   lastName: string;
+  name: string;
   gender: string;
   email: string;
   phone: string;
+  profilePhoto: string | null;
 }
 
 export interface ReportTo {

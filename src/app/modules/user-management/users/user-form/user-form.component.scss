@@ -1,0 +1,19 @@
+form {
+    display: flex;
+    flex-direction: column;
+
+    .item {
+        display: flex;
+        gap: 1rem;
+
+        &.is-small {
+            flex-direction: column;
+            gap: 0;
+        }
+    }
+
+    .actions {
+        display: flex;
+        gap: .5rem;
+    }
+}

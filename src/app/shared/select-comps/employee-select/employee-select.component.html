@@ -1,0 +1,21 @@
+<mat-form-field class="full-width" appearance="outline">
+  <mat-label>Employee</mat-label>
+  <mat-select
+    msInfiniteScroll
+    [complete]="offset === total"
+    [debounceTime]="100"
+    placeholder="Employee"
+    (infiniteScroll)="getEmployees()"
+    required
+    [(ngModel)]="value"
+  >
+    <mat-option
+      *ngFor="let employee of employees; trackBy: trackEmployee"
+      [value]="employee.id"
+      >{{ employee.name }}</mat-option
+    >
+  </mat-select>
+  <mat-error *ngIf="ngControl?.control?.hasError('required')"
+    >Employee is required.</mat-error
+  >
+</mat-form-field>
