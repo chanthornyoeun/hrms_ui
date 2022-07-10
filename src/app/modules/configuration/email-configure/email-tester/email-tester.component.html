@@ -13,21 +13,30 @@
 <mat-dialog-content>
   <form [formGroup]="testForm">
     <mat-form-field class="full-width">
-      <mat-label>Recipient</mat-label>
-      <input
-        appFocus
-        matInput
-        formControlName="to"
-        type="text"
+      <mat-label>Recipients</mat-label>
+      <mat-chip-list
+        #chipList
+        aria-label="Recipients"
+        placeholder="Recipients"
         required
-        placeholder="example@gmail.com"
-      />
-      <mat-error *ngIf="testForm.get('to')?.hasError('required')"
-        >Recipient is required.</mat-error
+        formArrayName="to"
       >
-      <mat-error *ngIf="testForm.get('to')?.hasError('email')"
-        >Invalid email format.</mat-error
-      >
+        <mat-chip
+          [value]="recipient"
+          *ngFor="let recipient of recipients.controls; let i = index"
+          (removed)="remove(i)"
+        >
+          {{ recipient.value }}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input
+          placeholder="New Recipient"
+          [matChipInputFor]="chipList"
+          (matChipInputTokenEnd)="add($event)"
+        />
+      </mat-chip-list>
     </mat-form-field>
 
     <mat-form-field class="full-width">
