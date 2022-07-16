@@ -1,0 +1,11 @@
+.edit-icon {
+    visibility: hidden;
+}
+
+.node {
+    &:hover {
+        .edit-icon {
+            visibility: visible;
+        }
+    }
+}

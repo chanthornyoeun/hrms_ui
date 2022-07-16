@@ -1,0 +1,99 @@
+<div matDialogTitle>
+  <h1>Page</h1>
+  <button
+    mat-icon-button
+    color="warn"
+    matTooltip="Close"
+    (click)="closeDialog()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<form [formGroup]="pageForm" (ngSubmit)="submit()">
+  <mat-dialog-content>
+    <mat-form-field class="full-width">
+      <mat-label>Parent Page</mat-label>
+      <mat-select formControlName="parentId" placeholder="Parent Page">
+        <mat-option [value]="page.id" *ngFor="let page of pages">{{
+          page.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        formControlName="name"
+        type="text"
+        required
+        placeholder="Name"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type" placeholder="Type" required>
+        <mat-option [value]="type" *ngFor="let type of types">{{
+          type
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Icon</mat-label>
+      <input matInput formControlName="icon" type="text" placeholder="Icon" />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>URL</mat-label>
+      <input
+        matInput
+        formControlName="url"
+        type="text"
+        placeholder="URL"
+        [required]="pageForm.get('type')?.value === 'Link'"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Order Number</mat-label>
+      <input
+        matInput
+        formControlName="orderNo"
+        type="number"
+        placeholder="Order Number"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Description"
+        rows="10"
+      ></textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button
+      mat-flat-button
+      type="submit"
+      color="primary"
+      matTooltip="Save"
+      [disabled]="pageForm.invalid"
+    >
+      Save
+    </button>
+    <button
+      mat-button
+      type="button"
+      matTooltip="Cancel"
+      (click)="closeDialog()"
+    >
+      Cancel
+    </button>
+  </mat-dialog-actions>
+</form>

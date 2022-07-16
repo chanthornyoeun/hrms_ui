@@ -76,6 +76,10 @@ const routes: Routes = [
         path: 'email-configure',
         loadChildren: () => import('./modules/configuration/email-configure/email-configure.module').then(m => m.EmailConfigureModule)
       },
+      { 
+        path: 'page',
+        loadChildren: () => import('./modules/page-management/page-management.module').then(m => m.PageManagementModule) 
+      }
     ]
   },
   {

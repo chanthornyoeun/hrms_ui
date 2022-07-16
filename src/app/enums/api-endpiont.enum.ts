@@ -28,4 +28,5 @@ export enum ApiEndPointEnum {
     CHECK_OUT = '/api/attendant-check-out',
     EMAIL_CONFIGURE = '/api/email-configure',
     EMAIL_TESTER = '/api/sent-email-test',
+    PAGE = '/api/page',
 }

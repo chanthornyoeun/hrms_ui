@@ -253,6 +253,11 @@ const ADMIN_PAGES: Array<Page> = [
         name: 'Users',
         type: 'Link',
         url: 'users'
+      },
+      {
+        name: 'Page Management',
+        type: 'Link',
+        url: 'page'
       }
     ]
   },{
