@@ -15,9 +15,10 @@ export class PrefixInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // const headers: HttpHeaders = request.headers.set('API-KEY', environment.API_KEY);
+    const headers: HttpHeaders = request.headers.set('X-API-KEY', environment.X_API_KEY);
     const req = request.clone({
-      url: `${environment.API_URL}${request.url}`
+      url: `${environment.API_URL}${request.url}`,
+      headers
     });
     return next.handle(req);
   }
