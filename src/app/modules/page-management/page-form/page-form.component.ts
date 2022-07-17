@@ -2,9 +2,11 @@ import { HttpParams } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { finalize } from 'rxjs';
 import { DialogAction } from 'src/app/enums/dialog-action.enum';
 import { Page } from 'src/app/models/page';
 import { PageService } from 'src/app/services/page.service';
+import { LoaderService } from 'src/app/shared/components/loader/loader.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { ParamsBuilder } from 'src/app/utilities/params-builder';
 
@@ -24,7 +26,8 @@ export class PageFormComponent implements OnInit {
     private dialogRef: MatDialogRef<PageFormComponent>,
     @Inject(MAT_DIALOG_DATA) public page: Page,
     private pageService: PageService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loaderService: LoaderService
   ) { }
 
   ngOnInit(): void {
@@ -70,11 +73,17 @@ export class PageFormComponent implements OnInit {
   }
 
   update(id: number, page: Page) {
-    this.pageService.update(id, page).subscribe(_ => this.saveHandler('Page has been updated successfully.'));
+    this.loaderService.show();
+    this.pageService.update(id, page)
+      .pipe(finalize(() => this.loaderService.hide()))
+      .subscribe(_ => this.saveHandler('Page has been updated successfully.'));
   }
 
   save(page: Page) {
-    this.pageService.save(page).subscribe(_ => this.saveHandler('Page has been created successfully.'));
+    this.loaderService.show();
+    this.pageService.save(page)
+      .pipe(finalize(() => this.loaderService.hide()))
+      .subscribe(_ => this.saveHandler('Page has been created successfully.'));
   }
 
   saveHandler(message: string) {
