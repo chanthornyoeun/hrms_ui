@@ -25,7 +25,8 @@ export class RoleListComponent extends Pagination<Role> {
       { headerText: 'Actions', field: 'actions', type: 'actions' }
     ],
     rowActions: [
-      { icon: 'edit', link: 'update/', tooltip: 'Edit' }
+      { icon: 'edit', link: 'update/', tooltip: 'Edit' },
+      { icon: 'settings', link: 'apply-pages/', tooltip: 'Apply Pages' }
     ]
   }
 

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PaggConfigureComponent } from './pagg-configure/pagg-configure.component';
 import { RoleFormComponent } from './role-form/role-form.component';
 import { RoleListComponent } from './role-list/role-list.component';
 
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: 'update/:id',
     component: RoleFormComponent
+  },
+  {
+    path: 'apply-pages/:id',
+    component: PaggConfigureComponent
   }
 ];
 

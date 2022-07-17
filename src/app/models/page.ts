@@ -1,10 +1,12 @@
 export interface Page {
     id: number;
-    parentId: number;
+    parentId?: number;
     name: string;
-    type: string;
-    url: string;
-    orderNo: number;
-    description: string;
-    children?: Page[];
+    type?: string;
+    url?: string;
+    icon?: string;
+    orderNo?: number;
+    description?: string;
+    roleChecked?: boolean;
+    children: Page[];
 }

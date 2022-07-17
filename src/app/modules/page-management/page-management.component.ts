@@ -2,13 +2,13 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
-import { Page } from 'src/app/core/page';
 import { DialogAction } from 'src/app/enums/dialog-action.enum';
+import { Page } from 'src/app/models/page';
 import { PageService } from 'src/app/services/page.service';
 import { PageFormComponent } from './page-form/page-form.component';
 
 /** Flat node with expandable and level information */
-interface FlatNode extends Page {
+export interface FlatNode extends Page {
   level: number;
   expandable: boolean;
 }
