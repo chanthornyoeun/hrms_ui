@@ -29,5 +29,6 @@ export enum ApiEndPointEnum {
     EMAIL_CONFIGURE = '/api/email-configure',
     EMAIL_TESTER = '/api/sent-email-test',
     PAGE = '/api/page',
+    CURRENT_USER_PAGE = '/api/role-page-current-account',
     ROLE_PAGE = '/api/role-page',
 }

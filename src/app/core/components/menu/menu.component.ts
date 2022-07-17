@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Page, pagePermission } from "../../page";
-import { EmployeeService } from "../../../services/employee.service";
+import { Page } from 'src/app/models/page';
+import { PageService } from 'src/app/services/page.service';
 
 @Component({
   selector: 'app-menu',
@@ -11,17 +11,16 @@ export class MenuComponent implements OnInit {
 
   pages: Array<Page> = [];
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(
+    private pageService: PageService
+  ) { }
 
   ngOnInit(): void {
-    this.getCurrentEmployee();
+    this.getPages();
   }
 
-  private getCurrentEmployee() {
-    this.employeeService.getCurrentEmployee().subscribe(res => {
-      const role: string = res.data.roles[0].roleName;
-      this.pages = pagePermission.get(role);
-    });
+  private getPages() {
+    this.pageService.getPageByCurrentUser().subscribe(res => this.pages = res.data);
   }
 
 }
