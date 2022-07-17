@@ -6,6 +6,7 @@ import { PageManagementComponent } from './page-management.component';
 import { MaterialCompModule } from 'src/app/shared/material-comp/material-comp.module';
 import { PageFormComponent } from './page-form/page-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ComponentsModule } from '../../shared/components/components.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     PageManagementRoutingModule,
     ReactiveFormsModule,
-    MaterialCompModule
+    MaterialCompModule,
+    ComponentsModule
   ]
 })
 export class PageManagementModule { }
