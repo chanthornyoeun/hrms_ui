@@ -19,3 +19,7 @@ mat-sidenav-content .content{
   height: 32px;
   border-radius: 50%;
 }
+
+.content {
+  height: calc(100% - 88px);
+}

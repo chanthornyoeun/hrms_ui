@@ -20,7 +20,10 @@ export class MenuComponent implements OnInit {
   }
 
   private getPages() {
-    this.pageService.getPageByCurrentUser().subscribe(res => this.pages = res.data);
+    this.pageService.getPageByCurrentUser().subscribe(res => {
+      this.pages = res.data;
+      this.pageService.pages = this.pages;
+    });
   }
 
 }
