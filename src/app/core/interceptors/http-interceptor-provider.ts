@@ -4,8 +4,8 @@ import { TokenInterceptor } from "./token.interceptor";
 import { GlobalErrorHandlerInterceptor } from "./global-error-handler.interceptor";
 
 export const HTTP_INTERCEPTOR_PROVIDER = [
-    addInterceptor(PrefixInterceptor),
     addInterceptor(TokenInterceptor),
+    addInterceptor(PrefixInterceptor),
     addInterceptor(GlobalErrorHandlerInterceptor)
 ];
 
