@@ -1,9 +1,18 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Business Cambodia</mat-toolbar>
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <img
+      src="../../../../assets/images/logo_with_name.png"
+      width="100%"
+      alt="Company Logo"
+    />
+    <mat-divider></mat-divider>
     <app-menu></app-menu>
   </mat-sidenav>
   <mat-sidenav-content>
