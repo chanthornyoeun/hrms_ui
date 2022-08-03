@@ -11,6 +11,7 @@ import { HTTP_INTERCEPTOR_PROVIDER } from "./core/interceptors/http-interceptor-
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { environment } from '../environments/environment';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { environment } from '../environments/environment';
   ],
   providers: [
     MAT_FORM_FIELD_PROVIDER,
-    HTTP_INTERCEPTOR_PROVIDER
+    HTTP_INTERCEPTOR_PROVIDER,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

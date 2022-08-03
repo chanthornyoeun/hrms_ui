@@ -45,4 +45,22 @@ export class DateUtil {
     return new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
   }
 
+  /**
+   * Get first day of given date
+   * @param date 
+   * @returns 
+   */
+  public static getFirstDayOfDate(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), 1);
+  }
+
+  /**
+   * Get last day of given date
+   * @param date
+   * @returns 
+   */
+  public static getLastDayOfDate(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  }
+
 }

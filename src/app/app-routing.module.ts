@@ -81,7 +81,7 @@ const routes: Routes = [
         canActivate: [AuthorizationGuard],
         loadChildren: () => import('./modules/user-management/role/role.module').then(m => m.RoleModule)
       },
-      { 
+      {
         path: 'users',
         canActivate: [AuthorizationGuard],
         loadChildren: () => import('./modules/user-management/users/users.module').then(m => m.UsersModule)
@@ -91,14 +91,19 @@ const routes: Routes = [
         canActivate: [AuthorizationGuard],
         loadChildren: () => import('./modules/configuration/email-configure/email-configure.module').then(m => m.EmailConfigureModule)
       },
-      { 
+      {
         path: 'page',
         canActivate: [AuthorizationGuard],
-        loadChildren: () => import('./modules/page-management/page-management.module').then(m => m.PageManagementModule) 
+        loadChildren: () => import('./modules/page-management/page-management.module').then(m => m.PageManagementModule)
       },
-      { 
+      {
         path: 'unauthorized',
-        loadChildren: () => import('./modules/miscellaneous/miscellaneous.module').then(m => m.MiscellaneousModule) 
+        loadChildren: () => import('./modules/miscellaneous/miscellaneous.module').then(m => m.MiscellaneousModule)
+      },
+      {
+        path: 'calendar',
+        canActivate: [AuthorizationGuard],
+        loadChildren: () => import('./modules/my-calendar/my-calendar.module').then(m => m.MyCalendarModule)
       },
     ]
   },

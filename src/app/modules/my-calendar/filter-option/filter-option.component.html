@@ -1,0 +1,8 @@
+<div [formGroup]="filterForm" class="filter-option">
+  <mat-checkbox
+    [formControlName]="option.value"
+    color="primary"
+    *ngFor="let option of options"
+    >{{ option.name }}</mat-checkbox
+  >
+</div>

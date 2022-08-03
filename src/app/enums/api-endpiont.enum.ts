@@ -31,4 +31,5 @@ export enum ApiEndPointEnum {
     PAGE = '/api/page',
     CURRENT_USER_PAGE = '/api/role-page-current-account',
     ROLE_PAGE = '/api/role-page',
+    CALENDAR = '/api/calendar',
 }

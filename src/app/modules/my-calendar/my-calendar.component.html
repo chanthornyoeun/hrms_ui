@@ -1,0 +1,98 @@
+<div class="mat-h1">Calendar</div>
+
+<div class="calendar-header">
+  <mat-button-toggle-group>
+    <mat-button-toggle
+      mwlCalendarPreviousView
+      [view]="view"
+      [(viewDate)]="viewDate"
+      (viewDateChange)="changeMonth($event)"
+    >
+      <mat-icon>arrow_back_ios</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle
+      mwlCalendarToday
+      [(viewDate)]="viewDate"
+      (viewDateChange)="changeMonth($event)"
+    >
+      Today
+    </mat-button-toggle>
+    <mat-button-toggle
+      mwlCalendarNextView
+      [view]="view"
+      [(viewDate)]="viewDate"
+      (viewDateChange)="changeMonth($event)"
+    >
+      <mat-icon>navigate_next</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <div class="mat-h1">
+    {{ viewDate | calendarDate: view + "ViewTitle":"en" }}
+  </div>
+
+  <app-filter-option
+    (filterChange$)="onOptionChange($event)"
+  ></app-filter-option>
+</div>
+
+<mwl-calendar-month-view
+  [viewDate]="viewDate"
+  [events]="events"
+  [cellTemplate]="customCellTemplate"
+>
+</mwl-calendar-month-view>
+
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+  <div class="cal-cell-top">
+    <span class="cal-day-number">{{
+      day.date | calendarDate: "monthViewDayNumber":locale
+    }}</span>
+  </div>
+  <ng-container *ngFor="let event of day.events">
+    <ng-container *ngFor="let employee of event.birthdays">
+      <app-item
+        title="{{ employee.name }}'s birthday"
+        icon="cake"
+        color="#e3bc08"
+      ></app-item>
+    </ng-container>
+    <br />
+
+    <ng-container *ngFor="let leaveRequest of event.leaveRequests">
+      <app-item
+        title="{{ leaveRequest.employee.name }}'s Leave"
+        icon="person_off"
+        color="red"
+      ></app-item>
+    </ng-container>
+    <br />
+
+    <ng-container *ngFor="let holiday of event.holidays">
+      <app-item
+        [title]="holiday.name"
+        icon="houseboat"
+        color="green"
+      ></app-item>
+    </ng-container>
+    <br />
+
+    <ng-container *ngIf="event.isWeekend; else attendanceRef">
+      <app-item
+        [title]="event.title"
+        icon="check_circle"
+        color="red"
+      ></app-item>
+    </ng-container>
+
+    <ng-template #attendanceRef>
+      <ng-container *ngIf="event.isAttend !== undefined">
+        <app-item
+          [title]="event.title"
+          icon="{{ event.isAttend ? 'check_circle' : 'cancel' }}"
+          color="{{ event.isAttend ? '#1e90ff' : 'red' }}"
+        ></app-item>
+      </ng-container>
+    </ng-template>
+  </ng-container>
+</ng-template>
