@@ -1,5 +1,40 @@
+table {
+  width: 100%;
+}
+
+.month {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  div>h1 {
+    margin-bottom: 0;
+  }
+}
+
+.prev-icon {
+  transform: rotate(180deg);
+}
+
 .actions {
   display: flex;
+  gap: .5rem;
+}
+
+.attendant-wrapper {
+  text-align: center;
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+}
+
+td, th {
+  width: 50px;
 }

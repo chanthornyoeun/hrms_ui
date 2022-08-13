@@ -63,4 +63,8 @@ export class DateUtil {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0);
   }
 
+  public static getDayInMonth(date: Date): number {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  }
+
 }

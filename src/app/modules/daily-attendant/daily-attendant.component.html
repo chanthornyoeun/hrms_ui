@@ -20,12 +20,121 @@
       <mat-icon class="icon-18">done</mat-icon>
       Check Out
     </button>
+    <button
+      mat-stroked-button
+      color="primary"
+      matTooltip="Export as Excel"
+      (click)="exportExcel()"
+    >
+      <mat-icon class="icon-18">import_export</mat-icon>
+      Export
+    </button>
   </div>
 </div>
-<app-data-grid
-  [columnConfig]="config"
-  [rowData]="data"
-  [totalRecord]="total"
-  [defaultPageSize]="defaultPageSize"
-  (pageChange$)="pageChange($event)"
-></app-data-grid>
+
+<table mat-table class="mat-elevation-z2" [dataSource]="attendances">
+  <ng-container matColumnDef="month">
+    <th mat-header-cell *matHeaderCellDef [colSpan]="displayedColumns.length">
+      <div class="month">
+        <button mat-icon-button matTooltip="Previuse" (click)="previousMonth()">
+          <mat-icon class="prev-icon">arrow_forward_ios</mat-icon>
+        </button>
+        <div>
+          <h1>{{ selectedDate | date: "MMMM, yyyy" }}</h1>
+
+          <mat-form-field style="width: 1px; visibility: hidden">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [max]="currentDate"
+              [value]="selectedDate"
+            />
+            <mat-datepicker
+              #picker
+              startView="year"
+              (monthSelected)="monthSelected($event); picker.close()"
+            ></mat-datepicker>
+          </mat-form-field>
+          <button mat-icon-button (click)="picker.open()">
+            <mat-icon>calendar_month</mat-icon>
+          </button>
+        </div>
+        <button
+          mat-icon-button
+          matTooltip="Next"
+          [disabled]="
+            currentDate.getMonth() === selectedDate.getMonth() &&
+            currentDate.getFullYear() === selectedDate.getFullYear()
+          "
+          (click)="nextMonth()"
+        >
+          <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
+      </div>
+    </th>
+  </ng-container>
+
+  <ng-container matColumnDef="employee">
+    <th mat-header-cell *matHeaderCellDef sticky>
+      <mat-form-field appearance="standard" class="full-width">
+        <mat-label>Employee</mat-label>
+        <input matInput placeholder="Employee" [formControl]="employeeCtl" />
+      </mat-form-field>
+    </th>
+    <td mat-cell *matCellDef="let attendant" sticky>
+      {{ attendant.employee.name }}
+    </td>
+    <td mat-footer-cell *matFooterCellDef [colSpan]="displayedColumns.length">
+      <mat-paginator
+        [pageSizeOptions]="pageSizeOptions"
+        [length]="totalRecord"
+        [pageSize]="defaultPageSize"
+        showFirstLastButtons
+        (page)="nextPage($event)"
+      >
+      </mat-paginator>
+    </td>
+  </ng-container>
+
+  <ng-container [matColumnDef]="column" *ngFor="let column of columnDefs">
+    <th mat-header-cell *matHeaderCellDef>
+      <div class="full-width attendant-wrapper">
+        {{ column | date: "dd" }}
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let attendance">
+      <div
+        class="full-width attendant-wrapper"
+        *ngIf="attendance.attendants | isSameDay: column as attendant"
+      >
+        <ng-container *ngIf="attendant.isWeekend; else normalDay">
+          <span matTooltip="Weekend">W</span>
+        </ng-container>
+        <ng-template #normalDay>
+          <ng-container
+            *ngIf="
+              attendant.isAttend !== undefined && attendant.isAttend !== null
+            "
+          >
+            <mat-icon
+              class="mat-18"
+              [matTooltip]="attendant.isAttend ? 'Attend' : 'Not Present'"
+              [ngStyle]="{ color: attendant.isAttend ? 'blue' : 'red' }"
+              >{{ attendant.isAttend ? "checked" : "close" }}</mat-icon
+            >
+          </ng-container>
+        </ng-template>
+      </div>
+    </td>
+    <td
+      mat-footer-cell
+      *matFooterCellDef
+      [colSpan]="displayedColumns.length"
+    ></td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['month']; sticky: true"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+</table>

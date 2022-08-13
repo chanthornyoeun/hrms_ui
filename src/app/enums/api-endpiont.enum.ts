@@ -24,6 +24,8 @@ export enum ApiEndPointEnum {
     TRAINING = '/api/employee-training',
     DEPENDENT = '/api/dependent',
     ATTENDANCE = '/api/attendant',
+    ATTENDANT_AS_CALENDAR = '/api/attendant-as-calendar',
+    ATTENDANT_EXPORT = '/api/attendant-export',
     CHECK_IN = '/api/attendant-check-in',
     CHECK_OUT = '/api/attendant-check-out',
     EMAIL_CONFIGURE = '/api/email-configure',
