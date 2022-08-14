@@ -41,26 +41,36 @@
             </ng-container>
             <ng-container *ngSwitchDefault>
               <ng-container *ngIf="col.renderer; else noRenderer">
-                {{col.renderer(element)}}
+                {{ col.renderer(element) }}
               </ng-container>
               <ng-template #noRenderer>
-                {{element[col.field]}}
+                {{ element[col.field] }}
               </ng-template>
             </ng-container>
           </ng-container>
         </ng-template>
       </td>
+      <td mat-footer-cell *matFooterCellDef [colSpan]="displayedColumns.length">
+        <mat-paginator
+          [pageSizeOptions]="pageSizeOptions"
+          [length]="totalRecord"
+          [pageSize]="defaultPageSize"
+          showFirstLastButtons
+          (page)="onPageChange($event)"
+        >
+        </mat-paginator>
+      </td>
+      <tr class="mat-row" *matNoDataRow>
+        <td mat-cell [attr.colspan]="displayedColumns.length" style="text-align: center;">
+          No data
+        </td>
+      </tr>
     </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr
+      mat-footer-row
+      *matFooterRowDef="[displayedColumns[0]]; sticky: true"
+    ></tr>
   </table>
-  <mat-paginator
-    [pageSizeOptions]="pageSizeOptions"
-    [length]="totalRecord"
-    [pageSize]="defaultPageSize"
-    showFirstLastButtons
-    (page)="onPageChange($event)"
-    >
-  </mat-paginator>
 </div>
