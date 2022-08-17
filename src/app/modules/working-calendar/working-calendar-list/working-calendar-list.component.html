@@ -1,13 +1,27 @@
 <div class="list-header">
   <h2>Working Calendar</h2>
-  <button
-    mat-flat-button
-    color="primary"
-    matTooltip="Add new working"
-    routerLink="create"
-  >
-    <mat-icon class="icon-18">add</mat-icon>
-  </button>
+
+  <div class="right-side">
+    <mat-form-field class="full-width">
+      <mat-label>Department</mat-label>
+      <mat-select placeholder="Department" [formControl]="departmentCtl">
+        <mat-option value="All">All</mat-option>
+        <mat-option
+          *ngFor="let department of department$ | async"
+          [value]="department.id"
+        >{{ department.name }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <button
+      mat-flat-button
+      color="primary"
+      matTooltip="Add new working"
+      routerLink="create"
+    >
+      <mat-icon class="icon-18">add</mat-icon>
+    </button>
+  </div>
 </div>
 <app-data-grid
   [columnConfig]="config"
