@@ -13,7 +13,6 @@
 <app-leave-request-filter
   [selfLeave]="configuration?.selfLeave || 0"
   (onSearch$)="search($event)"
-  (onClear$)="clear()"
 ></app-leave-request-filter>
 <app-data-grid
   [columnConfig]="config"

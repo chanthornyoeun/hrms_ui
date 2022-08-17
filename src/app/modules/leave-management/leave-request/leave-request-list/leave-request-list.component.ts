@@ -58,8 +58,6 @@ export class LeaveRequestListComponent extends Pagination<LeaveRequst> implement
         if (this.configuration.selfLeave) {
           this.removeEmployeeColumn();
         }
-        const queryParams: object = this.paginationHistoryService.getQueryParams()
-        this.list(this.pagination, ParamsBuilder.build({ ...queryParams, ...this.configuration }));
       });
   }
 

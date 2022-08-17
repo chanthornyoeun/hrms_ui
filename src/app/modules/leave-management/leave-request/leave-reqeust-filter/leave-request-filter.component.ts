@@ -24,7 +24,6 @@ export class LeaveRequestFilterComponent implements OnInit {
 
   @Input() selfLeave!: number;
   @Output() onSearch$: EventEmitter<LeaveRequestFilter> = new EventEmitter<LeaveRequestFilter>();
-  @Output() onClear$: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
     private leaveTypeService: LeaveTypeService,
@@ -45,7 +44,11 @@ export class LeaveRequestFilterComponent implements OnInit {
         }
       });
       this.filterForm.patchValue(params);
+      if (!params['fromDate'] || !params['toDate']) {
+        this.paginationHistoryService.updateQueryParams(this.filterForm.value);
+      }
     }
+    this.search();
   }
 
   private buildForm() {
@@ -67,7 +70,7 @@ export class LeaveRequestFilterComponent implements OnInit {
       employeeId: 'All'
     }
     this.filterForm.reset(defaultFilter);
-    this.onClear$.emit();
+    this.search();
   }
 
   search() {
