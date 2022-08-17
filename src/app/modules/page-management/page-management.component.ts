@@ -6,6 +6,8 @@ import { DialogAction } from 'src/app/enums/dialog-action.enum';
 import { Page } from 'src/app/models/page';
 import { PageService } from 'src/app/services/page.service';
 import { PageFormComponent } from './page-form/page-form.component';
+import { LoaderService } from '../../shared/components/loader/loader.service';
+import { finalize } from 'rxjs/operators';
 
 /** Flat node with expandable and level information */
 export interface FlatNode extends Page {
@@ -48,14 +50,21 @@ export class PageManagementComponent implements OnInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(private pageService: PageService, private dialog: MatDialog) { }
+  constructor(
+    private pageService: PageService,
+    private loaderService: LoaderService,
+    private dialog: MatDialog
+  ) { }
 
   hasChild = (_: number, node: FlatNode) => node.expandable;
 
   private getPages() {
-    this.pageService.getPagesAsTree().subscribe(res => {
-      this.dataSource.data = res.data;
-    });
+    this.loaderService.show();
+    this.pageService.getPagesAsTree()
+      .pipe(finalize(() => this.loaderService.hide()))
+      .subscribe(res => {
+        this.dataSource.data = res.data;
+      });
   }
 
   openForm(page?: Page) {
