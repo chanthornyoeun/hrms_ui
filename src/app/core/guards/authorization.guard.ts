@@ -16,7 +16,6 @@ export class AuthorizationGuard implements CanActivate {
   ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     const url: string = state.url.split('/')[1];
     const isAuthorized: boolean = this.pageService.hasPermission(url);
-    console.log(isAuthorized);
     if (!isAuthorized) {
       this.router.navigate(['/unauthorized']);
     }
