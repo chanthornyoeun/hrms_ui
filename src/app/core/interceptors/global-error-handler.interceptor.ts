@@ -42,7 +42,6 @@ export class GlobalErrorHandlerInterceptor implements HttpInterceptor {
         break;
       case StatusCodeEnum.FORBIDDEN:
       case StatusCodeEnum.BAD_REQUEST:
-      case StatusCodeEnum.BAD_REQUEST:
       case StatusCodeEnum.NOT_FOUND:
       case StatusCodeEnum.INTERNAL_SERVER_ERROR:
         message = evt.error.message;
