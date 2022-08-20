@@ -85,7 +85,7 @@ export class MyCalendarComponent implements OnInit {
             return 'Weekend';
         }
 
-        return event.isAttend ? 'Attend' : 'Not Preset';
+        return event.isAttend ? 'Attend' : 'Not Present';
     }
 
     onOptionChange(options: CalendarFilter) {
