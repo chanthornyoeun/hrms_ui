@@ -10,19 +10,25 @@ export class NotificationService {
   private message$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   currentMessage$: Observable<any> = this.message$.asObservable();
 
-  constructor(private angularFireMessaging: AngularFireMessaging) { }
+  constructor(
+    private angularFireMessaging: AngularFireMessaging
+  ) { }
 
-  getToken(): Promise<string | null | undefined> {
-    return this.angularFireMessaging.getToken.toPromise();
+  getToken(): Observable<string | null> {
+    return this.angularFireMessaging.getToken;
   }
 
-  requestPermission() {
-    this.angularFireMessaging.requestToken.subscribe(token => {
-      // TODO: update device's token
-    });
+  /**
+   * Request permission
+   */
+  requestToken(): Observable<string | null> {
+    return this.angularFireMessaging.requestToken;
   }
 
-  receiveMessage() {
+  /**
+   * Dispatch message to observable
+   */
+  receiveMessage(): void {
     this.angularFireMessaging.messages.subscribe(message => this.message$.next(message));
   }
 

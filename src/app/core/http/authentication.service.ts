@@ -32,11 +32,14 @@ export class AuthenticationService {
       )
   }
 
-  logout(deviceToken: string): void {
-    this.http.post(ApiEndPointEnum.LOGOUT, { deviceToken }).subscribe(_ => {
-      this.credentialService.removeCredential();
-      this.router.navigate(['/auth/login']);
-    });
+  logout(deviceToken: string | null): Observable<ResponseDTO> {
+    return this.http.post<ResponseDTO>(ApiEndPointEnum.LOGOUT, { deviceToken })
+      .pipe(
+        tap(_ => {
+          this.credentialService.removeCredential();
+          this.router.navigate(['/auth/login']);
+        })
+      );
   }
 
 }

@@ -13,10 +13,10 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private responsiveService: ResponsiveService,
     private notificationService: NotificationService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
-    this.notificationService.requestPermission();
+    this.notificationService.receiveMessage();
   }
 
   ngOnDestroy(): void {

@@ -9,6 +9,7 @@ export enum ApiEndPointEnum {
     HOLIDAY = '/api/holiday',
     LOGIN = '/api/auth/login',
     LOGOUT = '/api/auth/logout',
+    DEVICE_TOKEN = '/api/auth/current-user-device-token',
     LEAVE_REQUEST = '/api/leave-request',
     CURRENT_USER = '/api/auth/current-user',
     CANCEL_LEAVE_REQUEST = '/api/leave-request-cancel',

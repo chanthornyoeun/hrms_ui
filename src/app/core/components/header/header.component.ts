@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
-import { map, shareReplay } from "rxjs/operators";
+import { map, shareReplay, switchMap } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { CredentialService } from "../../http/credential.service";
 import { Router } from "@angular/router";
@@ -39,7 +39,10 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.notificationService.getToken().then(token => this.authService.logout(token!));
+    this.notificationService
+      .getToken()
+      .pipe(switchMap(token => this.authService.logout(token)))
+      .subscribe();
   }
 
 }
