@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://174.138.24.155:8090',
+  API_URL: 'https://hr-ocean.com:8090',
   X_API_KEY: 'aHJtcy1wcm9qZWN0LXhhcGlrZXktc2Vj',
   dateFormat: 'dd-MMM-yyyy',
   dateTimeFormat: 'dd-MMM-yyyy hh:mm a',
