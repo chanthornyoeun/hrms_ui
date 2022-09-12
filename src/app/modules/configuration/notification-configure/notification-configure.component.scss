@@ -1,0 +1,54 @@
+.notification-table {
+    .notification-table__head {
+        display: flex;
+        flex-direction: row;
+        border-bottom: 1px solid rgb(202, 202, 202);
+
+        .notification-table__head__item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 65px;
+            width: 16%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 18px;
+            font-weight: 500;
+
+            &:first-child {
+                text-align: left;
+                flex-grow: 1;
+            }
+        }
+    }
+
+    .notification-table__body {
+        .notification-table__row {
+            display: flex;
+            flex-direction: row;
+            border-top: 1px solid #e9e9e9;
+            border-bottom: 1px solid #e9e9e9;
+            padding: 10px 0;
+
+            .notification-table__body__item {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                height: 65px;
+                text-align: center;
+                width: 16%;
+
+                &:first-child {
+                    text-align: left;
+                    flex-grow: 1;
+                }
+            }
+        }
+    }
+
+
+}
+
+table {
+    width: 100%;
+}

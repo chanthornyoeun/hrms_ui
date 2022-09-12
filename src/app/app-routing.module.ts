@@ -105,6 +105,10 @@ const routes: Routes = [
         canActivate: [AuthorizationGuard],
         loadChildren: () => import('./modules/my-calendar/my-calendar.module').then(m => m.MyCalendarModule)
       },
+      {
+        path: 'notifications-config',
+        loadChildren: () => import('./modules/configuration/notification-configure/notification-configure.module').then(m => m.NotificationConfigureModule)
+      },
     ]
   },
   {
