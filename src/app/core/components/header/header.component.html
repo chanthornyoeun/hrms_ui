@@ -18,21 +18,26 @@
 
   <div class="right">
     <button mat-icon-button routerLink="/notifications" (click)="clearBadgeCount()">
-      <mat-icon [matBadge]="badgeCount$ | async" matBadgeSize="medium" matBadgeColor="warn"
-        >notifications</mat-icon
-      >
+      <ng-container *ngIf="(badgeCount$ | async) as badgeCount; else emptyNotification">
+        <mat-icon [matBadge]="badgeCount" matBadgeSize="medium" matBadgeColor="warn"
+          >notifications</mat-icon
+        >
+      </ng-container>
+      <ng-template #emptyNotification>
+        <mat-icon>notifications</mat-icon>
+      </ng-template>
     </button>
 
     <img
-     
+
     class="avatar"
-   
+
       [src]="profilePicture"
-   
+
       [matMenuTriggerFor]="menuRef"
-   
+
       *ngIf="profilePicture; else normalBtn"
-  
+
       alt="User's Profile"
     />
     <ng-template #normalBtn>
