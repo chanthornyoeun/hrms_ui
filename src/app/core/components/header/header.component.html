@@ -1,28 +1,53 @@
-<mat-toolbar color="primary" class="header-top">
-  <button
-    type="button"
-    aria-label="Toggle sidenav"
-    mat-icon-button
-    (click)="toggle.emit()"
-    *ngIf="isHandset$ | async"
-  >
-    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-  </button>
-  <span>HRMS</span>
-  <img class="avatar" [src]="profilePicture" [matMenuTriggerFor]="menuRef" *ngIf="profilePicture; else normalBtn"/>
-  <ng-template #normalBtn>
-    <button mat-icon-button [matMenuTriggerFor]="menuRef">
-      <mat-icon>account_circle</mat-icon>
+<mat-toolbar
+  color="primary"
+  class="header-top"
+  [style.height]="responsive.isSmall ? '48px' : '56px'"
+>
+  <div class="branding">
+    <button
+      type="button"
+      aria-label="Toggle sidenav"
+      mat-icon-button
+      (click)="toggle.emit()"
+      *ngIf="isHandset$ | async"
+    >
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
-  </ng-template>
+    <span>HRMS</span>
+  </div>
 
-  <mat-menu #menuRef="matMenu">
-    <button mat-menu-item (click)="goToProfile()">
-      <mat-icon>account_circle</mat-icon> Profile
+  <div class="right">
+    <button mat-icon-button routerLink="/notifications" (click)="clearBadgeCount()">
+      <mat-icon [matBadge]="badgeCount$ | async" matBadgeSize="medium" matBadgeColor="warn"
+        >notifications</mat-icon
+      >
     </button>
-    <mat-divider></mat-divider>
-    <button mat-menu-item (click)="logout()">
-      <mat-icon>logout</mat-icon> Logout
-    </button>
-  </mat-menu>
+
+    <img
+     
+    class="avatar"
+   
+      [src]="profilePicture"
+   
+      [matMenuTriggerFor]="menuRef"
+   
+      *ngIf="profilePicture; else normalBtn"
+  
+      alt="User's Profile"
+    />
+    <ng-template #normalBtn>
+      <button mat-icon-button [matMenuTriggerFor]="menuRef">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </ng-template>
+    <mat-menu #menuRef="matMenu">
+      <button mat-menu-item (click)="goToProfile()">
+        <mat-icon>account_circle</mat-icon> Profile
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon> Logout
+      </button>
+    </mat-menu>
+  </div>
 </mat-toolbar>

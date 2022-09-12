@@ -35,4 +35,12 @@ export enum ApiEndPointEnum {
     CURRENT_USER_PAGE = '/api/role-page-current-account',
     ROLE_PAGE = '/api/role-page',
     CALENDAR = '/api/calendar',
+    NOTIFICATION = '/api/notification',
+    NOTIFICATION_BADGE_COUNT = '/api/user-badge-count',
+    CLEAR_BADGE_COUNT = '/api/notification-clear-badge-count',
+    MARK_AS_READ = '/api/notification-mark-as-read',
+    MARK_ALL_AS_READ = '/api/notification-mark-all-as-read',
+    MARK_AS_UNREAD = '/api/notification-mark-as-unread',
+    MARK_ALL_AS_UNREAD = '/api/notification-mark-all-as-unread',
+    REMOVE_ALL_NOTIFICATION = '/api/notification-remove-all',
 }

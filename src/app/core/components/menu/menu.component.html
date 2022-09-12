@@ -5,6 +5,7 @@
     <a
       mat-list-item
       routerLinkActive="router-link-active"
+      [routerLinkActiveOptions]={exact:true}
       [routerLink]="childPage.url"
       *ngFor="let childPage of page.children"
       >{{ childPage.name }}</a
@@ -13,6 +14,7 @@
   <ng-template #linkTemplate>
     <a
       mat-list-item
+      [routerLinkActiveOptions]={exact:true}
       routerLinkActive="router-link-active"
       [routerLink]="page.url"
       >{{ page.name }}</a

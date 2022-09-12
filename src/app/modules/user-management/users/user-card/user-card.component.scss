@@ -1,0 +1,18 @@
+.user {
+    display: flex;
+    gap: 1rem;
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: .225rem;
+
+        span {
+            word-break: break-all;
+        }
+    }
+}
+
+.mat-title {
+    margin-bottom: 0;
+}

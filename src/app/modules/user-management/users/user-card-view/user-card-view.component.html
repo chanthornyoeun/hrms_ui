@@ -1,0 +1,14 @@
+<div
+  class="card-view"
+  infinite-scroll
+  [scrollWindow]="false"
+  (scrolled)="onScrollDown($event)"
+>
+  <app-user-card [user]="user" *ngFor="let user of users"></app-user-card>
+  <div class="empty-data" *ngIf="users.length == 0 && !isLoading">
+    No Data, <a mat-button (click)="refresh()">Refresh</a>
+  </div>
+  <div style="background-color: grey; padding: 1rem" *ngIf="isLoading">
+    Fetching...
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<mat-card *ngIf="user">
+  <mat-card-content>
+    <div class="user">
+      <app-avatar
+        [employee]="user.employee"
+        width="56px"
+        height="56px"
+      ></app-avatar>
+
+      <div class="content">
+        <span class="mat-title">{{ user.employee?.name }}</span>
+        <span class="username">{{ user.username }}</span>
+        <span class="email">{{ user.email }}</span>
+        <div class="roles">
+          <mat-chip-list>
+            <mat-chip
+              selected
+              color="primary"
+              *ngFor="let role of user.roles"
+              >{{ role.roleName }}</mat-chip
+            >
+            <mat-chip *ngIf="user.roles.length <= 0">No Role</mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

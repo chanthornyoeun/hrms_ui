@@ -1,0 +1,16 @@
+.card-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: calc(100vh - 195px);
+    overflow-y: auto;
+}
+
+
+.empty-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}

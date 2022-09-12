@@ -1,0 +1,14 @@
+<ng-container *ngIf="employee">
+  <img
+    [style]="{ width, height, 'min-width': width, 'min-height': height }"
+    [src]="employee.profilePhoto"
+    alt="Picture"
+    *ngIf="employee.profilePhoto; else avatarContent"
+  />
+
+  <ng-template #avatarContent>
+    <div class="avatar-content" [style]="{ width: width, height: height }">
+      {{ employee.name | initials }}
+    </div>
+  </ng-template>
+</ng-container>

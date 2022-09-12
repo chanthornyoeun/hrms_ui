@@ -109,6 +109,10 @@ const routes: Routes = [
         path: 'notifications-config',
         loadChildren: () => import('./modules/configuration/notification-configure/notification-configure.module').then(m => m.NotificationConfigureModule)
       },
+      {
+        path: 'notifications',
+        loadChildren: () => import('./modules/notification/notification.module').then(m => m.NotificationModule)
+      },
     ]
   },
   {

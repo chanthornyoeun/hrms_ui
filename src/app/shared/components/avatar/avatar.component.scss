@@ -1,0 +1,14 @@
+img,
+.avatar-content {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: white;
+    background-color: #0000008a;
+}

@@ -13,6 +13,7 @@ import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.compon
 import { NavigationComponent } from "./components/navigation/navigation.component";
 import { HeaderComponent } from './components/header/header.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 
@@ -33,7 +34,8 @@ import { MenuComponent } from './components/menu/menu.component';
     MatIconModule,
     MatListModule,
     MatMenuModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatBadgeModule
   ]
 })
 export class CoreModule { }

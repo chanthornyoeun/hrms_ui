@@ -15,11 +15,13 @@ import { LoaderComponent } from "./loader/loader.component";
 import { LoaderService } from "./loader/loader.service";
 import { ConfirmationComponent } from "./confirmation/confirmation.component";
 import { ConfirmationService } from './confirmation/confirmation.service';
+import { AvatarComponent } from './avatar/avatar.component';
 
 const comps = [
   DataGridComponent,
   LoaderComponent,
-  ConfirmationComponent
+  ConfirmationComponent,
+  AvatarComponent
 ];
 
 @NgModule({

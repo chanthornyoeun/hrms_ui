@@ -1,0 +1,104 @@
+<div class="notification" [style.width]="width">
+  <div class="header">
+    <div class="mat-h1">Notifications</div>
+    <button
+      mat-icon-button
+      matTooltip="More actions"
+      [matMenuTriggerFor]="notificationRef"
+    >
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+    <mat-menu #notificationRef="matMenu">
+      <button mat-menu-item (click)="markAllAsRead()">
+        <mat-icon>done_all</mat-icon>Mark all as read
+      </button>
+      <button mat-menu-item (click)="markAllAsUnread()">
+        <mat-icon>done_all</mat-icon>Mark all as unread
+      </button>
+      <button mat-menu-item (click)="clearAllNotifications()">
+        <mat-icon>close</mat-icon>Clear all notifications
+      </button>
+      <button mat-menu-item routerLink="/notifications-config">
+        <mat-icon>settings</mat-icon>Notification Settings
+      </button>
+    </mat-menu>
+  </div>
+  <div class="notification-content">
+    <mat-chip-list [formControl]="filterCtl">
+      <mat-chip
+        style="cursor: pointer"
+        [value]="option"
+        *ngFor="let option of options"
+        (click)="filterChanged(option)"
+        >{{ option }}</mat-chip
+      >
+    </mat-chip-list>
+
+    <div class="mat-h2">Leave Request</div>
+    <div
+      class="notification-items"
+      infinite-scroll
+      [scrollWindow]="false"
+      (scrolled)="onScrollDown($event)"
+    >
+      <div class="item" *ngFor="let content of contents; let idx = index" (click)="viewLeaveDetails(content)">
+        <div class="left">
+          <app-avatar
+            class="avatar"
+            [employee]="content.data.data.body.employee"
+            width="56px"
+            height="56px"
+          ></app-avatar>
+          <div class="content">
+            <div class="details">
+              <div [ngSwitch]="content.data.data.body.status">
+                <div *ngSwitchCase="'Approved'">
+                  {{ content.data.data.body.approvedBy.name }} has been approved
+                  your leave request.
+                </div>
+                <div *ngSwitchCase="'Rejected'">
+                  {{ content.data.data.body.rejectedBy.name }} has been rejected
+                  your leave request.
+                </div>
+                <div *ngSwitchCase="'Cancelled'">
+                  {{ content.data.data.body.cancelledBy.name }} has been
+                  cancelled leave request.
+                </div>
+                <div *ngSwitchDefault>
+                  {{ content.data.data.body.employee.name }} has been sent a
+                  leave request for approval.
+                </div>
+              </div>
+            </div>
+            <div class="timestamp" [ngClass]="{ unread: !content.isRead }">
+              {{ content.lifeTimeStamp }}
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button mat-icon-button class="icon" [matMenuTriggerFor]="menuRef">
+            <mat-icon class="mat-18">more_horiz</mat-icon>
+          </button>
+          <mat-menu #menuRef="matMenu">
+            <button mat-menu-item (click)="viewLeaveDetails(content)">
+              <mat-icon>visibility</mat-icon>View leave details
+            </button>
+            <button mat-menu-item *ngIf="!content.isRead" (click)="markAsRead(content)">
+              <mat-icon>done</mat-icon>Mark as read
+            </button>
+            <button mat-menu-item *ngIf="content.isRead" (click)="markAsUnread(content)">
+              <mat-icon>done</mat-icon>Mark as unread
+            </button>
+            <button mat-menu-item (click)="removeNotification(content, idx)">
+              <mat-icon>close</mat-icon>Remove this notification
+            </button>
+          </mat-menu>
+          <div
+            class="unread"
+            [ngStyle]="{ visibility: !content.isRead ? 'visible' : 'hidden' }"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
