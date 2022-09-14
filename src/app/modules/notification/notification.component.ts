@@ -1,11 +1,12 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, map, shareReplay, finalize } from 'rxjs';
+import { Observable, map, shareReplay, finalize, switchMap, Subject, takeUntil } from 'rxjs';
 import { Credential, CredentialService } from 'src/app/core/http/credential.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { LoaderService } from 'src/app/shared/components/loader/loader.service';
 import { ParamsBuilder } from 'src/app/utilities/params-builder';
 
 @Component({
@@ -13,7 +14,7 @@ import { ParamsBuilder } from 'src/app/utilities/params-builder';
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.scss']
 })
-export class NotificationComponent implements OnInit {
+export class NotificationComponent implements OnInit, OnDestroy {
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -30,13 +31,16 @@ export class NotificationComponent implements OnInit {
   total: number = 0;
   isLoading: boolean = false;
   currentUser: Credential;
+  badgeCount$!: Observable<number>;
+
+  private _unsubscribeAll: Subject<void> = new Subject<void>();
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     private notificationService: NotificationService,
     private credentialService: CredentialService,
     private router: Router,
-    private fb: FormBuilder
+    private loaderService: LoaderService
   ) {
     this.currentUser = this.credentialService.getCredential();
   }
@@ -46,6 +50,17 @@ export class NotificationComponent implements OnInit {
     const params: HttpParams = ParamsBuilder.build({ offset: this.offset, limit: this.limit, type: 'LEAVE_REQUEST' });
     this.getNotifications(params);
     this.clearBadgeCount();
+    this.badgeCount$ = this.notificationService.currentMessage$.pipe(
+      switchMap(_ => this.notificationService.badgeCount$),
+      map(res => res.notificationBadge)
+    );
+    this.handleForceRefresh();
+  }
+
+  private handleForceRefresh() {
+    this.notificationService.forceRefresh$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(() => this.refresh());
   }
 
   getWidth() {
@@ -136,6 +151,18 @@ export class NotificationComponent implements OnInit {
     this.notificationService.clearBadgeCount().subscribe(_ => {
       this.notificationService.broadcastBadgeCount(0);
     });
+  }
+
+  refresh() {
+    this.contents = [];
+    this.clearBadgeCount();
+    const params: HttpParams = ParamsBuilder.build({ offset: 0, limit: this.limit, type: 'LEAVE_REQUEST' });
+    this.getNotifications(params);
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
 }

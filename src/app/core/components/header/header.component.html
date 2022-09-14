@@ -17,8 +17,8 @@
   </div>
 
   <div class="right">
-    <button mat-icon-button routerLink="/notifications" (click)="clearBadgeCount()">
-      <ng-container *ngIf="(badgeCount$ | async) as badgeCount; else emptyNotification">
+    <button mat-icon-button (click)="viewNotification()">
+      <ng-container *ngIf="badgeCount; else emptyNotification">
         <mat-icon [matBadge]="badgeCount" matBadgeSize="medium" matBadgeColor="warn"
           >notifications</mat-icon
         >

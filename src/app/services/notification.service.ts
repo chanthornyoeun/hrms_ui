@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, switchMap } from 'rxjs';
 import { ApiEndPointEnum } from '../enums/api-endpiont.enum';
 import { ResponseDTO } from '../models/response-dto';
 import { ParamsBuilder } from '../utilities/params-builder';
@@ -15,6 +15,9 @@ export class NotificationService {
   currentMessage$: Observable<any> = this.message$.asObservable();
   private _badgeCount$: BehaviorSubject<{ notificationBadge: number }> = new BehaviorSubject<{ notificationBadge: number }>({ notificationBadge: 0 });
   badgeCount$: Observable<{ notificationBadge: number }> = this._badgeCount$.asObservable();
+
+  private _forceRefresh$: Subject<void> = new Subject<void>();
+  forceRefresh$: Observable<void> = this._forceRefresh$.asObservable();
 
   constructor(
     private angularFireMessaging: AngularFireMessaging,
@@ -87,6 +90,10 @@ export class NotificationService {
    */
   receiveMessage(): void {
     this.angularFireMessaging.messages.subscribe(message => this.message$.next(message));
+  }
+
+  doRefresh(): void {
+    this._forceRefresh$.next();
   }
 
 }

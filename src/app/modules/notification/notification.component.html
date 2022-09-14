@@ -1,3 +1,15 @@
+<button
+  mat-button
+  class="refresh-btn"
+  color="primary"
+  *ngIf="badgeCount$ | async as badgeCount"
+  matTooltip="Click to see new notifications"
+  (click)="refresh()"
+>
+  <mat-icon>sync</mat-icon>
+  New notifications({{ badgeCount }})
+</button>
+
 <div class="notification" [style.width]="width">
   <div class="header">
     <div class="mat-h1">Notifications</div>
@@ -41,7 +53,11 @@
       [scrollWindow]="false"
       (scrolled)="onScrollDown($event)"
     >
-      <div class="item" *ngFor="let content of contents; let idx = index" (click)="viewLeaveDetails(content)">
+      <div
+        class="item"
+        *ngFor="let content of contents; let idx = index"
+        (click)="viewLeaveDetails(content)"
+      >
         <div class="left">
           <app-avatar
             class="avatar"
@@ -83,10 +99,18 @@
             <button mat-menu-item (click)="viewLeaveDetails(content)">
               <mat-icon>visibility</mat-icon>View leave details
             </button>
-            <button mat-menu-item *ngIf="!content.isRead" (click)="markAsRead(content)">
+            <button
+              mat-menu-item
+              *ngIf="!content.isRead"
+              (click)="markAsRead(content)"
+            >
               <mat-icon>done</mat-icon>Mark as read
             </button>
-            <button mat-menu-item *ngIf="content.isRead" (click)="markAsUnread(content)">
+            <button
+              mat-menu-item
+              *ngIf="content.isRead"
+              (click)="markAsUnread(content)"
+            >
               <mat-icon>done</mat-icon>Mark as unread
             </button>
             <button mat-menu-item (click)="removeNotification(content, idx)">

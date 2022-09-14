@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
       shareReplay()
     );
   profilePicture: string = '';
-  badgeCount$!: Observable<number>;
+  badgeCount: number = 0;
   @Output() toggle: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
@@ -38,7 +38,9 @@ export class HeaderComponent implements OnInit {
     this.notificationService.getBadgeCount().subscribe(res => {
       this.notificationService.broadcastBadgeCount(res.data.notificationBadge);
     });
-    this.badgeCount$ = this.notificationService.badgeCount$.pipe(map(res => res.notificationBadge));
+    this.notificationService.badgeCount$
+      .pipe(map(res => res.notificationBadge))
+      .subscribe(badgeCount => this.badgeCount = badgeCount);
   }
 
   goToProfile() {
@@ -52,10 +54,18 @@ export class HeaderComponent implements OnInit {
       .subscribe();
   }
 
-  clearBadgeCount() {
+  private clearBadgeCount() {
     this.notificationService.clearBadgeCount().subscribe(_ => {
       this.notificationService.broadcastBadgeCount(0);
     });
+  }
+
+  viewNotification() {
+    this.clearBadgeCount();
+    this.router.navigate(['/notifications']);
+    if (this.badgeCount > 0) {
+      this.notificationService.doRefresh();
+    }
   }
 
 }
