@@ -76,9 +76,9 @@
                   {{ content.data.data.body.rejectedBy.name }} has been rejected
                   your leave request.
                 </div>
-                <div *ngSwitchCase="'Cancelled'">
-                  {{ content.data.data.body.cancelledBy.name }} has been
-                  cancelled leave request.
+                <div *ngSwitchCase="'Canceled'">
+                  {{ content.data.data.body.canceledBy.name }} has been
+                  canceled leave request.
                 </div>
                 <div *ngSwitchDefault>
                   {{ content.data.data.body.employee.name }} has been sent a
