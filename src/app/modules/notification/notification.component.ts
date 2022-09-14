@@ -80,7 +80,8 @@ export class NotificationComponent implements OnInit, OnDestroy {
     this.getNotifications(params);
   }
 
-  private getNotifications(params: HttpParams = new HttpParams()) {
+  getNotifications(params: HttpParams = new HttpParams()) {
+    this.loaderService.show();
     this.notificationService.getNotifications(params)
       .pipe(
         map(res => {
@@ -88,7 +89,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
           this.total = res.total;
           return res.data;
         }),
-        finalize(() => this.isLoading = false))
+        finalize(() => this.loaderService.hide()))
       .subscribe(data => {
         this.contents.push(...data);
       });
