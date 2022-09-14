@@ -4,7 +4,7 @@
   color="primary"
   *ngIf="badgeCount$ | async as badgeCount"
   matTooltip="Click to see new notifications"
-  (click)="refresh()"
+  (click)="refreshNewContents()"
 >
   <mat-icon>sync</mat-icon>
   New notifications({{ badgeCount }})
@@ -50,8 +50,11 @@
     <div
       class="notification-items"
       infinite-scroll
-      [scrollWindow]="false"
-      (scrolled)="onScrollDown($event)"
+      [scrollWindow]="true"
+      [fromRoot]="true"
+      [infiniteScrollThrottle]="100"
+      infiniteScrollContainer=".mat-sidenav-content"
+      (scrolled)="onScrollDown()"
     >
       <div
         class="item"
@@ -77,8 +80,8 @@
                   your leave request.
                 </div>
                 <div *ngSwitchCase="'Canceled'">
-                  {{ content.data.data.body.canceledBy.name }} has been
-                  canceled leave request.
+                  {{ content.data.data.body.canceledBy.name }} has been canceled
+                  leave request.
                 </div>
                 <div *ngSwitchDefault>
                   {{ content.data.data.body.employee.name }} has been sent a

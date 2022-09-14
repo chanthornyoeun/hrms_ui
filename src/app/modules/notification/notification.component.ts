@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { HttpParams } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, map, shareReplay, finalize, switchMap, Subject, takeUntil } from 'rxjs';
@@ -12,7 +12,8 @@ import { ParamsBuilder } from 'src/app/utilities/params-builder';
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.scss']
+  styleUrls: ['./notification.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationComponent implements OnInit, OnDestroy {
 
@@ -27,7 +28,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   options: string[] = ['All', 'Read', 'Unread'];
   contents: any[] = [];
   offset: number = 0;
-  limit: number = 100;
+  limit: number = 20;
   total: number = 0;
   isLoading: boolean = false;
   currentUser: Credential;
@@ -40,15 +41,15 @@ export class NotificationComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private credentialService: CredentialService,
     private router: Router,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private cd: ChangeDetectorRef
   ) {
     this.currentUser = this.credentialService.getCredential();
   }
 
   ngOnInit(): void {
     this.getWidth();
-    const params: HttpParams = ParamsBuilder.build({ offset: this.offset, limit: this.limit, type: 'LEAVE_REQUEST' });
-    this.getNotifications(params);
+    this.getNotifications(this.getParams());
     this.clearBadgeCount();
     this.badgeCount$ = this.notificationService.currentMessage$.pipe(
       switchMap(_ => this.notificationService.badgeCount$),
@@ -70,17 +71,12 @@ export class NotificationComponent implements OnInit, OnDestroy {
   filterChanged(option: string) {
     if (this.filterCtl.value === option) return;
     this.filterCtl.setValue(option);
-    let params: HttpParams = ParamsBuilder.build({ offset: 0, limit: this.limit, type: 'LEAVE_REQUEST' });
     this.contents = [];
-    if (option === 'Unread') {
-      params = params.set('isRead', false);
-    } else if (option === 'Read') {
-      params = params.set('isRead', true);
-    }
-    this.getNotifications(params);
+    this.resetPagination();
+    this.getNotifications(this.getParams());
   }
 
-  getNotifications(params: HttpParams = new HttpParams()) {
+  getNotifications(params: HttpParams = new HttpParams(), options?: { clearContent: boolean }) {
     this.loaderService.show();
     this.notificationService.getNotifications(params)
       .pipe(
@@ -89,16 +85,37 @@ export class NotificationComponent implements OnInit, OnDestroy {
           this.total = res.total;
           return res.data;
         }),
-        finalize(() => this.loaderService.hide()))
-      .subscribe(data => {
-        this.contents.push(...data);
+        finalize(() => this.loaderService.hide())
+      )
+      .subscribe(contents => {
+        if (options && options.clearContent) {
+          this.contents = contents;
+        } else {
+          this.contents.push(...contents);
+        }
+        this.cd.markForCheck();
       });
   }
 
-  onScrollDown($event: any) {
-    console.log($event);
-    const params: HttpParams = ParamsBuilder.build({ offset: this.offset, limit: this.limit, type: 'LEAVE_REQUEST' });
-    this.getNotifications(params);
+  private getParams(): HttpParams {
+    let params: HttpParams = ParamsBuilder.build({ offset: this.offset, limit: this.limit, type: 'LEAVE_REQUEST' });
+    const option = this.filterCtl.value;
+    if (option === 'Unread') {
+      params = params.set('isRead', false);
+    } else if (option === 'Read') {
+      params = params.set('isRead', true);
+    }
+    return params;
+  }
+
+  onScrollDown() {
+    this.getNotifications(this.getParams());
+  }
+
+  private resetPagination(): void {
+    this.offset = 0;
+    this.total = 0;
+    this.limit = 20;
   }
 
   viewLeaveDetails(content: any): void {
@@ -117,11 +134,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   markAllAsRead() {
-    this.notificationService.markAllAsRead().subscribe(_ => {
-      this.contents = [];
-      const params: HttpParams = ParamsBuilder.build({ offset: 0, limit: this.limit, type: 'LEAVE_REQUEST' });
-      this.getNotifications(params);
-    });
+    this.notificationService.markAllAsRead().subscribe(_ => this.refresh());
   }
 
   markAsUnread(content: any): void {
@@ -131,11 +144,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   markAllAsUnread() {
-    this.notificationService.markAllAsUnread().subscribe(_ => {
-      this.contents = [];
-      const params: HttpParams = ParamsBuilder.build({ offset: 0, limit: this.limit, type: 'LEAVE_REQUEST' });
-      this.getNotifications(params);
-    });
+    this.notificationService.markAllAsUnread().subscribe(_ => this.refresh());
   }
 
   removeNotification(content: any, index: number): void {
@@ -154,11 +163,15 @@ export class NotificationComponent implements OnInit, OnDestroy {
     });
   }
 
-  refresh() {
-    this.contents = [];
+
+  refreshNewContents() {
     this.clearBadgeCount();
-    const params: HttpParams = ParamsBuilder.build({ offset: 0, limit: this.limit, type: 'LEAVE_REQUEST' });
-    this.getNotifications(params);
+    this.refresh();
+  }
+
+  private refresh() {
+    this.resetPagination();
+    this.getNotifications(this.getParams(), { clearContent: true });
   }
 
   ngOnDestroy(): void {
