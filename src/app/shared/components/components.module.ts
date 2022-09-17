@@ -16,6 +16,7 @@ import { LoaderService } from "./loader/loader.service";
 import { ConfirmationComponent } from "./confirmation/confirmation.component";
 import { ConfirmationService } from './confirmation/confirmation.service';
 import { AvatarComponent } from './avatar/avatar.component';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 const comps = [
   DataGridComponent,
@@ -37,7 +38,8 @@ const comps = [
     MatProgressSpinnerModule,
     MatDialogModule,
     RouterModule,
-    PipesModule
+    PipesModule,
+    LazyLoadImageModule
   ],
   exports: comps,
   providers: [LoaderService, ConfirmationService]

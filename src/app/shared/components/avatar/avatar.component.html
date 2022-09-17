@@ -1,8 +1,9 @@
 <ng-container *ngIf="employee">
   <img
+    class="avatar-content"
     [style]="{ width, height, 'min-width': width, 'min-height': height }"
-    [src]="employee.profilePhoto"
-    alt="Picture"
+    [lazyLoad]="employee.profilePhoto"
+    alt="Avatar"
     *ngIf="employee.profilePhoto; else avatarContent"
   />
 
