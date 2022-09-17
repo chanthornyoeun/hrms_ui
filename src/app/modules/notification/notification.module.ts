@@ -9,13 +9,16 @@ import { MaterialCompModule } from 'src/app/shared/material-comp/material-comp.m
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ComponentsModule } from 'src/app/shared/components/components.module';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { NotificationSkeletonComponent } from './notification-skeleton/notification-skeleton.component';
 
 
 
 @NgModule({
   declarations: [
     NotificationComponent,
-    NotificationItemComponent
+    NotificationItemComponent,
+    NotificationSkeletonComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +28,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ComponentsModule,
     InfiniteScrollModule,
     ScrollingModule,
+    NgxSkeletonLoaderModule,
   ]
 })
 export class NotificationModule { }

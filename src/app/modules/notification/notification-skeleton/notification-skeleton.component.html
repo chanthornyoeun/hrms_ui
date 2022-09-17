@@ -1,0 +1,19 @@
+<div class="item" *ngFor="let item of items">
+  <div class="left">
+    <ngx-skeleton-loader
+      id="avatar"
+      appearance="circle"
+      [theme]="{ height: '56px', width: '56px', margin: '0' }"
+    ></ngx-skeleton-loader>
+    <div class="content">
+      <ngx-skeleton-loader
+        animation="progress"
+        [theme]="{ height: '14px', width, 'margin-bottom': '0' }"
+      ></ngx-skeleton-loader>
+      <ngx-skeleton-loader
+        animation="progress"
+        [theme]="{ height: '12px', width: '100px', 'margin-bottom': '0' }"
+      ></ngx-skeleton-loader>
+    </div>
+  </div>
+</div>

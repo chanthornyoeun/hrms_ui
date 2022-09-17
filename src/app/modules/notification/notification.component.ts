@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { Observable, map, shareReplay, finalize, switchMap, Subject, takeUntil } from 'rxjs';
 import { Credential, CredentialService } from 'src/app/core/http/credential.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { LoaderService } from 'src/app/shared/components/loader/loader.service';
 import { ParamsBuilder } from 'src/app/utilities/params-builder';
 
 @Component({
@@ -41,7 +40,6 @@ export class NotificationComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private credentialService: CredentialService,
     private router: Router,
-    private loaderService: LoaderService,
     private cd: ChangeDetectorRef
   ) {
     this.currentUser = this.credentialService.getCredential();
@@ -77,7 +75,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   getNotifications(params: HttpParams = new HttpParams(), options?: { clearContent: boolean }) {
-    this.loaderService.show();
+    this.isLoading = true;
     this.notificationService.getNotifications(params)
       .pipe(
         map(res => {
@@ -85,7 +83,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
           this.total = res.total;
           return res.data;
         }),
-        finalize(() => this.loaderService.hide())
+        finalize(() => this.isLoading = false)
       )
       .subscribe(contents => {
         if (options && options.clearContent) {
