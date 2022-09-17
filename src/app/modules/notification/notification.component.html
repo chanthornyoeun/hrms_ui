@@ -47,21 +47,21 @@
     </mat-chip-list>
 
     <div class="mat-h2">Leave Request</div>
-    <div
+    <cdk-virtual-scroll-viewport
       class="notification-items"
+      itemSize="80"
       infinite-scroll
-      [scrollWindow]="true"
-      [fromRoot]="true"
-      [infiniteScrollThrottle]="100"
-      infiniteScrollContainer=".mat-sidenav-content"
+      [scrollWindow]="false"
+      [infiniteScrollDistance]="1"
+      [infiniteScrollUpDistance]="1"
+      [infiniteScrollThrottle]="500"
       (scrolled)="onScrollDown()"
     >
       <div
+        *cdkVirtualFor="let content of contents; let idx = index"
         class="item"
-        *ngFor="let content of contents; let idx = index"
-        (click)="viewLeaveDetails(content)"
       >
-        <div class="left">
+        <div class="left" (click)="viewLeaveDetails(content)">
           <app-avatar
             class="avatar"
             [employee]="content.data.data.body.employee"
@@ -122,10 +122,12 @@
           </mat-menu>
           <div
             class="unread"
-            [ngStyle]="{ visibility: !content.isRead ? 'visible' : 'hidden' }"
+            [ngStyle]="{
+              visibility: !content.isRead ? 'visible' : 'hidden'
+            }"
           ></div>
         </div>
       </div>
-    </div>
+    </cdk-virtual-scroll-viewport>
   </div>
 </div>

@@ -28,7 +28,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   options: string[] = ['All', 'Read', 'Unread'];
   contents: any[] = [];
   offset: number = 0;
-  limit: number = 20;
+  limit: number = 10;
   total: number = 0;
   isLoading: boolean = false;
   currentUser: Credential;
@@ -91,7 +91,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
         if (options && options.clearContent) {
           this.contents = contents;
         } else {
-          this.contents.push(...contents);
+          this.contents = [...this.contents, ...contents];
         }
         this.cd.markForCheck();
       });
@@ -109,13 +109,15 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   onScrollDown() {
-    this.getNotifications(this.getParams());
+    if (this.offset < this.total) {
+      this.getNotifications(this.getParams());
+    }
   }
 
   private resetPagination(): void {
     this.offset = 0;
     this.total = 0;
-    this.limit = 20;
+    this.limit = 10;
   }
 
   viewLeaveDetails(content: any): void {

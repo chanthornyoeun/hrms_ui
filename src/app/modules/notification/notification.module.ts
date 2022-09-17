@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialCompModule } from 'src/app/shared/material-comp/material-comp.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ComponentsModule } from 'src/app/shared/components/components.module';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 
@@ -22,7 +23,8 @@ import { ComponentsModule } from 'src/app/shared/components/components.module';
     ReactiveFormsModule,
     MaterialCompModule,
     ComponentsModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    ScrollingModule,
   ]
 })
 export class NotificationModule { }
