@@ -21,10 +21,18 @@
       <mat-icon>more_horiz</mat-icon>
     </button>
     <mat-menu #notificationRef="matMenu">
-      <button mat-menu-item (click)="markAllAsRead()">
+      <button
+        mat-menu-item
+        *ngIf="filterCtl.value == 'Unread' || filterCtl.value == 'All'"
+        (click)="markAllAsRead()"
+      >
         <mat-icon>done_all</mat-icon>Mark all as read
       </button>
-      <button mat-menu-item (click)="markAllAsUnread()">
+      <button
+        mat-menu-item
+        *ngIf="filterCtl.value == 'Read' || filterCtl.value == 'All'"
+        (click)="markAllAsUnread()"
+      >
         <mat-icon>done_all</mat-icon>Mark all as unread
       </button>
       <button mat-menu-item (click)="clearAllNotifications()">
