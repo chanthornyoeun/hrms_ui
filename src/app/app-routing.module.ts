@@ -107,10 +107,12 @@ const routes: Routes = [
       },
       {
         path: 'notifications-config',
+        canActivate: [AuthorizationGuard],
         loadChildren: () => import('./modules/configuration/notification-configure/notification-configure.module').then(m => m.NotificationConfigureModule)
       },
       {
         path: 'notifications',
+        canActivate: [AuthorizationGuard],
         loadChildren: () => import('./modules/notification/notification.module').then(m => m.NotificationModule)
       },
     ]
