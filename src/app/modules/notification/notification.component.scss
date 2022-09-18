@@ -94,6 +94,7 @@ $unreadColor: #2E89FF;
         display: flex;
         gap: 1rem;
         align-items: center;
+        flex-grow: 1;
 
         .content {
             display: flex;
