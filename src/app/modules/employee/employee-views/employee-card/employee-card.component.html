@@ -13,7 +13,12 @@
         <span class="name"
           >{{ employee.firstName }} {{ employee.lastName }}</span
         >
-        <span class="position">{{ employee.position?.position }}</span>
+        <ng-container *ngIf="employee.position; else noPosition">
+          <span class="position">{{ employee.position?.position }}</span>
+        </ng-container>
+        <ng-template #noPosition>
+          <span class="position">No position</span>
+        </ng-template>
         <div class="badge" [class]="employee.isActive ? 'active' : 'inactive'">
           {{ employee.isActive ? "Active" : "Inactive" }}
         </div>

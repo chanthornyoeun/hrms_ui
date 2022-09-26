@@ -1,3 +1,7 @@
+<app-employee-search-form
+  (onSearch$)="search($event)"
+  (onClear$)="clear()"
+></app-employee-search-form>
 <div
   class="card-view"
   infiniteScroll
@@ -14,6 +18,10 @@
     *ngFor="let employee of employees"
   ></app-employee-card>
 </div>
+
+<ng-container *ngIf="total === 0 && !isLoading">
+  <div class="mat-h2 no-emp">No Employees!</div>
+</ng-container>
 
 <ng-container *ngIf="isLoading">
   <app-employee-card-skeleton class="card-view"></app-employee-card-skeleton>
