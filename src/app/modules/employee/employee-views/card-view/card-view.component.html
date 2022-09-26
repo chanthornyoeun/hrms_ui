@@ -14,3 +14,7 @@
     *ngFor="let employee of employees"
   ></app-employee-card>
 </div>
+
+<ng-container *ngIf="isLoading">
+  <app-employee-card-skeleton class="card-view"></app-employee-card-skeleton>
+</ng-container>

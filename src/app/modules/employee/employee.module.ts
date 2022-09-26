@@ -36,6 +36,8 @@ import { EmployeeCardComponent } from './employee-views/employee-card/employee-c
 import { EmployeeViewsComponent } from './employee-views/employee-views.component';
 import { MaterialCompModule } from 'src/app/shared/material-comp/material-comp.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { EmployeeCardSkeletonComponent } from './employee-views/employee-card-skeleton/employee-card-skeleton.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     CardViewComponent,
     EmployeeCardComponent,
     EmployeeViewsComponent,
+    EmployeeCardSkeletonComponent
   ],
   imports: [
     CommonModule,
@@ -66,7 +69,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MaterialCompModule,
     ReactiveFormsModule,
     SharedModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    NgxSkeletonLoaderModule
   ],
   providers: [
     DATEPICKER_PROVIDER,

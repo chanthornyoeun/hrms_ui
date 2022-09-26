@@ -28,6 +28,7 @@ export class CardViewComponent implements OnInit {
   }
 
   getEmployees(params?: HttpParams): void {
+    this.isLoading = true;
     this.employeeService.list({ params })
       .pipe(
         map(res => {
