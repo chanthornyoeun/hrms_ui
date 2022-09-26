@@ -1,9 +1,9 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs';
+import { finalize, map } from 'rxjs';
 import { Employee } from 'src/app/models/employee';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { LoaderService } from 'src/app/shared/components/loader/loader.service';
-import { ResponsiveService } from '../../../../services/responsive.service';
+import { ParamsBuilder } from 'src/app/utilities/params-builder';
 
 @Component({
   selector: 'app-card-view',
@@ -12,23 +12,39 @@ import { ResponsiveService } from '../../../../services/responsive.service';
 })
 export class CardViewComponent implements OnInit {
 
-  employees!: Employee[];
+  employees: Employee[] = [];
+  offset: number = 0;
+  limit: number = 20;
+  total: number = 0;
+  isLoading: boolean = false;
 
   constructor(
-    private employeeService: EmployeeService,
-    private loaderService: LoaderService,
-    public responsive: ResponsiveService
+    private employeeService: EmployeeService
   ) { }
 
   ngOnInit(): void {
-    this.getEmployees();
+    const params: HttpParams = ParamsBuilder.build({ offset: 0, limit: this.limit });
+    this.getEmployees(params);
   }
 
-  getEmployees() {
-    this.loaderService.show();
-    this.employeeService.list()
-      .pipe(finalize(() => this.loaderService.hide()))
-      .subscribe(res => this.employees = res.data);
+  getEmployees(params?: HttpParams): void {
+    this.employeeService.list({ params })
+      .pipe(
+        map(res => {
+          this.offset = this.offset + this.limit;
+          this.total = res.total;
+          return res.data;
+        }),
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe(employees => {
+        this.employees.push(...employees);
+      });
+  }
+
+  onScrollDown(): void {
+    const params: HttpParams = ParamsBuilder.build({ offset: this.offset, limit: this.limit });
+    this.getEmployees(params);
   }
 
 }

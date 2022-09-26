@@ -1,17 +1,5 @@
 .card-view {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 24px;
-
-    &.is-phone-portrait {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    &.is-handset {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
 }

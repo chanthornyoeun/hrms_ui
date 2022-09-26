@@ -1,9 +1,13 @@
 <div
   class="card-view"
-  [ngClass]="{
-    'is-phone-portrait': responsive.isSmall,
-    'is-handset': responsive.isHandset
-  }"
+  infiniteScroll
+  [scrollWindow]="true"
+  [fromRoot]="true"
+  infiniteScrollContainer=".mat-sidenav-content"
+  [infiniteScrollDistance]="1"
+  [infiniteScrollUpDistance]="1"
+  [infiniteScrollThrottle]="500"
+  (scrolled)="onScrollDown()"
 >
   <app-employee-card
     [employee]="employee"
