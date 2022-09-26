@@ -1,13 +1,14 @@
 .search-area {
-    display: flex;
-    flex-direction: row;
-    gap: .5rem;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    column-gap: 24px;
 }
 
 .actions {
     display: flex;
     gap: .5rem;
+    align-self: center;
+    margin-bottom: 1rem;
 }
 
 button {

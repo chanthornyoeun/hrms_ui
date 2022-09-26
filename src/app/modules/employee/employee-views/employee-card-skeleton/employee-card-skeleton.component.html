@@ -1,0 +1,51 @@
+<mat-card *ngFor="let item of items">
+  <mat-card-content>
+    <div class="card-container">
+      <div class="head">
+        <ngx-skeleton-loader
+          id="avatar"
+          appearance="circle"
+          [theme]="{ height: '86px', width: '86px', margin: '0' }"
+        ></ngx-skeleton-loader>
+        <ngx-skeleton-loader
+          animation="progress"
+          [theme]="{ height: '14px', width: '150px', margin: '0' }"
+        ></ngx-skeleton-loader>
+        <ngx-skeleton-loader
+          animation="progress"
+          [theme]="{
+            height: '12px',
+            width: '60px',
+            margin: '0',
+            'border-radius': '20px'
+          }"
+        ></ngx-skeleton-loader>
+      </div>
+      <div class="details">
+        <ng-template [ngTemplateOutlet]="detials"></ng-template>
+        <ng-template [ngTemplateOutlet]="detials"></ng-template>
+        <ng-template [ngTemplateOutlet]="detials"></ng-template>
+      </div>
+      <ngx-skeleton-loader
+        class="button"
+        animation="progress"
+        [theme]="{ height: '34px', width: '100%', margin: '0' }"
+      ></ngx-skeleton-loader>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #detials>
+  <div class="item">
+    <ngx-skeleton-loader
+      class="icon"
+      appearance="circle"
+      [theme]="{ height: '24px', width: '24px', margin: '0' }"
+    ></ngx-skeleton-loader>
+    <ngx-skeleton-loader
+      class="text"
+      animation="progress"
+      [theme]="{ height: '14px', 'margin-bottom': '0' }"
+    ></ngx-skeleton-loader>
+  </div>
+</ng-template>

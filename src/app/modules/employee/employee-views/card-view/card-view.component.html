@@ -1,12 +1,28 @@
+<app-employee-search-form
+  (onSearch$)="search($event)"
+  (onClear$)="clear()"
+></app-employee-search-form>
 <div
   class="card-view"
-  [ngClass]="{
-    'is-phone-portrait': responsive.isSmall,
-    'is-handset': responsive.isHandset
-  }"
+  infiniteScroll
+  [scrollWindow]="true"
+  [fromRoot]="true"
+  infiniteScrollContainer=".mat-sidenav-content"
+  [infiniteScrollDistance]="1"
+  [infiniteScrollUpDistance]="1"
+  [infiniteScrollThrottle]="500"
+  (scrolled)="onScrollDown()"
 >
   <app-employee-card
     [employee]="employee"
     *ngFor="let employee of employees"
   ></app-employee-card>
 </div>
+
+<ng-container *ngIf="total === 0 && !isLoading">
+  <div class="mat-h2 no-emp">No Employees!</div>
+</ng-container>
+
+<ng-container *ngIf="isLoading">
+  <app-employee-card-skeleton class="card-view"></app-employee-card-skeleton>
+</ng-container>
