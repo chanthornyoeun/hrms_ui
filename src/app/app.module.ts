@@ -12,6 +12,11 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { environment } from '../environments/environment';
 import { DatePipe } from '@angular/common';
+import { PerfectScrollbarConfigInterface, PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
 
 @NgModule({
   declarations: [
@@ -29,7 +34,11 @@ import { DatePipe } from '@angular/common';
   providers: [
     MAT_FORM_FIELD_PROVIDER,
     HTTP_INTERCEPTOR_PROVIDER,
-    DatePipe
+    DatePipe,
+    {
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+    },
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,4 @@
 <mat-toolbar
-  color="primary"
   class="header-top"
   [style.height]="responsive.isSmall ? '48px' : '56px'"
 >
@@ -9,7 +8,6 @@
       aria-label="Toggle sidenav"
       mat-icon-button
       (click)="toggle.emit()"
-      *ngIf="isHandset$ | async"
     >
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
@@ -19,7 +17,10 @@
   <div class="right">
     <button mat-icon-button (click)="viewNotification()">
       <ng-container *ngIf="badgeCount; else emptyNotification">
-        <mat-icon [matBadge]="badgeCount" matBadgeSize="medium" matBadgeColor="warn"
+        <mat-icon
+          [matBadge]="badgeCount"
+          matBadgeSize="medium"
+          matBadgeColor="warn"
           >notifications</mat-icon
         >
       </ng-container>
@@ -29,15 +30,10 @@
     </button>
 
     <img
-
-    class="avatar"
-
+      class="avatar"
       [src]="profilePicture"
-
       [matMenuTriggerFor]="menuRef"
-
       *ngIf="profilePicture; else normalBtn"
-
       alt="User's Profile"
     />
     <ng-template #normalBtn>

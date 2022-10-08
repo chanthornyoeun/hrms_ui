@@ -1,23 +1,45 @@
-<mat-nav-list *ngFor="let page of pages">
-  <ng-container *ngIf="page.type === 'Dropdown'; else linkTemplate">
-    <h3 class="group">{{ page.name }}</h3>
-    <mat-divider></mat-divider>
-    <a
-      mat-list-item
-      routerLinkActive="router-link-active"
-      [routerLinkActiveOptions]={exact:true}
-      [routerLink]="childPage.url"
-      *ngFor="let childPage of page.children"
-      >{{ childPage.name }}</a
-    >
+<mat-nav-list *ngFor="let page of pages" class="nav">
+  <ng-container *ngIf="page.type === 'Dropdown'">
+    <div class="dropdown-nav">
+      <span>{{ page.name }}</span>
+    </div>
+    <ng-container *ngFor="let childPage of page.children">
+      <ng-container
+        *ngTemplateOutlet="linkTemplate; context: { $implicit: childPage }"
+      ></ng-container>
+    </ng-container>
   </ng-container>
-  <ng-template #linkTemplate>
-    <a
-      mat-list-item
-      [routerLinkActiveOptions]={exact:true}
-      routerLinkActive="router-link-active"
-      [routerLink]="page.url"
-      >{{ page.name }}</a
-    >
-  </ng-template>
+
+  <ng-container *ngIf="page.type === 'Link'">
+    <ng-container
+      *ngTemplateOutlet="linkTemplate; context: { $implicit: page }"
+    ></ng-container>
+  </ng-container>
 </mat-nav-list>
+
+<ng-template #linkTemplate let-page>
+  <a
+    class="nav-item"
+    mat-list-item
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLinkActive="router-link-active"
+    [routerLink]="page.url"
+  >
+    <div class="item-content">
+      <ng-container *ngIf="page.icon | customIcon; else normalIcon">
+        <object
+          class="svg-icon"
+          [data]="page.icon | customIconName"
+          type="image/svg+xml"
+          width="24px"
+          height="24px"
+          title="Icon"
+        ></object>
+      </ng-container>
+      <ng-template #normalIcon>
+        <mat-icon class="mat-18">{{ page.icon }}</mat-icon>
+      </ng-template>
+      <span>{{ page.name }}</span>
+    </div>
+  </a>
+</ng-template>
