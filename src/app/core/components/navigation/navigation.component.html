@@ -7,13 +7,17 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <img
-      src="../../../../assets/images/logo_with_name.png"
-      width="100%"
-      alt="Company Logo"
-    />
-    <mat-divider></mat-divider>
-    <app-menu></app-menu>
+    <perfect-scrollbar>
+      <div class="branding">
+        <img
+          class="logo"
+          src="../../../../assets/images/bird_logo.png"
+          alt="Company Logo"
+        />
+        <h2>Business Cambodia</h2>
+      </div>
+      <app-menu></app-menu>
+    </perfect-scrollbar>
   </mat-sidenav>
   <mat-sidenav-content>
     <app-header (toggle)="drawer.toggle()"></app-header>

@@ -4,7 +4,7 @@ export interface Page {
     name: string;
     type?: string;
     url?: string;
-    icon?: string;
+    icon: string;
     orderNo?: number;
     description?: string;
     roleChecked?: boolean;

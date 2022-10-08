@@ -1,7 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
-import { map, shareReplay, switchMap } from "rxjs/operators";
-import { Observable } from "rxjs";
+import { map, switchMap } from "rxjs/operators";
 import { CredentialService } from "../../http/credential.service";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../http/authentication.service";
@@ -15,18 +13,12 @@ import { NotificationService } from '../../../services/notification.service';
 })
 export class HeaderComponent implements OnInit {
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Small])
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
   profilePicture: string = '';
   badgeCount: number = 0;
   @Output() toggle: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
     private router: Router,
-    private breakpointObserver: BreakpointObserver,
     private credentialService: CredentialService,
     private authService: AuthenticationService,
     public responsive: ResponsiveService,
