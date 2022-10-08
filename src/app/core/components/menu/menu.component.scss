@@ -35,7 +35,13 @@ $primary-color: #3F51B5;
 }
 
 .router-link-active {
-  background-color: $primary-color;
+  background-color: $primary-color !important;
   color: #FFFFFF !important;
   margin: 1px 0;
+}
+
+@media (hover: none) {
+  .nav-item:not(.router-link-active):hover {
+    color: black !important;
+  }
 }
