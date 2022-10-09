@@ -1,0 +1,26 @@
+<div matDialogTitle>
+  <h1>
+    Assign Roles to <strong>{{ data.employee?.name }}</strong>
+  </h1>
+  <button
+    mat-icon-button
+    color="warn"
+    matTooltip="Close"
+    (click)="closeDialog()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-dialog-content>
+  <mat-checkbox
+    color="primary"
+    [checked]="isExist(role.id)"
+    *ngFor="let role of role$ | async"
+    (change)="toggleRole($event.checked, role)"
+    >{{ role.name }}</mat-checkbox
+  >
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-flat-button color="primary" (click)="submit()">Save</button>
+  <button mat-button color="warn" (click)="closeDialog()">Cancel</button>
+</mat-dialog-actions>

@@ -9,6 +9,7 @@
         <ng-container *ngIf="col.type === 'actions'; else normalColumn">
           <ng-container *ngFor="let action of columnConfig.rowActions">
             <a
+              *ngIf="action.link; else clickTemplate"
               mat-icon-button
               [color]="action.color"
               [matTooltip]="action.tooltip!"
@@ -17,6 +18,17 @@
             >
               <mat-icon class="mat-18">{{ action.icon }}</mat-icon>
             </a>
+            <ng-template #clickTemplate>
+              <a
+                mat-icon-button
+                [color]="action.color"
+                [matTooltip]="action.tooltip!"
+                routerLinkActive="router-link-active"
+                (click)="action.click ? action.click(element) : null"
+              >
+                <mat-icon class="mat-18">{{ action.icon }}</mat-icon>
+              </a>
+            </ng-template>
           </ng-container>
         </ng-container>
         <ng-template #normalColumn>
@@ -61,7 +73,11 @@
         </mat-paginator>
       </td>
       <tr class="mat-row" *matNoDataRow>
-        <td mat-cell [attr.colspan]="displayedColumns.length" style="text-align: center;">
+        <td
+          mat-cell
+          [attr.colspan]="displayedColumns.length"
+          style="text-align: center"
+        >
           No data
         </td>
       </tr>
