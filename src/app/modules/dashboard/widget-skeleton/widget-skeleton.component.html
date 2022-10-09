@@ -1,0 +1,33 @@
+<div class="widget" *ngFor="let item of items">
+  <div class="left">
+    <ngx-skeleton-loader
+      class="title"
+      [theme]="{ height: '18px', width: '150px', margin: '0' }"
+    ></ngx-skeleton-loader>
+    <div class="counter" style="display: flex; gap: 0.5rem">
+      <ngx-skeleton-loader
+        [theme]="{ height: '24px', width: '5px', margin: '0' }"
+      ></ngx-skeleton-loader>
+      <ngx-skeleton-loader
+        [theme]="{ height: '24px', width: '5px', margin: '0' }"
+      ></ngx-skeleton-loader>
+      <ngx-skeleton-loader
+        [theme]="{ height: '24px', width: '5px', margin: '0' }"
+      ></ngx-skeleton-loader>
+    </div>
+    <ngx-skeleton-loader
+      class="title"
+      [theme]="{ height: '12px', width: '150px', margin: '0' }"
+    ></ngx-skeleton-loader>
+  </div>
+  <div class="right">
+    <ngx-skeleton-loader
+      class="title"
+      [theme]="{ height: '18px', width: '50px', margin: '0' }"
+    ></ngx-skeleton-loader>
+    <ngx-skeleton-loader
+      class="title"
+      [theme]="{ height: '24px', width: '24px', margin: '0' }"
+    ></ngx-skeleton-loader>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+.widgets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin: 0.5rem;
+  padding-bottom: 1.5rem;
+}

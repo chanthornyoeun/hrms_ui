@@ -1,0 +1,18 @@
+<div class="widget" *ngIf="widget">
+  <div class="left">
+    <span class="title">{{ widget.title }}</span>
+    <span class="counter">{{ widget.counter | number }}</span>
+    <span
+      class="link"
+      [matTooltip]="widget.link.text"
+      [routerLink]="widget.link.url"
+      >{{ widget.link.text }}</span
+    >
+  </div>
+  <div class="right">
+    <div class="percentage" [ngClass]="widget.class">
+      {{ widget.percentage | percent: ".2" }}
+    </div>
+    <mat-icon [ngClass]="widget.class">{{ widget.icon }}</mat-icon>
+  </div>
+</div>

@@ -43,4 +43,5 @@ export enum ApiEndPointEnum {
     MARK_AS_UNREAD = '/api/notification-mark-as-unread',
     MARK_ALL_AS_UNREAD = '/api/notification-mark-all-as-unread',
     REMOVE_ALL_NOTIFICATION = '/api/notification-remove-all',
+    DASHBOARD_CARD = '/api/dashboard-data',
 }

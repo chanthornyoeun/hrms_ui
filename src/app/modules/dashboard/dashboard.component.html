@@ -1,0 +1,17 @@
+<h1 class="mat-h1" style="margin-left: 0.5rem">Dashboard</h1>
+
+<div class="widgets">
+  <ng-container *ngIf="!isLoading">
+    <app-widget
+      class="full-width"
+      *ngFor="let widget of widgets"
+      [widget]="widget"
+    ></app-widget>
+  </ng-container>
+  <ng-container *ngIf="isLoading">
+    <app-widget-skeleton
+      class="widgets"
+      style="margin: 0"
+    ></app-widget-skeleton>
+  </ng-container>
+</div>
