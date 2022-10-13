@@ -14,10 +14,6 @@ export class MessageService {
       horizontalPosition: 'end'
     };
 
-    if (this.responsiveService.isSmall) {
-      config.verticalPosition = 'bottom';
-    }
-
     this.snackbar.open(message, 'Ok', config);
   }
 
