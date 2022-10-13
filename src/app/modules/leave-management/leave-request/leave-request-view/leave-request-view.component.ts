@@ -119,7 +119,7 @@ export class LeaveRequestViewComponent implements OnInit {
     };
     const agreed: boolean = await this.confirmationService.confirm(confirmation).toPromise();
     if (agreed) {
-      this.leaveRequestService.cancel(this.requestId).subscribe(res => {
+      this.leaveRequestService.cancel(this.requestId, this.leaveRequestForm.value.comment).subscribe(res => {
         this.navigateToList();
         this.messageService.show('Your leave request has been canceled.');
       });

@@ -18,8 +18,8 @@ export class LeaveRequestService extends RestfulService {
     return ApiEndPointEnum.LEAVE_REQUEST;
   }
 
-  cancel(requestId: number): Observable<ResponseDTO> {
-    return this.http.post<ResponseDTO>(`${ApiEndPointEnum.CANCEL_LEAVE_REQUEST}/${requestId}`, {});
+  cancel(requestId: number, comment: string): Observable<ResponseDTO> {
+    return this.http.post<ResponseDTO>(`${ApiEndPointEnum.CANCEL_LEAVE_REQUEST}/${requestId}`, { comment });
   }
 
   calculateDays(payload: any): Observable<ResponseDTO> {
@@ -27,11 +27,11 @@ export class LeaveRequestService extends RestfulService {
   }
 
   reject(requestId: number, comment: string): Observable<ResponseDTO> {
-    return this.http.post<ResponseDTO>(`${ApiEndPointEnum.REJECT_LEAVE_REQUEST}/${requestId}`, {comment});
+    return this.http.post<ResponseDTO>(`${ApiEndPointEnum.REJECT_LEAVE_REQUEST}/${requestId}`, { comment });
   }
 
   approve(requestId: number, comment: string): Observable<ResponseDTO> {
-    return this.http.post<ResponseDTO>(`${ApiEndPointEnum.APPROVE_LEAVE_REQUEST}/${requestId}`, {comment});
+    return this.http.post<ResponseDTO>(`${ApiEndPointEnum.APPROVE_LEAVE_REQUEST}/${requestId}`, { comment });
   }
 
 }
