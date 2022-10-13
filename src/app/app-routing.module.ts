@@ -9,6 +9,11 @@ import { AuthLayoutComponent } from './core/layouts/auth-layout/auth-layout.comp
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: AdminLayoutComponent,
     canActivate: [AuthenticationGuard],
     children: [
