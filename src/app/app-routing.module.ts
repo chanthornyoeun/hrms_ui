@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationGuard } from './core/guards/authentication.guard';
+import { AuthlessGuard } from './core/guards/authless.guard';
 import { AuthorizationGuard } from './core/guards/authorization.guard';
 import { AdminLayoutComponent } from './core/layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './core/layouts/auth-layout/auth-layout.component';
@@ -124,6 +125,7 @@ const routes: Routes = [
   {
     path: '',
     component: AuthLayoutComponent,
+    canActivate: [AuthlessGuard],
     children: [
       {
         path: 'auth',
