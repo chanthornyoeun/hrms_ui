@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
-import { BehaviorSubject, Observable, Subject, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, skip, Subject, switchMap } from 'rxjs';
 import { ApiEndPointEnum } from '../enums/api-endpiont.enum';
 import { ResponseDTO } from '../models/response-dto';
 import { ParamsBuilder } from '../utilities/params-builder';
@@ -24,6 +24,7 @@ export class NotificationService {
     private http: HttpClient
   ) {
     this.currentMessage$.pipe(
+      skip(1),
       switchMap((res) => this.getBadgeCount())
     ).subscribe(res => {
       this.broadcastBadgeCount(res.data.notificationBadge);

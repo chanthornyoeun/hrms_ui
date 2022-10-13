@@ -6,6 +6,7 @@ export const environment = {
   dateTimeFormat: 'dd-MMM-yyyy hh:mm a',
   timeFormat: 'hh:mm a',
   fileDestination: 'LOCAL',
+  loginUrl: '/auth/login',
   firebaseConfig: {
     apiKey: "AIzaSyD6AiLKPTm_nl3gEEVlhzPXyEy19lfqlOo",
     authDomain: "hrms-815a7.firebaseapp.com",

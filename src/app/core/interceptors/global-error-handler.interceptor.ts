@@ -7,11 +7,12 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import {catchError, filter} from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { MessageService } from '../../shared/services/message.service';
 import { Router } from '@angular/router';
 import { CredentialService } from '../http/credential.service';
-import {StatusCodeEnum} from "../status-code.enum";
+import { StatusCodeEnum } from "../status-code.enum";
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class GlobalErrorHandlerInterceptor implements HttpInterceptor {
@@ -52,8 +53,10 @@ export class GlobalErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   private handleUnauthorized() {
-    this.router.navigate(['/auth/login'], {queryParams: {redirect: location.pathname}, replaceUrl: true});
-    this.credentialService.removeCredential();
+    if (location.pathname !== environment.loginUrl) {
+      this.router.navigate(['/auth/login'], { queryParams: { redirect: location.pathname }, replaceUrl: true });
+      this.credentialService.removeCredential();
+    }
   }
 
 }
