@@ -8,7 +8,7 @@ export interface Credential {
     profile: string;
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class CredentialService {
 
     private CREDENTIAL_KEY = 'credential';
@@ -20,16 +20,19 @@ export class CredentialService {
         return !!this.getCredential();
     }
 
-    setCredential(credential: Credential): void {
-        localStorage.setItem(this.CREDENTIAL_KEY, JSON.stringify(credential));
+    setCredential(credential: Credential, remember: boolean): void {
+        const storage = remember ? localStorage : sessionStorage;
+        storage.setItem(this.CREDENTIAL_KEY, JSON.stringify(credential));
     }
 
     getCredential(): Credential {
-        return JSON.parse(localStorage.getItem(this.CREDENTIAL_KEY)!);
+        const credentail: string = (sessionStorage.getItem(this.CREDENTIAL_KEY) || localStorage.getItem(this.CREDENTIAL_KEY))!;
+        return JSON.parse(credentail);
     }
 
     removeCredential(): void {
         localStorage.removeItem(this.CREDENTIAL_KEY);
+        sessionStorage.removeItem(this.CREDENTIAL_KEY);
     }
 
 }

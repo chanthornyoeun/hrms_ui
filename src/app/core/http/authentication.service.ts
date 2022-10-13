@@ -17,7 +17,7 @@ export class AuthenticationService {
     private credentialService: CredentialService
   ) { }
 
-  login(credential: any): Observable<ResponseDTO> {
+  login(credential: any, remember: boolean): Observable<ResponseDTO> {
     return this.http.post<ResponseDTO>(ApiEndPointEnum.LOGIN, credential)
       .pipe(
         tap(res =>
@@ -27,7 +27,7 @@ export class AuthenticationService {
             token: res.data.token,
             employeeId: res.data.employeeId,
             profile: res.data.employee?.profilePhoto
-          })
+          }, remember)
         )
       )
   }

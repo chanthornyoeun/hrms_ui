@@ -1,6 +1,14 @@
-<mat-card>
+<mat-card [class.sm-screen]="(isSmall$ | async)">
+  <div class="branding">
+    <img
+      class="logo"
+      src="../../../../assets/images/baksey_logo.png"
+      alt="Company Logo"
+    />
+  </div>
+  <mat-divider></mat-divider>
   <mat-card-content>
-    <form [formGroup]="signinForm">
+    <form [formGroup]="signinForm" class="login-form">
       <mat-form-field class="full-width" appearance="outline">
         <mat-label>Username</mat-label>
         <input
@@ -10,6 +18,13 @@
           name="username"
           placeholder="Username"
         />
+        <mat-error
+          *ngIf="
+            signinForm.get('username')?.errors &&
+            signinForm.get('username')?.touched
+          "
+          >Username is required.</mat-error
+        >
       </mat-form-field>
 
       <mat-form-field class="full-width" appearance="outline">
@@ -21,7 +36,19 @@
           name="password"
           placeholder="********"
         />
+        <mat-error
+          *ngIf="
+            signinForm.get('password')?.errors &&
+            signinForm.get('password')?.touched
+          "
+          >Password is required.</mat-error
+        >
       </mat-form-field>
+      <div style="margin-bottom: 1rem">
+        <mat-checkbox formControlName="remember" color="primary"
+          >Remember Me</mat-checkbox
+        >
+      </div>
       <button mat-flat-button color="primary" (click)="login()">Sign In</button>
     </form>
   </mat-card-content>

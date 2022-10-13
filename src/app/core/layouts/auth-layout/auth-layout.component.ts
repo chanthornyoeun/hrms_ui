@@ -9,6 +9,9 @@ import { Component } from '@angular/core';
         display: grid;
         place-content: center;
         height: 100vh;
+        background-image: url('../../../../assets/images/login_background.jpg');
+        background-repeat: norepeat;
+        background-size: cover;
       }
     `
   ]

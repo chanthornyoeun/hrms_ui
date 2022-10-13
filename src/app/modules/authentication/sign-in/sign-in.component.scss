@@ -1,0 +1,42 @@
+mat-card {
+    min-width: 300px;
+    width: 500px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.branding {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 3rem 0 !important;
+
+    .logo {
+        width: 350px;
+    }
+}
+
+.mat-card-content {
+    padding: 2rem;
+}
+
+.sm-screen {
+    width: calc(100vw - 66px);
+
+    .logo {
+        width: 250px;
+    }
+
+    .branding {
+        margin: 1.5rem 0 !important;
+    }
+
+    .mat-card-content {
+        padding: 1rem 0 0 0;
+    }
+}
