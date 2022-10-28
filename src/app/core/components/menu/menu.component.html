@@ -27,14 +27,7 @@
   >
     <div class="item-content">
       <ng-container *ngIf="page.icon | customIcon; else normalIcon">
-        <object
-          class="svg-icon"
-          [data]="page.icon | customIconName"
-          type="image/svg+xml"
-          width="24px"
-          height="24px"
-          title="Icon"
-        ></object>
+        <mat-icon svgIcon="{{ page.icon | customIconName }}"></mat-icon>
       </ng-container>
       <ng-template #normalIcon>
         <mat-icon class="mat-18">{{ page.icon }}</mat-icon>

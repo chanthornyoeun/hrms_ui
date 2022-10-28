@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ResponsiveService } from './services/responsive.service';
 import { NotificationService } from './services/notification.service';
+import { SvgIconService } from './services/svg-icon.service';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private responsiveService: ResponsiveService,
-    private notificationService: NotificationService
-  ) { }
+    private notificationService: NotificationService,
+    private svgIconService: SvgIconService
+  ) { 
+    this.svgIconService.registerIcons();
+  }
 
   ngOnInit(): void {
     this.notificationService.receiveMessage();
