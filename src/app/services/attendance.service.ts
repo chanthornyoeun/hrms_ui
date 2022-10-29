@@ -7,6 +7,7 @@ import { IRequestOptions } from "../core/http/restful.service";
 import { DateRange } from '../models/date-range';
 import { DateFormatService } from './date-format.service';
 import { ExportTypeEnum } from '../enums/export-type.enum';
+import { QrCodeAttendant } from '../models/qr-code-attendant';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,10 @@ export class AttendanceService {
 
   checkOut(): Observable<ResponseDTO> {
     return this.http.post<ResponseDTO>(ApiEndPointEnum.CHECK_OUT, {});
+  }
+
+  generateQrCode(payload: QrCodeAttendant) {
+    return this.http.post(ApiEndPointEnum.QR_CODE_ATTENDENT, payload, { responseType: 'arraybuffer' });
   }
 
 }

@@ -13,6 +13,8 @@ import { PaginationHistory, PaginationHistoryService } from 'src/app/services/pa
 import { ExportTypeEnum } from 'src/app/enums/export-type.enum';
 import { saveAs } from 'file-saver';
 import { DateFormatService } from 'src/app/services/date-format.service';
+import { MatDialog } from '@angular/material/dialog';
+import { QrCodeGeneratorComponent } from './qr-code-generator/qr-code-generator.component';
 
 
 @Component({
@@ -43,6 +45,7 @@ export class DailyAttendantComponent implements OnInit {
     private loaderService: LoaderService,
     private dateFormatService: DateFormatService,
     private paginationService: PaginationHistoryService,
+    private matDialog: MatDialog
   ) {
     this.pagination = this.paginationService.getPagination();
     this.paginationService.updateQueryParams(this.dateRange);
@@ -155,6 +158,14 @@ export class DailyAttendantComponent implements OnInit {
 
   private getParams(): HttpParams {
     return ParamsBuilder.build({ limit: this.pagination.pageSize, offset: this.pagination.offset, search: this.employeeCtl.value });
+  }
+
+  openDialog() {
+    const dialogRef = this.matDialog.open(QrCodeGeneratorComponent, {
+      width: '1000px',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe();
   }
 
 }

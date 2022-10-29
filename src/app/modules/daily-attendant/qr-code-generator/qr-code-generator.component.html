@@ -1,0 +1,86 @@
+<div matDialogTitle>
+  <h1>QR Code Generator</h1>
+  <button
+    mat-icon-button
+    color="warn"
+    matTooltip="Close"
+    (click)="closeDialog()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <form [formGroup]="qrCodeForm">
+    <div class="logo">
+      <img
+        class="company-logo"
+        [src]="qrCodeForm.get('logo')?.value"
+        alt="Logo"
+        matTooltip="Select a logo"
+        (click)="fileRef.click()"
+      />
+    </div>
+    <input type="file" #fileRef (change)="upload($event.target)" />
+    <mat-form-field>
+      <mat-label>Latitude</mat-label>
+      <input
+        matInput
+        formControlName="lat"
+        type="number"
+        required
+        cdkFocusInitial
+        placeholder="Latitude"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Longitude</mat-label>
+      <input
+        matInput
+        formControlName="lng"
+        type="number"
+        required
+        placeholder="Longitude"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        rows="3"
+        placeholder="Longitude"
+      ></textarea>
+    </mat-form-field>
+    <button type="button" mat-flat-button color="primary" (click)="generate()">
+      Generate
+    </button>
+  </form>
+
+  <mat-divider [vertical]="true" inset="true"></mat-divider>
+
+  <div class="qrcode-area">
+    <div *ngIf="file" class="qrcode">
+      <img [src]="qrcode" alt="QR CODE" id="qr" />
+      <button
+        *ngIf="file"
+        type="button"
+        mat-button
+        color="primary"
+        matTooltip="Save QR Code"
+        (click)="saveQrCode()"
+      >
+        <mat-icon class="mat-18">save</mat-icon> Save
+      </button>
+    </div>
+    <h4 *ngIf="!file && !isLoading">
+      Generate an QR Code from the left side.
+    </h4>
+    <mat-spinner
+      class="spinner"
+      *ngIf="isLoading"
+      strokeWidth="3"
+      [diameter]="40"
+    ></mat-spinner>
+  </div>
+</mat-dialog-content>

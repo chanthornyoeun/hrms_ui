@@ -1,0 +1,50 @@
+.mat-dialog-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mat-dialog-content {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.qrcode-area {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .qrcode {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.spinner {
+    position: absolute;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+img.company-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    background-color: grey;
+}
+
+input[type='file'] {
+    visibility: hidden;
+}

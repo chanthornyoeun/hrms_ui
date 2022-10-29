@@ -12,6 +12,7 @@ import { SelectCompsModule } from 'src/app/shared/select-comps/select-comps.modu
 import { ComponentsModule } from 'src/app/shared/components/components.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IsSameDayPipe } from './is-same-day.pipe';
+import { QrCodeGeneratorComponent } from './qr-code-generator/qr-code-generator.component';
 
 export const DATE_FORMAT = {
   display: {
@@ -38,6 +39,7 @@ export const DATEPICKER_PROVIDER = [
   declarations: [
     DailyAttendantComponent,
     IsSameDayPipe,
+    QrCodeGeneratorComponent,
   ],
   imports: [
     CommonModule,

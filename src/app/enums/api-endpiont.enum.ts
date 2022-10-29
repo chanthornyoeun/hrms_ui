@@ -45,4 +45,5 @@ export enum ApiEndPointEnum {
     MARK_ALL_AS_UNREAD = '/api/notification-mark-all-as-unread',
     REMOVE_ALL_NOTIFICATION = '/api/notification-remove-all',
     DASHBOARD_CARD = '/api/dashboard-data',
+    QR_CODE_ATTENDENT = '/api/qr-code/attendant',
 }

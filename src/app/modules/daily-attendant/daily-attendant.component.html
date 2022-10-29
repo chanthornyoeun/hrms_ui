@@ -21,6 +21,15 @@
       Check Out
     </button>
     <button
+      mat-flat-button
+      color="primary"
+      matTooltip="QR CODE Generator"
+      (click)="openDialog()"
+    >
+      <mat-icon class="icon-18">qr_code</mat-icon>
+      QR Code
+    </button>
+    <button
       mat-stroked-button
       color="primary"
       matTooltip="Export as Excel"
