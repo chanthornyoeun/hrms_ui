@@ -7,7 +7,6 @@ import { DateUtil } from "../../../../utilities/date-util";
 import { LeaveRequestService } from "../../../../services/leave-request.service";
 import { MessageService } from "../../../../shared/services/message.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { DatePipe } from "@angular/common";
 import { Moment } from "moment";
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
 import { finalize, map, pluck } from "rxjs/operators";
@@ -18,8 +17,7 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-leave-request-form',
   templateUrl: './leave-request-form.component.html',
-  styleUrls: ['./leave-request-form.component.scss'],
-  providers: [DatePipe]
+  styleUrls: ['./leave-request-form.component.scss']
 })
 export class LeaveRequestFormComponent implements OnInit {
 
@@ -48,7 +46,6 @@ export class LeaveRequestFormComponent implements OnInit {
     private employeeService: EmployeeService,
     private leaveRequestService: LeaveRequestService,
     private messageService: MessageService,
-    private datePipe: DatePipe,
     private loaderService: LoaderService,
     public responsive: ResponsiveService
   ) {
@@ -162,9 +159,8 @@ export class LeaveRequestFormComponent implements OnInit {
 
   getLeaveDays() {
     const leaveTypeId: number = this.leaveRequestForm.get('leaveTypeId')?.value;
-    const dateFormat: string = 'yyyy-MM-dd';
-    const fromDate: string = this.datePipe.transform(this.leaveRequestForm.get('fromDate')?.value, dateFormat) || '';
-    const toDate: string = this.datePipe.transform(this.leaveRequestForm.get('toDate')?.value, dateFormat) || '';
+    const fromDate: string = new Date(this.leaveRequestForm.get('fromDate')?.value).toISOString();
+    const toDate: string = DateUtil.clearTime(new Date(this.leaveRequestForm.get('toDate')?.value)).toISOString();
     const payload: any = {
       leaveTypeId,
       fromDate,
@@ -187,10 +183,9 @@ export class LeaveRequestFormComponent implements OnInit {
       return;
     }
 
-    const dateFormat: string = 'yyyy-MM-dd';
     const leaveRequest: any = this.leaveRequestForm.value;
-    leaveRequest.fromDate = this.datePipe.transform(leaveRequest.fromDate, dateFormat);
-    leaveRequest.toDate = this.datePipe.transform(leaveRequest.toDate, dateFormat);
+    leaveRequest.fromDate = new Date(leaveRequest.fromDate).toISOString();
+    leaveRequest.toDate = DateUtil.clearTime(new Date(leaveRequest.toDate)).toISOString();
     this.save(leaveRequest);
   }
 
