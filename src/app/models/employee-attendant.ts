@@ -4,4 +4,5 @@ export interface EmployeeAttendant {
     dayInFullWord: string;
     isAttend: boolean;
     isWeekend: boolean;
+    isOnLeave: boolean;
 }

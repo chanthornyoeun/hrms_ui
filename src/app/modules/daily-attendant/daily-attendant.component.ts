@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { LoaderService } from "../../shared/components/loader/loader.service";
 import { AttendanceService } from "../../services/attendance.service";
 import { Attendance } from 'src/app/models/attendance';
-import { debounceTime, distinctUntilChanged, finalize } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, map } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { DateRange } from 'src/app/models/date-range';
 import { DateUtil } from 'src/app/utilities/date-util';
@@ -15,6 +15,8 @@ import { saveAs } from 'file-saver';
 import { DateFormatService } from 'src/app/services/date-format.service';
 import { MatDialog } from '@angular/material/dialog';
 import { QrCodeGeneratorComponent } from './qr-code-generator/qr-code-generator.component';
+import { EmployeeService } from 'src/app/services/employee.service';
+import { Employee } from 'src/app/models/employee';
 
 
 @Component({
@@ -38,6 +40,11 @@ export class DailyAttendantComponent implements OnInit {
     toDate: DateUtil.getLastDayOfDate(this.selectedDate)
   };
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  roles: string[] = [];
+  isHRUser: boolean = false;
+  currentEmp!: Employee;
+  employeeId: number | null = null;
+  departmentId: number | null = null;
   private pagination: PaginationHistory;
 
   constructor(
@@ -45,6 +52,7 @@ export class DailyAttendantComponent implements OnInit {
     private loaderService: LoaderService,
     private dateFormatService: DateFormatService,
     private paginationService: PaginationHistoryService,
+    private employeeService: EmployeeService,
     private matDialog: MatDialog
   ) {
     this.pagination = this.paginationService.getPagination();
@@ -54,8 +62,35 @@ export class DailyAttendantComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAttendances(this.dateRange);
     this.employeeChange();
+    this.getCurrentUserRoles();
+  }
+
+  private getCurrentUserRoles() {
+    this.employeeService.getCurrentEmployee().pipe(
+      map(res => {
+        this.currentEmp = res.data['employee'];
+        return (res.data['roles'] as Array<any>).map(role => role['roleName']);
+      })
+    ).subscribe(roles => {
+      this.roles = roles;
+      this.isHRUser = this.roles.includes('HR') || this.roles.includes('ADMIN');
+      this.getAttendenceBaseOnRole(this.dateRange);
+    });
+  }
+
+  private getAttendenceBaseOnRole(dateRange: DateRange, params = new HttpParams()) {
+    if (this.roles.includes('MANAGER')) {
+      this.departmentId = this.currentEmp.department?.id
+      params = params.set('departmentId', `${this.departmentId}`);
+    }
+
+    if (this.roles.includes('USER') && !this.roles.includes('MANAGER') && !this.roles.includes('HR')) {
+      this.employeeId = this.currentEmp.id;
+      params = params.set('employeeId', `${this.employeeId}`);
+    }
+
+    this.getAttendances(dateRange, params);
   }
 
   private getAttendances(dateRange: DateRange, params = new HttpParams()) {
@@ -69,11 +104,11 @@ export class DailyAttendantComponent implements OnInit {
   }
 
   checkIn() {
-    this.attendanceService.checkIn().subscribe(_ => this.getAttendances(this.dateRange, this.getParams()));
+    this.attendanceService.checkIn().subscribe(_ => this.getAttendenceBaseOnRole(this.dateRange, this.getParams()));
   }
 
   checkOut() {
-    this.attendanceService.checkOut().subscribe(_ => this.getAttendances(this.dateRange, this.getParams()));
+    this.attendanceService.checkOut().subscribe(_ => this.getAttendenceBaseOnRole(this.dateRange, this.getParams()));
   }
 
   private generateNumberOfDay(date: Date): string[] {
@@ -111,7 +146,7 @@ export class DailyAttendantComponent implements OnInit {
       fromDate: DateUtil.getFirstDayOfDate(this.selectedDate),
       toDate: DateUtil.getLastDayOfDate(this.selectedDate)
     };
-    this.getAttendances(this.dateRange, ParamsBuilder.build({ search: this.employeeCtl.value }));
+    this.getAttendenceBaseOnRole(this.dateRange, ParamsBuilder.build({ search: this.employeeCtl.value }));
     this.paginationService.updateQueryParams(this.dateRange);
   }
 
@@ -130,13 +165,13 @@ export class DailyAttendantComponent implements OnInit {
         this.paginator.pageIndex = this.pagination.pageIndex;
         params = this.getParams();
       }
-      this.getAttendances(this.dateRange, params);
+      this.getAttendenceBaseOnRole(this.dateRange, params);
     });
   }
 
   exportExcel() {
     this.loaderService.show();
-    const params: HttpParams = ParamsBuilder.build({ limit: this.totalRecord, search: this.employeeCtl.value });
+    const params: HttpParams = ParamsBuilder.build({ limit: this.totalRecord, search: this.employeeCtl.value, departmentId: this.departmentId, employeeId: this.employeeId });
     this.attendanceService.export(ExportTypeEnum.EXCEL, this.dateRange, params)
       .pipe(finalize(() => this.loaderService.hide()))
       .subscribe(res => {
@@ -157,7 +192,7 @@ export class DailyAttendantComponent implements OnInit {
   }
 
   private getParams(): HttpParams {
-    return ParamsBuilder.build({ limit: this.pagination.pageSize, offset: this.pagination.offset, search: this.employeeCtl.value });
+    return ParamsBuilder.build({ limit: this.pagination.pageSize, offset: this.pagination.offset, search: this.employeeCtl.value, departmentId: this.departmentId, employeeId: this.employeeId });
   }
 
   openDialog() {
