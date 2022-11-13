@@ -150,6 +150,8 @@ export class NotificationComponent implements OnInit, OnDestroy {
   removeNotification(content: any, index: number): void {
     this.notificationService.removeNotification(content.id).subscribe(res => {
       this.contents.splice(index, 1);
+      this.contents = [...this.contents];
+      this.cd.markForCheck();
     });
   }
 
