@@ -7,7 +7,6 @@ import { DateUtil } from "../../../../utilities/date-util";
 import { LeaveRequestFilter } from "./leave-request-filter";
 import { Employee } from 'src/app/models/employee';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { DatePipe } from '@angular/common';
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 
 @Component({
@@ -29,14 +28,13 @@ export class LeaveRequestFilterComponent implements OnInit {
     private leaveTypeService: LeaveTypeService,
     private fb: FormBuilder,
     private employeeService: EmployeeService,
-    private datePipe: DatePipe,
     private paginationHistoryService: PaginationHistoryService
   ) {
     this.buildForm();
   }
 
   ngOnInit(): void {
-    const params: {[key: string]: any} = this.paginationHistoryService.getQueryParams();
+    const params: { [key: string]: any } = this.paginationHistoryService.getQueryParams();
     if (params) {
       Object.keys(params).forEach((key: string) => {
         if (params.hasOwnProperty(key) && params[key] === null) {
@@ -74,12 +72,11 @@ export class LeaveRequestFilterComponent implements OnInit {
   }
 
   search() {
-    const fromDate: Date = this.filterForm.get('fromDate')?.value;
-    const toDate: Date = this.filterForm.get('toDate')?.value;
-    const dateFormat: string = 'yyyy-MM-dd';
+    const fromDate: Date = new Date(this.filterForm.get('fromDate')?.value);
+    const toDate: Date = new Date(this.filterForm.get('toDate')?.value);
     const value = {
-      fromDate: this.datePipe.transform(fromDate, dateFormat),
-      toDate: this.datePipe.transform(toDate, dateFormat),
+      fromDate: fromDate.toISOString(),
+      toDate: toDate.toISOString(),
       leaveTypeId: this.filterForm.get('leaveTypeId')?.value === 'All' ? null : this.filterForm.get('leaveTypeId')?.value,
       status: this.filterForm.get('status')?.value === 'All' ? null : this.filterForm.get('status')?.value,
       employeeId: this.filterForm.get('employeeId')?.value === 'All' ? null : this.filterForm.get('employeeId')?.value

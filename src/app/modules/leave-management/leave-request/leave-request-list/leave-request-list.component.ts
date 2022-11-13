@@ -7,9 +7,12 @@ import { LoaderService } from "../../../../shared/components/loader/loader.servi
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 import { ParamsBuilder } from 'src/app/utilities/params-builder';
 import { Searchable } from 'src/app/shared/components/data-grid/searchable';
-import { LeaveRequst } from 'src/app/models/leave-requst';
+import { Employee, LeaveRequst } from 'src/app/models/leave-requst';
 import { ActivatedRoute } from "@angular/router";
 import { LeaveConfiguration } from "../models/leave-configuration";
+import { EmployeeService } from 'src/app/services/employee.service';
+import { map } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-leave-request-list',
@@ -21,6 +24,10 @@ export class LeaveRequestListComponent extends Pagination<LeaveRequst> implement
   @ViewChild(DataGridComponent) grid!: DataGridComponent;
   configuration: LeaveConfiguration = {};
   breadcrumb: string = '';
+  roles: string[] = [];
+  isHRUser: boolean | undefined = false;
+  currentEmp!: Employee;
+  invokedOnce: boolean = false;
 
   config: ColumnConfig = {
     columnDefs: [
@@ -45,7 +52,8 @@ export class LeaveRequestListComponent extends Pagination<LeaveRequst> implement
     private leaveRequestService: LeaveRequestService,
     protected ld: LoaderService,
     private pg: PaginationHistoryService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private employeeService: EmployeeService
   ) {
     super(leaveRequestService, ld, pg, true);
   }
@@ -61,12 +69,31 @@ export class LeaveRequestListComponent extends Pagination<LeaveRequst> implement
       });
   }
 
-  search($event: LeaveRequestFilter) {
-    this.pg.updateQueryParams($event);
+  private getCurrentUserRoles() {
+    return this.employeeService.getCurrentEmployee().pipe(
+      map(res => {
+        this.invokedOnce = true;
+        this.currentEmp = res.data['employee'];
+        this.roles = (res.data['roles'] as Array<any>).map(role => role['roleName']);
+        return this.roles.includes('HR') || this.roles.includes('ADMIN');
+      })
+    ).toPromise();
+  }
+
+  async search($event: LeaveRequestFilter) {
+    if (!this.invokedOnce) {
+      this.isHRUser = await this.getCurrentUserRoles();
+    }
+
+    let queryParams = { ...$event };
+    if (!this.isHRUser) {
+      queryParams = { ...$event, ...this.configuration };
+    }
+    this.pg.updateQueryParams(queryParams);
     this.pg.setPreviousPagination({ ...this.pagination });
     this.pagination.pageIndex = 0;
     this.pagination.offset = 0;
-    this.list(this.pagination, ParamsBuilder.build({ ...$event, ...this.configuration }));
+    this.list(this.pagination, ParamsBuilder.build(queryParams));
   }
 
   clear() {
