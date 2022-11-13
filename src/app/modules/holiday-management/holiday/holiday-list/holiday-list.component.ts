@@ -22,7 +22,7 @@ export class HolidayListComponent extends Pagination<Holiday> {
       { headerText: 'Group', field: 'groupId', renderer: record => record.group?.name },
       { headerText: 'Date', field: 'holidayDate', format: 'dateFormat' },
       { headerText: 'Active', field: 'isActive', format: 'active' },
-      { headerText: 'Description', field: 'description' },
+      { headerText: 'Description', field: 'description', format: 'excerpt' },
       { headerText: 'Actions', field: 'actions', type: 'actions' }
     ],
     rowActions: [
