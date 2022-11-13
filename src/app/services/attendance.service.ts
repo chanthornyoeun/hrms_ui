@@ -5,7 +5,6 @@ import { ApiEndPointEnum } from "../enums/api-endpiont.enum";
 import { Observable } from "rxjs";
 import { IRequestOptions } from "../core/http/restful.service";
 import { DateRange } from '../models/date-range';
-import { DateFormatService } from './date-format.service';
 import { ExportTypeEnum } from '../enums/export-type.enum';
 import { QrCodeAttendant } from '../models/qr-code-attendant';
 
@@ -16,7 +15,6 @@ export class AttendanceService {
 
   constructor(
     private http: HttpClient,
-    private dateFormatService: DateFormatService
   ) { }
 
   list(option?: IRequestOptions): Observable<ResponseDTO> {
@@ -25,16 +23,16 @@ export class AttendanceService {
 
   getAttendantsAsCalendar(dateRange: DateRange, params: HttpParams = new HttpParams()): Observable<ResponseDTO> {
     params = params
-      .set('fromDate', this.dateFormatService.format(dateRange.fromDate)!)
-      .set('toDate', this.dateFormatService.format(dateRange.toDate)!)
+      .set('fromDate', dateRange.fromDate.toISOString())
+      .set('toDate', dateRange.toDate.toISOString())
     return this.http.get<ResponseDTO>(ApiEndPointEnum.ATTENDANT_AS_CALENDAR, { params });
   }
 
   export(type: ExportTypeEnum, dateRange: DateRange, params: HttpParams = new HttpParams()): Observable<Blob> {
     params = params
       .set('type', type)
-      .set('fromDate', this.dateFormatService.format(dateRange.fromDate)!)
-      .set('toDate', this.dateFormatService.format(dateRange.toDate)!)
+      .set('fromDate', dateRange.fromDate.toISOString())
+      .set('toDate', dateRange.toDate.toISOString())
     return this.http.get(ApiEndPointEnum.ATTENDANT_EXPORT, { params, responseType: 'blob' });
   }
 
