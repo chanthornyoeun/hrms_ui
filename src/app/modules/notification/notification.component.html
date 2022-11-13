@@ -71,29 +71,52 @@
       >
         <div class="left" (click)="viewLeaveDetails(content)">
           <app-avatar
+            *ngIf="content.data.data.body.status == 'Pending'"
             class="avatar"
             [employee]="content.data.data.body.employee"
             width="56px"
             height="56px"
           ></app-avatar>
+          <app-avatar
+            *ngIf="content.data.data.body.status == 'Approved'"
+            class="avatar"
+            [employee]="content.data.data.body.approvedBy"
+            width="56px"
+            height="56px"
+          ></app-avatar>
+          <app-avatar
+            *ngIf="content.data.data.body.status == 'Rejected'"
+            class="avatar"
+            [employee]="content.data.data.body.rejectedBy"
+            width="56px"
+            height="56px"
+          ></app-avatar>
+          <app-avatar
+            *ngIf="content.data.data.body.status == 'Canceled'"
+            class="avatar"
+            [employee]="content.data.data.body.canceledBy"
+            width="56px"
+            height="56px"
+          ></app-avatar>
+
           <div class="content">
             <div class="details">
               <div [ngSwitch]="content.data.data.body.status">
                 <div *ngSwitchCase="'Approved'">
-                  {{ content.data.data.body.approvedBy.name }} has been approved
-                  your leave request.
-                </div>
-                <div *ngSwitchCase="'Rejected'">
-                  {{ content.data.data.body.rejectedBy.name }} has been rejected
-                  your leave request.
-                </div>
-                <div *ngSwitchCase="'Canceled'">
-                  {{ content.data.data.body.canceledBy.name }} has been canceled
+                  {{ content.data.data.body.approvedBy.name }} approved your
                   leave request.
                 </div>
+                <div *ngSwitchCase="'Rejected'">
+                  {{ content.data.data.body.rejectedBy.name }}
+                  rejected your leave request.
+                </div>
+                <div *ngSwitchCase="'Canceled'">
+                  {{ content.data.data.body.canceledBy.name }} canceled a leave
+                  request.
+                </div>
                 <div *ngSwitchDefault>
-                  {{ content.data.data.body.employee.name }} has been sent a
-                  leave request for approval.
+                  {{ content.data.data.body.employee.name }} sent a leave
+                  request for approval.
                 </div>
               </div>
             </div>
