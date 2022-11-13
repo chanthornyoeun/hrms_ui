@@ -61,7 +61,9 @@
 
     <ng-container *ngFor="let leaveRequest of event.leaveRequests">
       <app-item
-        title="{{ leaveRequest.employee.name }}'s Leave"
+        title="{{ leaveRequest.employee.name }}'s Leave({{
+          leaveRequest.status == 'Approved' ? 'A' : 'P'
+        }})"
         icon="person_off"
         color="red"
       ></app-item>
