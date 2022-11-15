@@ -25,7 +25,7 @@ export class WorkingCalendarListComponent extends Pagination<WorkingCalendar> im
 
   config: ColumnConfig = {
     columnDefs: [
-      { headerText: 'Id', field: 'id' },
+      { headerText: 'No.', field: 'id', format: 'autonumber' },
       { headerText: 'Department', field: 'departmentId', renderer: record => record.department?.name },
       { headerText: 'Day', field: 'day' },
       { headerText: 'Start Time', field: 'startTime' },

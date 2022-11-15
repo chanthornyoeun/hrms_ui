@@ -17,7 +17,7 @@ export class HolidayGroupListComponent extends Pagination<HolidayGroup> {
 
   config: ColumnConfig = {
     columnDefs: [
-      { headerText: 'Id', field: 'id' },
+      { headerText: 'No.', field: 'id', format: 'autonumber' },
       { headerText: 'Name', field: 'name' },
       { headerText: 'Description', field: 'description' },
       { headerText: 'Created Date', field: 'createdAt', format: 'dateFormat' },

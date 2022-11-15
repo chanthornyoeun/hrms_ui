@@ -22,7 +22,7 @@ export class PositionListComponent extends Pagination<Position> implements OnIni
 
   config: ColumnConfig = {
     columnDefs: [
-      { headerText: 'Id', field: 'id' },
+      { headerText: 'No.', field: 'id', format: 'autonumber' },
       { headerText: 'Name', field: 'position' },
       { headerText: 'Active', field: 'isActive', format: 'active' },
       { headerText: 'Created Date', field: 'createdAt', format: 'dateFormat' },

@@ -17,7 +17,7 @@ export class LeaveTypeListComponent extends Pagination<LeaveType> {
 
   config: ColumnConfig = {
     columnDefs: [
-      { headerText: 'Id', field: 'id' },
+      { headerText: 'No.', field: 'id', format: 'autonumber' },
       { headerText: 'Type', field: 'type' },
       { headerText: 'Allowance Days', field: 'allowanceDay' },
       { headerText: 'Active', field: 'isActive', format: 'active' },

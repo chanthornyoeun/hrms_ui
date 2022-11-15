@@ -17,7 +17,7 @@ export class RoleListComponent extends Pagination<Role> {
 
   config: ColumnConfig = {
     columnDefs: [
-      { headerText: 'Id', field: 'id' },
+      { headerText: 'No.', field: 'id', format: 'autonumber' },
       { headerText: 'Name', field: 'name' },
       { headerText: 'Active', field: 'isActive', format: 'active' },
       { headerText: 'Created Date', field: 'createdAt', format: 'dateFormat' },

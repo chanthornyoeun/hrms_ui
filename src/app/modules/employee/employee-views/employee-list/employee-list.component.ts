@@ -20,7 +20,7 @@ export class EmployeeListComponent extends Pagination<Employee> implements Searc
 
   config: ColumnConfig = {
     columnDefs: [
-      { headerText: 'Id', field: 'id' },
+      { headerText: 'No.', field: 'id', format: 'autonumber' },
       { headerText: 'Name', field: 'name' },
       { headerText: 'Gender', field: 'gender' },
       { headerText: 'Date of Birth', field: 'dateOfBirth', format: 'dateFormat' },

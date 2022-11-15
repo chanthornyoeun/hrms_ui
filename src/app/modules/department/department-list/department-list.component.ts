@@ -22,7 +22,7 @@ export class DepartmentListComponent extends Pagination<Department> implements O
 
   config: ColumnConfig = {
     columnDefs: [
-      { headerText: 'Id', field: 'id' },
+      { headerText: 'No.', field: 'id', format: 'autonumber' },
       { headerText: 'Name', field: 'name' },
       { headerText: 'Manager', field: 'managerId', renderer: record => record.manager?.firstName + ' ' + record.manager?.lastName },
       { headerText: 'Active', field: 'isActive', format: 'active' },

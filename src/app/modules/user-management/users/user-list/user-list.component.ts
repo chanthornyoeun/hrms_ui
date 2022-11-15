@@ -21,6 +21,7 @@ export class UserListComponent extends Pagination<any> {
 
   config: ColumnConfig = {
     columnDefs: [
+      { headerText: 'No.', field: 'id', format: 'autonumber' },
       { headerText: 'Employee', field: 'employee', renderer: user => `${user.employee?.firstName} ${user.employee?.lastName}` },
       { headerText: 'Username', field: 'username' },
       { headerText: 'Email', field: 'email' },

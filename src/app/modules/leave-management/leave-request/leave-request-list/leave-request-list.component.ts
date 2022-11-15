@@ -12,7 +12,6 @@ import { ActivatedRoute } from "@angular/router";
 import { LeaveConfiguration } from "../models/leave-configuration";
 import { EmployeeService } from 'src/app/services/employee.service';
 import { map } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-leave-request-list',
@@ -31,7 +30,7 @@ export class LeaveRequestListComponent extends Pagination<LeaveRequst> implement
 
   config: ColumnConfig = {
     columnDefs: [
-      { headerText: 'Id', field: 'id' },
+      { headerText: 'Id', field: 'id', format: 'autonumber' },
       { headerText: 'Type of Leave', field: 'leaveTypeId', renderer: record => record.leaveType.type },
       { headerText: 'Employee', field: 'employeeId', renderer: record => record.employee.firstName + ' ' + record.employee.lastName },
       { headerText: 'Applied On', field: 'createdAt', format: 'dateTimeFormat' },

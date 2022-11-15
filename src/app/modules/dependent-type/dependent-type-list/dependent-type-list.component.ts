@@ -17,7 +17,7 @@ export class DependentTypeListComponent extends Pagination<DependentType> {
 
   config: ColumnConfig = {
     columnDefs: [
-      { headerText: 'Id', field: 'id' },
+      { headerText: 'No.', field: 'id', format: 'autonumber' },
       { headerText: 'Short Description', field: 'shortDescription' },
       { headerText: 'Active', field: 'isActive', format: 'active' },
       { headerText: 'Created Date', field: 'createdAt', format: 'dateFormat' },
