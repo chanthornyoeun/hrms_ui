@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { LeaveRequestService } from "../../../../services/leave-request.service";
 import { LeaveRequst } from "../../../../models/leave-requst";
@@ -10,13 +10,7 @@ import { MessageService } from "../../../../shared/services/message.service";
 import { ConfirmationService } from "../../../../shared/components/confirmation/confirmation.service";
 import { CredentialService } from "../../../../core/http/credential.service";
 import { ResponsiveService } from 'src/app/services/responsive.service';
-
-enum LeaveStatus {
-  PENDING = 'Pending',
-  APPROVE = 'Approved',
-  REJECT = 'Rejected',
-  CANCEL = 'Canceled'
-}
+import { LeaveStatusEnum } from 'src/app/enums/leave-status.enum';
 
 @Component({
   selector: 'app-leave-request-view',
@@ -28,15 +22,15 @@ export class LeaveRequestViewComponent implements OnInit {
   leaveRequestForm!: FormGroup;
   leaveRequest!: LeaveRequst;
   requestId!: number;
-  statuses: string[] = [LeaveStatus.APPROVE, LeaveStatus.REJECT, LeaveStatus.CANCEL];
+  statuses: string[] = [LeaveStatusEnum.APPROVE, LeaveStatusEnum.REJECT, LeaveStatusEnum.CANCEL];
   breadcrumb: string = '';
-  LeaveStatus = LeaveStatus;
-  private backToURL: string = '';
+  LeaveStatus = LeaveStatusEnum;
   private currentEmployeeId: number;
+  canApproved: boolean = false;
+  isRequestor: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private loaderService: LoaderService,
     private messageService: MessageService,
@@ -51,11 +45,6 @@ export class LeaveRequestViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data
-      .subscribe((data: any) => {
-        this.breadcrumb = data.breadcrumb;
-        this.backToURL = data.url;
-      });
     this.getLeaveDetails();
   }
 
@@ -73,8 +62,10 @@ export class LeaveRequestViewComponent implements OnInit {
       .pipe(finalize(() => this.loaderService.hide()))
       .subscribe(res => {
         this.leaveRequest = res.data;
+        this.canApproved = this.currentEmployeeId === this.leaveRequest.reportTo.id;
+        this.isRequestor = this.isRequester();
         this.filterStatus();
-        if (this.leaveRequest.status === LeaveStatus.PENDING) {
+        if (this.leaveRequest.status === LeaveStatusEnum.PENDING) {
           this.leaveRequestForm.get('status')?.setValue(this.statuses[0]);
         } else {
           this.leaveRequestForm.patchValue(this.leaveRequest);
@@ -83,9 +74,9 @@ export class LeaveRequestViewComponent implements OnInit {
   }
 
   private filterStatus() {
-    if (this.isRequester() && this.leaveRequest.status === LeaveStatus.PENDING) {
+    if (this.isRequester() && this.leaveRequest.status === LeaveStatusEnum.PENDING && !this.canApproved) {
       this.statuses.splice(0, 2);
-    } else if (this.leaveRequest.status === LeaveStatus.PENDING) {
+    } else if (this.leaveRequest.status === LeaveStatusEnum.PENDING) {
       this.statuses.pop();
     }
   }
@@ -96,17 +87,21 @@ export class LeaveRequestViewComponent implements OnInit {
 
   submit() {
     const status: string = this.leaveRequestForm.get('status')?.value;
-    if (status === LeaveStatus.APPROVE) {
+    if (status === LeaveStatusEnum.APPROVE) {
       this.approve();
       return;
     }
 
-    if (status === LeaveStatus.REJECT) {
+    if (status === LeaveStatusEnum.REJECT) {
+      if (this.leaveRequestForm.get('reason')?.errors) {
+        this.messageService.show('Please provide your reason.');
+        return;
+      }
       this.reject();
       return;
     }
 
-    if (status === LeaveStatus.CANCEL) {
+    if (status === LeaveStatusEnum.CANCEL) {
       this.cancel();
       return;
     }
@@ -155,7 +150,7 @@ export class LeaveRequestViewComponent implements OnInit {
   }
 
   navigateToList() {
-    this.router.navigate([this.backToURL]);
+    history.back();
   }
 
 }

@@ -1,3 +1,7 @@
+.leave-view-wrapper {
+  padding: 1rem;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -8,7 +12,6 @@
     margin: 0;
   }
 }
-
 
 .leave-view {
   display: flex;
@@ -23,7 +26,7 @@
 }
 
 table {
-  line-height: 1.8;
+  line-height: 2.5;
   font-size: 16px;
 
   th {

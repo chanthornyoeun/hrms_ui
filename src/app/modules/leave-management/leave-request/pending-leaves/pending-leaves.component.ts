@@ -1,10 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
 import { LeaveStatusEnum } from 'src/app/enums/leave-status.enum';
 import { LeaveRequst } from 'src/app/models/leave-requst';
-import { EmployeeService } from 'src/app/services/employee.service';
 import { LeaveRequestService } from 'src/app/services/leave-request.service';
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 import { ColumnConfig, DataGridComponent } from 'src/app/shared/components/data-grid/data-grid.component';
@@ -44,8 +41,6 @@ export class PendingLeavesComponent extends Pagination<LeaveRequst> {
     private leaveRequestService: LeaveRequestService,
     protected ld: LoaderService,
     private pg: PaginationHistoryService,
-    private activatedRoute: ActivatedRoute,
-    private employeeService: EmployeeService
   ) {
     super(leaveRequestService, ld, pg, true);
   }

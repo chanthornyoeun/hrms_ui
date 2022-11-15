@@ -1,118 +1,128 @@
-<form [formGroup]="leaveRequestForm" (ngSubmit)="submit()">
-  <div class="header">
-    <h2>{{ breadcrumb }} / View</h2>
-  </div>
+<div class="header">
+  <h2>Leave Request / View</h2>
+</div>
 
-  <div class="leave-view" [ngClass]="{ 'is-small': responsive.isSmall }">
-    <table class="full-width" *ngIf="leaveRequest">
-      <tbody>
-        <tr>
-          <th>Employee Name</th>
-          <td>:</td>
-          <td>
-            {{ leaveRequest.employee | fullName: "firstName":"lastName" }}
-          </td>
-        </tr>
-        <tr>
-          <th>No. of Day(s)</th>
-          <td>:</td>
-          <td>{{ leaveRequest.day }}</td>
-        </tr>
-        <!--<tr>
-      <th>Remaining Leaves</th>
-      <td>:</td>
-      <td>N/A</td>
-    </tr>-->
-        <tr>
-          <th>From Date</th>
-          <td>:</td>
-          <td>{{ leaveRequest.fromDate | dateFormat }}</td>
-        </tr>
-        <tr>
-          <th>To Date</th>
-          <td>:</td>
-          <td>{{ leaveRequest.toDate | dateFormat }}</td>
-        </tr>
-        <tr>
-          <th>Reason</th>
-          <td>:</td>
-          <td>{{ leaveRequest.reason }}</td>
-        </tr>
-        <tr>
-          <th>Reporting Manager</th>
-          <td>:</td>
-          <td>
-            {{ leaveRequest.reportTo | fullName: "firstName":"lastName" }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <mat-divider *ngIf="responsive.isSmall"></mat-divider>
-    <div class="full-width">
-      <mat-form-field class="full-width">
-        <mat-label>Status</mat-label>
-        <mat-select
-          appFocus
-          placeholder="Status"
-          formControlName="status"
-          [disabled]="leaveRequest?.status !== LeaveStatus.PENDING"
-        >
-          <mat-option *ngFor="let status of statuses" [value]="status">{{
-            status
-          }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field
-        class="full-width"
-        *ngIf="leaveRequestForm.get('status')?.value === LeaveStatus.REJECT"
-      >
-        <mat-label>Reason</mat-label>
-        <textarea
-          matInput
-          required
-          rows="10"
-          formControlName="reason"
-          placeholder="Reason"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field
-        class="full-width"
-        *ngIf="
-          leaveRequestForm.get('status')?.value === LeaveStatus.APPROVE ||
-          leaveRequestForm.get('status')?.value === LeaveStatus.CANCEL
-        "
-      >
-        <mat-label>Comment</mat-label>
-        <textarea
-          matInput
-          rows="5"
-          formControlName="comment"
-          placeholder="Comment"
-          [readonly]="leaveRequest?.status !== LeaveStatus.PENDING"
-        ></textarea>
-      </mat-form-field>
+<div class="leave-view-wrapper mat-elevation-z2">
+  <form [formGroup]="leaveRequestForm" (ngSubmit)="submit()">
+    <div class="leave-view" [ngClass]="{ 'is-small': responsive.isSmall }">
+      <table class="full-width" *ngIf="leaveRequest">
+        <tbody>
+          <tr>
+            <th>Employee Name</th>
+            <td>:</td>
+            <td>
+              {{ leaveRequest.employee | fullName: "firstName":"lastName" }}
+            </td>
+          </tr>
+          <tr>
+            <th>Type of Leave</th>
+            <td>:</td>
+            <td>{{ leaveRequest.leaveType?.type }}</td>
+          </tr>
+          <tr>
+            <th>From Date</th>
+            <td>:</td>
+            <td>{{ leaveRequest.fromDate | dateFormat }}</td>
+          </tr>
+          <tr>
+            <th>To Date</th>
+            <td>:</td>
+            <td>{{ leaveRequest.toDate | dateFormat }}</td>
+          </tr>
+          <tr>
+            <th>No. of Day(s)</th>
+            <td>:</td>
+            <td>{{ leaveRequest.day }}</td>
+          </tr>
+          <tr>
+            <th>Reason</th>
+            <td>:</td>
+            <td>{{ leaveRequest.reason }}</td>
+          </tr>
+          <tr>
+            <th>Reporting Manager</th>
+            <td>:</td>
+            <td>
+              {{ leaveRequest.reportTo | fullName: "firstName":"lastName" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-container *ngIf="canApproved || isRequestor">
+        <mat-divider *ngIf="responsive.isSmall"></mat-divider>
+        <div class="full-width">
+          <mat-form-field class="full-width">
+            <mat-label>Status</mat-label>
+            <mat-select
+              appFocus
+              placeholder="Status"
+              formControlName="status"
+              [disabled]="leaveRequest?.status !== LeaveStatus.PENDING"
+            >
+              <mat-option *ngFor="let status of statuses" [value]="status">{{
+                status
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field
+            class="full-width"
+            *ngIf="leaveRequestForm.get('status')?.value === LeaveStatus.REJECT"
+          >
+            <mat-label>Reason</mat-label>
+            <textarea
+              matInput
+              required
+              rows="10"
+              formControlName="reason"
+              placeholder="Reason"
+            ></textarea>
+            <mat-error *ngIf="leaveRequestForm.get('reason')?.errors"
+              >Reason is required.</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field
+            class="full-width"
+            *ngIf="
+              leaveRequestForm.get('status')?.value === LeaveStatus.APPROVE ||
+              leaveRequestForm.get('status')?.value === LeaveStatus.CANCEL
+            "
+          >
+            <mat-label>Comment</mat-label>
+            <textarea
+              matInput
+              rows="10"
+              formControlName="comment"
+              placeholder="Comment"
+              [readonly]="leaveRequest?.status !== LeaveStatus.PENDING"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </ng-container>
     </div>
-  </div>
-  <div class="actions">
-    <button
-      *ngIf="leaveRequest?.status === LeaveStatus.PENDING"
-      mat-flat-button
-      type="submit"
-      color="primary"
-      matTooltip="Submit"
-    >
-      <mat-icon>save</mat-icon>
-      Submit
-    </button>
+    <div class="actions">
+      <button
+        *ngIf="
+          leaveRequest?.status === LeaveStatus.PENDING &&
+          (canApproved || isRequestor)
+        "
+        mat-flat-button
+        type="submit"
+        color="primary"
+        matTooltip="Submit"
+      >
+        <mat-icon>save</mat-icon>
+        Submit
+      </button>
 
-    <button
-      type="button"
-      mat-button
-      matTooltip="Back"
-      (click)="navigateToList()"
-    >
-      <mat-icon>arrow_back</mat-icon>
-      Back
-    </button>
-  </div>
-</form>
+      <button
+        type="button"
+        mat-button
+        matTooltip="Back"
+        (click)="navigateToList()"
+      >
+        <mat-icon>arrow_back</mat-icon>
+        Back
+      </button>
+    </div>
+  </form>
+</div>

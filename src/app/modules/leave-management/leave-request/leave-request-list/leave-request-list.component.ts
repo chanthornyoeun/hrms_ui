@@ -30,7 +30,7 @@ export class LeaveRequestListComponent extends Pagination<LeaveRequst> implement
 
   config: ColumnConfig = {
     columnDefs: [
-      { headerText: 'Id', field: 'id', format: 'autonumber' },
+      { headerText: 'No.', field: 'id', format: 'autonumber' },
       { headerText: 'Type of Leave', field: 'leaveTypeId', renderer: record => record.leaveType.type },
       { headerText: 'Employee', field: 'employeeId', renderer: record => record.employee.firstName + ' ' + record.employee.lastName },
       { headerText: 'Applied On', field: 'createdAt', format: 'dateTimeFormat' },
