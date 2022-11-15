@@ -1,0 +1,13 @@
+<div class="breadcrumb">
+  <a class="mat-h2" routerLink="/dashboard">Dashboard / </a> <span class="mat-h2">Pending Leaves</span>
+</div>
+
+<app-employee-select [formControl]="employeeCtl"></app-employee-select>
+
+<app-data-grid
+  [columnConfig]="config"
+  [rowData]="data"
+  [totalRecord]="total"
+  [defaultPageSize]="defaultPageSize"
+  (pageChange$)="pageChange($event)"
+></app-data-grid>

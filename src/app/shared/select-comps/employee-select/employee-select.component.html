@@ -6,9 +6,9 @@
     [debounceTime]="100"
     placeholder="Employee"
     (infiniteScroll)="getEmployees()"
-    required
     [(ngModel)]="value"
   >
+    <mat-option value="All" selected>All</mat-option>
     <mat-option
       *ngFor="let employee of employees; trackBy: trackEmployee"
       [value]="employee.id"

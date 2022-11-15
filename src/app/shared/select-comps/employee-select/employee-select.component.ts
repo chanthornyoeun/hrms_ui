@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, forwardRef, Injector, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Employee } from 'src/app/models/leave-requst';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { ParamsBuilder } from 'src/app/utilities/params-builder';
@@ -59,7 +59,7 @@ export class EmployeeSelectComponent implements ControlValueAccessor, OnInit {
   }
 
   private getSelectedEmployee(employeeId: number) {
-    if (!employeeId) return;
+    if (!employeeId || typeof employeeId !== 'number') return;
     this.employeeService.get(employeeId).subscribe(res => this.employees.unshift(res.data));
   }
 
