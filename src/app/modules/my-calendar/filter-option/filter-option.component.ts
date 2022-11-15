@@ -13,21 +13,13 @@ export class FilterOptionComponent implements OnInit {
   filterForm!: FormGroup;
   options: { name: string, value: string }[] = [
     {
-      name: 'Birthday',
-      value: 'birthdays'
-    },
-    {
-      name: 'Leave Request',
-      value: 'leaveRequests'
-    },
-    {
       name: 'Holiday',
       value: 'holidays',
     },
     {
-      name: 'Attendance',
-      value: 'isAttend',
-    }
+      name: 'Birthday',
+      value: 'birthdays'
+    },
   ];
 
   @Output() filterChange$: EventEmitter<CalendarFilter> = new EventEmitter<CalendarFilter>();
@@ -39,9 +31,7 @@ export class FilterOptionComponent implements OnInit {
   private buildForm() {
     this.filterForm = this.fb.group({
       birthdays: true,
-      leaveRequests: true,
       holidays: true,
-      isAttend: true
     });
   }
 
