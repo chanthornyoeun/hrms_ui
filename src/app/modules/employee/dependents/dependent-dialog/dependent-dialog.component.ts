@@ -37,6 +37,10 @@ export class DependentDialogComponent {
     }
 
     const dependent: Dependent = this.dependentForm.value;
+    if (dependent.dependentType == 'Other') {
+      dependent.dependentType = dependent.custom ?? '';
+    }
+    delete dependent.custom;
     const dependentId: number = this.data?.id;
     dependentId > 0 ? this.update(dependentId, dependent) : this.save(dependent);
   }

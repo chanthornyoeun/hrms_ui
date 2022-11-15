@@ -11,9 +11,10 @@ export class DependentFormService {
     const dependentForm = this.fb.group({
       id: [null],
       employeeId: [null],
-      dependentTypeId: ['', Validators.required],
+      dependentType: ['', Validators.required],
       firstName: [null, Validators.required],
       lastName: [null, Validators.required],
+      custom:[''],
       dateOfBirth: [''],
       phone: [''],
       address: [''],

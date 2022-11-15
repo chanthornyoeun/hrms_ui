@@ -42,17 +42,33 @@
       <mat-datepicker #datePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field class="full-width">
-      <mat-label>Relationship</mat-label>
-      <mat-select formControlName="dependentTypeId" placeholder="Relationship">
-        <mat-option
-          [value]="dependentType.id"
-          *ngFor="let dependentType of dependentType$ | async"
-        >
-          {{ dependentType.shortDescription }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="item full-width">
+      <mat-form-field class="full-width">
+        <mat-label>Relationship</mat-label>
+        <mat-select formControlName="dependentType" placeholder="Relationship">
+          <mat-option
+            [value]="dependentType"
+            *ngFor="let dependentType of dependentTypes"
+          >
+            {{ dependentType }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field
+        class="full-width"
+        *ngIf="dependentForm.get('dependentType')?.value == 'Other'"
+      >
+        <mat-label>Custom</mat-label>
+        <input
+          type="text"
+          matInput
+          required
+          formControlName="custom"
+          autocomplete="off"
+          placeholder="Custom"
+        />
+      </mat-form-field>
+    </div>
   </div>
 
   <div class="item" [ngClass]="{ 'is-small': responsive.isSmall }">

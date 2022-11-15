@@ -1,8 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { map, Observable } from 'rxjs';
-import { DependentType } from 'src/app/models/dependent-type';
-import { DependentTypeService } from 'src/app/services/dependent-type.service';
 import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
@@ -10,12 +7,31 @@ import { ResponsiveService } from 'src/app/services/responsive.service';
   templateUrl: './dependent-form.component.html',
   styleUrls: ['./../../popup-form.scss']
 })
-export class DependentFormComponent {
+export class DependentFormComponent implements OnInit {
 
   @Input() dependentForm!: FormGroup;
   currentDate: Date = new Date();
-  dependentType$: Observable<DependentType[]> = this.dependentTypeService.list().pipe(map(res => res.data));
+  dependentTypes: string[] = [
+    'Father',
+    'Mother',
+    'Brother',
+    'Father',
+    'Son',
+    'Daughter',
+    'Other'
+  ];
 
-  constructor(private dependentTypeService: DependentTypeService, public responsive: ResponsiveService) { }
+  constructor(public responsive: ResponsiveService) { }
+
+  ngOnInit(): void {
+    const dependentType: string = this.dependentForm.value['dependentType'];
+    if (dependentType && !this.dependentTypes.includes(dependentType)) {
+      this.appendDependentType(dependentType);
+    }
+  }
+
+  private appendDependentType(dependentType: string) {
+    this.dependentTypes.splice(-1, 0, dependentType);
+  }
 
 }

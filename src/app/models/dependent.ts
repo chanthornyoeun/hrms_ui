@@ -1,10 +1,10 @@
-import { DependentType } from "./dependent-type";
 import { Employee } from "./leave-requst";
 
 export interface Dependent {
     id: number;
     employeeId: number;
-    dependentTypeId: number;
+    dependentType: string;
+    custom?: string;
     firstName: string;
     lastName: string;
     dateOfBirth: string;
@@ -13,5 +13,4 @@ export interface Dependent {
     createdAt?: any;
     updatedAt?: any;
     employee: Employee;
-    dependentType: DependentType;
 }
