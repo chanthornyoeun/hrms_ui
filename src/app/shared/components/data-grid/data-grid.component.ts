@@ -42,7 +42,7 @@ export class DataGridComponent implements OnInit {
   pageSizeOptions: number[] = [10, 25, 50, 100, 250, 500];
   @Output() pageChange$: EventEmitter<PaginationHistory> = new EventEmitter<PaginationHistory>();
   @ViewChild(MatPaginator) private paginator!: MatPaginator;
-  private pagination: PaginationHistory = {
+  pagination: PaginationHistory = {
     pageIndex: 0,
     pageSize: 10,
     offset: 0

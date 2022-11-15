@@ -9,6 +9,7 @@ import { DateTimeFormatPipe } from "./date-time-format.pipe";
 import { DirtyPipe } from './dirty.pipe';
 import { InitialsPipe } from './initials.pipe';
 import {TimeFormatPipe} from "./time-format.pipe";
+import { AutoNumberPipe } from './auto-number.pipe';
 
 const pipes = [
   ActivePipe,
@@ -19,7 +20,8 @@ const pipes = [
   DateTimeFormatPipe,
   DirtyPipe,
   InitialsPipe,
-  TimeFormatPipe
+  TimeFormatPipe,
+  AutoNumberPipe
 ];
 
 @NgModule({

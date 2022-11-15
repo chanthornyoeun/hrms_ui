@@ -5,7 +5,7 @@
       *ngFor="let col of columnConfig.columnDefs"
     >
       <th mat-header-cell *matHeaderCellDef>{{ col.headerText }}</th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element; let i = index">
         <ng-container *ngIf="col.type === 'actions'; else normalColumn">
           <ng-container *ngFor="let action of columnConfig.rowActions">
             <a
@@ -33,6 +33,9 @@
         </ng-container>
         <ng-template #normalColumn>
           <ng-container [ngSwitch]="col.format">
+            <ng-container *ngSwitchCase="'autonumber'">
+              {{ pagination.offset | autoNumber: i }}
+            </ng-container>
             <ng-container *ngSwitchCase="'active'">
               {{ element[col.field] | active }}
             </ng-container>
