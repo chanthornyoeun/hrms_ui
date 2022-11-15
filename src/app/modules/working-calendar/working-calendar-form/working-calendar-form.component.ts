@@ -81,7 +81,7 @@ export class WorkingCalendarFormComponent implements OnInit {
   }
 
   private nagivateToPositionList() {
-    this.route.navigate(['/working-calendar']);
+    this.route.navigate(['/working-hours']);
   }
 
 }
