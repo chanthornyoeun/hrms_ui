@@ -46,4 +46,5 @@ export enum ApiEndPointEnum {
     REMOVE_ALL_NOTIFICATION = '/api/notification-remove-all',
     DASHBOARD_CARD = '/api/dashboard-data',
     QR_CODE_ATTENDENT = '/api/qr-code/attendant',
+    ANNOUNCEMENT = '/api/holiday-announcement',
 }

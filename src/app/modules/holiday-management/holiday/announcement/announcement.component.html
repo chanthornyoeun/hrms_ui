@@ -1,0 +1,70 @@
+<div class="breadcrumb">
+  <a class="mat-h2" routerLink="/dashboard">Dashboard / </a>
+  <span class="mat-h2">Announcement</span>
+</div>
+
+<form class="announcement mat-elevation-z2" [formGroup]="announcementForm">
+  <mat-form-field class="full-width">
+    <mat-label>Title</mat-label>
+    <textarea
+      appFocus
+      matInput
+      placeholder="Title"
+      formControlName="text"
+      autocomplete="off"
+      required
+    ></textarea>
+    <mat-error *ngIf="announcementForm.get('text')?.errors"
+      >Title is required.</mat-error
+    >
+  </mat-form-field>
+
+  <div class="mat-h2">Announcement Channel</div>
+
+  <div class="announcement-via">
+    <mat-checkbox formControlName="telegram" color="primary"
+      >Telegram</mat-checkbox
+    >
+    <mat-checkbox formControlName="email" color="primary">Email</mat-checkbox>
+    <mat-checkbox formControlName="app" color="primary"
+      >Web/App Notification</mat-checkbox
+    >
+
+    <mat-error
+      style="font-size: 75%"
+      *ngIf="this.announcementForm.errors?.['missedChannel']"
+      >Communication channel is required.</mat-error
+    >
+  </div>
+
+  <mat-divider></mat-divider>
+  <div class="mat-h2">Attachment</div>
+  <div
+    appDropOver
+    class="fileupload"
+    (click)="fileRef.click()"
+    (fileDropped)="uploadFile((file = $event[0]))"
+  >
+    <p class="mat-h3">Drop drop here or click to upload</p>
+
+    <input
+      type="file"
+      id="upload-photo"
+      #fileRef
+      hidden
+      (change)="uploadFile($event)"
+    />
+    <button type="button" mat-stroked-button color="primary">
+      <mat-icon class="mat-18">upload_file</mat-icon>Upload
+    </button>
+
+    <div style="margin-top: 1rem; font-size: 18px" *ngIf="file">
+      {{ file.name }}
+    </div>
+  </div>
+  <div class="actions">
+    <button type="submit" mat-flat-button color="primary" (click)="announce()">
+      Announce Now
+    </button>
+  </div>
+</form>

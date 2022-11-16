@@ -1,0 +1,40 @@
+.breadcrumb {
+    padding-bottom: 1rem;
+
+    a {
+        text-decoration: none;
+    }
+
+    span {
+        font-weight: normal;
+    }
+}
+
+.announcement {
+    padding: 1rem;
+}
+
+.announcement-via {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.fileupload {
+    background-repeat: no-repeat;
+    background-size: 100px;
+    background-position: center;
+    background-color: #ffffff;
+    height: 200px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    background-position: center 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 2px dashed #b8b8b8;
+}
