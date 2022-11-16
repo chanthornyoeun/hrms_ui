@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { Department } from 'src/app/models/department';
@@ -63,6 +63,7 @@ export class EmployeeFormComponent implements OnInit {
       .subscribe(res => {
         const leaveAllowances = res.data.leaveAllowances;
         this.employeeForm.patchValue(res.data);
+        this.employeeForm.markAllAsTouched();
         this.generateLeaveAllowances(leaveAllowances);
       });
   }
@@ -74,10 +75,10 @@ export class EmployeeFormComponent implements OnInit {
       title: ['', Validators.required],
       profilePhoto: '',
       gender: ['', Validators.required],
-      dateOfBirth: [null, Validators.required],
+      dateOfBirth: [null, [Validators.required, this.validateEighteenYearsOld()]],
       joinedDate: [null, Validators.required],
       jobTitle: [null, Validators.required],
-      departmentId: [null, Validators.required],
+      departmentId: [null, [Validators.required]],
       positionId: [null, Validators.required],
       email: [null, Validators.required],
       phone: [null, Validators.required],
@@ -157,6 +158,17 @@ export class EmployeeFormComponent implements OnInit {
       .subscribe(res => {
         this.employeeForm.get('profilePhoto')?.setValue(res.data['url']);
       });
+  }
+
+  validateEighteenYearsOld(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value) {
+        const age = new Date(control.value).getFullYear();
+        const currentYear: number = new Date().getFullYear();
+        return currentYear - age < 18 ? { ineligibleAge: true } : null;
+      }
+      return null;
+    }
   }
 
 }

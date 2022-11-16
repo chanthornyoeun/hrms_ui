@@ -69,6 +69,11 @@
               [for]="picker"
             ></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+            <mat-error
+              *ngIf="employeeForm.get('dateOfBirth')?.touched && employeeForm.get('dateOfBirth')?.errors?.['ineligibleAge']"
+            >
+              Employee must be 18 years old or older.
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="full-width">
             <mat-label>Phone Number</mat-label>
