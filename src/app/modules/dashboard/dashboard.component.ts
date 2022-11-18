@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
       icon: 'person'
     },
     {
-      id: 'totalAbsentToday',
+      id: 'totalAbsent',
       title: 'Today Absent',
       counter: 5,
       link: {
