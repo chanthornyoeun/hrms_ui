@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs';
+import { LeaveStatusEnum } from 'src/app/enums/leave-status.enum';
 import { DashboardService } from 'src/app/services/dashboard.service';
 
 @Component({
@@ -40,7 +41,7 @@ export class DashboardComponent implements OnInit {
       counter: 5,
       link: {
         text: `See all employee's absent today`,
-        url: '/employee-leave'
+        url: '/daily-attendant'
       },
       percentage: 0,
       class: 'negative',
@@ -52,7 +53,8 @@ export class DashboardComponent implements OnInit {
       counter: 10,
       link: {
         text: `See all employee's leaves today`,
-        url: '/employee-leave'
+        url: `/leave-request/${LeaveStatusEnum.APPROVE.toLocaleLowerCase()}`,
+        params: LeaveStatusEnum.APPROVE.toLocaleLowerCase()
       },
       percentage: 0,
       class: 'negative',
@@ -64,7 +66,8 @@ export class DashboardComponent implements OnInit {
       counter: 5,
       link: {
         text: 'See all pending leaves',
-        url: '/leave-request/pending'
+        url: `/leave-request/${LeaveStatusEnum.PENDING.toLowerCase()}`,
+        params: LeaveStatusEnum.PENDING.toLowerCase()
       },
       percentage: 0,
       class: 'negative',

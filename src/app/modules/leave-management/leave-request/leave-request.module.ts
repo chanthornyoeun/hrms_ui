@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 import { LeaveRequestRoutingModule } from './leave-request-routing.module';
 import { LeaveRequestListComponent } from './leave-request-list/leave-request-list.component';
@@ -12,7 +12,7 @@ import { DATEPICKER_PROVIDER } from "../../../config";
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 import { AvailableLeavePipe } from './available-leave.pipe';
 import { LeaveRequestViewComponent } from './leave-request-view/leave-request-view.component';
-import { PendingLeavesComponent } from './pending-leaves/pending-leaves.component';
+import { LeaveRequestsComponent } from './leave-requests/leave-requests.component';
 import { SelectCompsModule } from 'src/app/shared/select-comps/select-comps.module';
 import { MaterialCompModule } from 'src/app/shared/material-comp/material-comp.module';
 
@@ -24,7 +24,7 @@ import { MaterialCompModule } from 'src/app/shared/material-comp/material-comp.m
     LeaveRequestFilterComponent,
     AvailableLeavePipe,
     LeaveRequestViewComponent,
-    PendingLeavesComponent
+    LeaveRequestsComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +35,6 @@ import { MaterialCompModule } from 'src/app/shared/material-comp/material-comp.m
     MaterialCompModule
   ],
   providers: [
-    DatePipe,
     DATEPICKER_PROVIDER,
     PaginationHistoryService
   ]

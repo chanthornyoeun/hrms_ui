@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RestfulService } from "../core/http/restful.service";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { ApiEndPointEnum } from "../enums/api-endpiont.enum";
 import { Observable } from 'rxjs';
 import { ResponseDTO } from '../models/response-dto';
@@ -16,6 +16,14 @@ export class LeaveRequestService extends RestfulService {
 
   getUrl(): string {
     return ApiEndPointEnum.LEAVE_REQUEST;
+  }
+
+  getTodayLeaves(params?: HttpParams): Observable<ResponseDTO> {
+    return this.http.get<ResponseDTO>(ApiEndPointEnum.TODAY_LEAVE, { params });
+  }
+
+  getPendingLeaves(params?: HttpParams): Observable<ResponseDTO> {
+    return this.http.get<ResponseDTO>(ApiEndPointEnum.PENDING_LEAVE, { params });
   }
 
   cancel(requestId: number, comment: string): Observable<ResponseDTO> {

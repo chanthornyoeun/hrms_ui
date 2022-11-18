@@ -3,12 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { LeaveRequestListComponent } from './leave-request-list/leave-request-list.component';
 import { LeaveRequestFormComponent } from "./leave-reqeust-form/leave-request-form.component";
 import { LeaveRequestViewComponent } from './leave-request-view/leave-request-view.component';
-import { PendingLeavesComponent } from './pending-leaves/pending-leaves.component';
+import { LeaveRequestsComponent } from './leave-requests/leave-requests.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LeaveRequestListComponent
+  },
+  {
+    path: ':status',
+    component: LeaveRequestsComponent
   },
   {
     path: 'create',
@@ -17,10 +21,6 @@ const routes: Routes = [
   {
     path: 'view/:id',
     component: LeaveRequestViewComponent
-  },
-  {
-    path: 'pending',
-    component: PendingLeavesComponent,
   },
 ];
 

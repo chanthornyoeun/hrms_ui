@@ -47,4 +47,6 @@ export enum ApiEndPointEnum {
     DASHBOARD_CARD = '/api/dashboard-data',
     QR_CODE_ATTENDENT = '/api/qr-code/attendant',
     ANNOUNCEMENT = '/api/holiday-announcement',
+    PENDING_LEAVE = '/api/leave-request-pending',
+    TODAY_LEAVE = '/api/leave-request-today'
 }

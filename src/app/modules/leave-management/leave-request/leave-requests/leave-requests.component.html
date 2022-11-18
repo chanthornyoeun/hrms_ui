@@ -1,0 +1,11 @@
+<div class="wrapper">
+  <app-breadcrumb [config]="breadcrumbConfig"></app-breadcrumb>
+
+  <app-data-grid
+    [columnConfig]="config"
+    [rowData]="data"
+    [totalRecord]="total"
+    [defaultPageSize]="defaultPageSize"
+    (pageChange$)="pageChange($event)"
+  ></app-data-grid>
+</div>
