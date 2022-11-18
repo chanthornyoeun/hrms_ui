@@ -6,6 +6,7 @@ import { LeaveTypeService } from 'src/app/services/leave-type.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
 import { finalize } from "rxjs/operators";
+import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
 
 @Component({
   selector: 'app-leave-type-form',
@@ -15,6 +16,11 @@ import { finalize } from "rxjs/operators";
 export class LeaveTypeFormComponent implements OnInit {
 
   leaveTypeForm!: FormGroup;
+  breadcrumbConfig: BreadcrumbConfig = {
+    title: 'Leave Types',
+    link: '/leave-types',
+    page: 'Form'
+  };
   private leaveTypeId: number;
 
   constructor(

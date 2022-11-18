@@ -9,6 +9,7 @@ import { HolidayService } from 'src/app/services/holiday.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
 import { finalize } from "rxjs/operators";
+import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
 
 @Component({
   selector: 'app-holiday-form',
@@ -19,6 +20,11 @@ export class HolidayFormComponent implements OnInit {
 
   holidayForm!: FormGroup;
   group$: Observable<HolidayGroup[]>;
+  breadcrumbConfig: BreadcrumbConfig = {
+    title: 'Holidays',
+    link: '/holidays',
+    page: 'Form'
+  };
   private holidayId: number;
 
   constructor(

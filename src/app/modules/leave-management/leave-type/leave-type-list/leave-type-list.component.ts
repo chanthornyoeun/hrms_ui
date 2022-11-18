@@ -5,6 +5,7 @@ import { ColumnConfig, DataGridComponent } from 'src/app/shared/components/data-
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
+import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
 
 @Component({
   selector: 'app-leave-type-list',
@@ -14,6 +15,11 @@ import { PaginationHistoryService } from 'src/app/services/pagination-history.se
 export class LeaveTypeListComponent extends Pagination<LeaveType> {
 
   @ViewChild(DataGridComponent) grid!: DataGridComponent;
+  breadcrumbConfig: BreadcrumbConfig = {
+    title: 'Dashboard',
+    link: '/dashboard',
+    page: 'Leave Types'
+  };
 
   config: ColumnConfig = {
     columnDefs: [

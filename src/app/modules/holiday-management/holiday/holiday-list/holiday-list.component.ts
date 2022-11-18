@@ -5,6 +5,7 @@ import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 import { Holiday } from 'src/app/models/holiday';
+import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
 
 @Component({
   selector: 'app-holiday-list',
@@ -14,12 +15,17 @@ import { Holiday } from 'src/app/models/holiday';
 export class HolidayListComponent extends Pagination<Holiday> {
 
   @ViewChild(DataGridComponent) grid!: DataGridComponent;
+  breadcrumbConfig: BreadcrumbConfig = {
+    title: 'Dashboard',
+    link: '/dashboard',
+    page: 'Holidays'
+  };
 
   config: ColumnConfig = {
     columnDefs: [
       { headerText: 'No.', field: 'id', format: 'autonumber' },
-      { headerText: 'Name', field: 'name' },
       { headerText: 'Group', field: 'groupId', renderer: record => record.group?.name },
+      { headerText: 'Holiday', field: 'name' },
       { headerText: 'Date', field: 'holidayDate', format: 'dateFormat' },
       { headerText: 'Active', field: 'isActive', format: 'active' },
       { headerText: 'Description', field: 'description', format: 'excerpt' },

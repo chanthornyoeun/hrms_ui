@@ -9,6 +9,7 @@ import { LoaderService } from "../../../shared/components/loader/loader.service"
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
 import { Searchable } from 'src/app/shared/components/data-grid/searchable';
 import { ParamsBuilder } from 'src/app/utilities/params-builder';
+import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
 
 @Component({
   selector: 'app-department-list',
@@ -19,6 +20,11 @@ export class DepartmentListComponent extends Pagination<Department> implements O
 
   searchForm = this.fb.group({ search: '' });
   @ViewChild(DataGridComponent) grid!: DataGridComponent;
+  breadcrumbConfig: BreadcrumbConfig = {
+    title: 'Dashboard',
+    link: '/dashboard',
+    page: 'Departments'
+  };
 
   config: ColumnConfig = {
     columnDefs: [

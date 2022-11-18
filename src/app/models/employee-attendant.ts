@@ -5,4 +5,5 @@ export interface EmployeeAttendant {
     isAttend: boolean;
     isWeekend: boolean;
     isOnLeave: boolean;
+    isPendingLeave: boolean;
 }

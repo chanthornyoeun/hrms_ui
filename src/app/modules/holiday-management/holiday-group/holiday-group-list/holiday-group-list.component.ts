@@ -5,6 +5,7 @@ import { ColumnConfig, DataGridComponent } from 'src/app/shared/components/data-
 import { Pagination } from 'src/app/shared/components/data-grid/pagination';
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
+import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
 
 @Component({
   selector: 'app-holiday-group-list',
@@ -14,6 +15,11 @@ import { PaginationHistoryService } from 'src/app/services/pagination-history.se
 export class HolidayGroupListComponent extends Pagination<HolidayGroup> {
 
   @ViewChild(DataGridComponent) grid!: DataGridComponent;
+  breadcrumbConfig: BreadcrumbConfig = {
+    title: 'Dashboard',
+    link: '/dashboard',
+    page: 'Holiday Groups'
+  };
 
   config: ColumnConfig = {
     columnDefs: [

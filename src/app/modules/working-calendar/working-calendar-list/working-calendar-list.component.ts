@@ -11,6 +11,7 @@ import { Department } from '../../../models/department';
 import { DepartmentService } from '../../../services/department.service';
 import { ParamsBuilder } from '../../../utilities/params-builder';
 import { HttpParams } from '@angular/common/http';
+import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
 
 @Component({
   selector: 'app-working-calendar-list',
@@ -22,6 +23,11 @@ export class WorkingCalendarListComponent extends Pagination<WorkingCalendar> im
   @ViewChild(DataGridComponent) grid!: DataGridComponent;
   departmentCtl: FormControl = new FormControl('All');
   department$!: Observable<Department[]>;
+  breadcrumbConfig: BreadcrumbConfig = {
+    title: 'Dashboard',
+    link: '/dashboard',
+    page: 'Working Hours'
+  };
 
   config: ColumnConfig = {
     columnDefs: [

@@ -1,67 +1,75 @@
-<form
-  [formGroup]="holidayForm"
-  class="form-container"
-  (ngSubmit)="submitForm()"
->
-  <mat-form-field>
-    <mat-label>Group</mat-label>
-    <mat-select formControlName="groupId" placeholder="Group">
-      <mat-option *ngFor="let group of group$ | async" [value]="group.id">{{
-        group.name
-      }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="column-wrapper">
+  <app-breadcrumb [config]="breadcrumbConfig"></app-breadcrumb>
+  <form
+    [formGroup]="holidayForm"
+    class="form-container mat-elevation-z2"
+    (ngSubmit)="submitForm()"
+  >
+    <mat-form-field>
+      <mat-label>Group</mat-label>
+      <mat-select formControlName="groupId" placeholder="Group">
+        <mat-option *ngFor="let group of group$ | async" [value]="group.id">{{
+          group.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input
-      matInput
-      formControlName="name"
-      autocomplete="off"
-      type="text"
-      required
-      placeholder="Name"
-    />
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        formControlName="name"
+        autocomplete="off"
+        type="text"
+        required
+        placeholder="Name"
+      />
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Date</mat-label>
-    <input
-      matInput
-      [matDatepicker]="picker"
-      placeholder="Date"
-      formControlName="holidayDate"
-    />
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Date"
+        formControlName="holidayDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 
-  <mat-slide-toggle formControlName="isActive" color="primary">
-    {{ holidayForm.get("isActive")?.value | activeSlider }}
-  </mat-slide-toggle>
+    <mat-slide-toggle formControlName="isActive" color="primary">
+      {{ holidayForm.get("isActive")?.value | activeSlider }}
+    </mat-slide-toggle>
 
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <textarea
-      matInput
-      formControlName="description"
-      placeholder="Description"
-      rows="15"
-    ></textarea>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Description"
+        rows="15"
+      ></textarea>
+    </mat-form-field>
 
-  <div class="actions">
-    <button
-      mat-flat-button
-      type="submit"
-      color="primary"
-      matTooltip="Save"
-      [disabled]="holidayForm.invalid"
-    >
-      Save
-    </button>
-    <button mat-button type="button" matTooltip="Cancel" routerLink="/holidays">
-      Cancel
-    </button>
-  </div>
-</form>
+    <div class="actions">
+      <button
+        mat-flat-button
+        type="submit"
+        color="primary"
+        matTooltip="Save"
+        [disabled]="holidayForm.invalid"
+      >
+        Save
+      </button>
+      <button
+        mat-button
+        type="button"
+        matTooltip="Cancel"
+        routerLink="/holidays"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

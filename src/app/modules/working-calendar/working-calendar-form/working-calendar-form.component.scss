@@ -1,17 +1,3 @@
-form {
-  display: flex;
-  flex-direction: column;
-
-  mat-slide-toggle {
-    margin-bottom: 1rem;
-  }
-
-  .actions {
-    display: flex;
-    gap: 0.5rem;
-  }
-}
-
 mat-icon {
   cursor: pointer;
 }

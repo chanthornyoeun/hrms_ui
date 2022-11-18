@@ -9,6 +9,7 @@ import { WorkingCalendarService } from 'src/app/services/working-calendar.servic
 import { MessageService } from 'src/app/shared/services/message.service';
 import { LoaderService } from "../../../shared/components/loader/loader.service";
 import { finalize } from "rxjs/operators";
+import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
 
 @Component({
   selector: 'app-working-calendar-form',
@@ -20,6 +21,11 @@ export class WorkingCalendarFormComponent implements OnInit {
   workingCalendarForm!: FormGroup;
   department$: Observable<Department[]>;
   days: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  breadcrumbConfig: BreadcrumbConfig = {
+    title: 'Working Hours',
+    link: '/working-hours',
+    page: 'Form'
+  };
   private calendarId: number;
 
   constructor(

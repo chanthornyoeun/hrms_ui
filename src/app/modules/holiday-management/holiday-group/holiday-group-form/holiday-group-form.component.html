@@ -1,48 +1,51 @@
-<form
-  class="form-container"
-  [formGroup]="holidayGroupForm"
-  class="form-container"
-  (ngSubmit)="submitForm()"
->
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input
-      matInput
-      formControlName="name"
-      autocomplete="off"
-      type="text"
-      required
-      placeholder="Name"
-    />
-  </mat-form-field>
+<div class="column-wrapper">
+  <app-breadcrumb [config]="breadcrumbConfig"></app-breadcrumb>
 
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <textarea
-      matInput
-      formControlName="description"
-      placeholder="Description"
-      rows="15"
-    ></textarea>
-  </mat-form-field>
+  <form
+    class="form-container mat-elevation-z2"
+    [formGroup]="holidayGroupForm"
+    (ngSubmit)="submitForm()"
+  >
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        formControlName="name"
+        autocomplete="off"
+        type="text"
+        required
+        placeholder="Name"
+      />
+    </mat-form-field>
 
-  <div class="actions">
-    <button
-      mat-flat-button
-      type="submit"
-      color="primary"
-      matTooltip="Save"
-      [disabled]="holidayGroupForm.invalid"
-    >
-      Save
-    </button>
-    <button
-      mat-button
-      type="button"
-      matTooltip="Cancel"
-      routerLink="/holiday-groups"
-    >
-      Cancel
-    </button>
-  </div>
-</form>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Description"
+        rows="15"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="actions">
+      <button
+        mat-flat-button
+        type="submit"
+        color="primary"
+        matTooltip="Save"
+        [disabled]="holidayGroupForm.invalid"
+      >
+        Save
+      </button>
+      <button
+        mat-button
+        type="button"
+        matTooltip="Cancel"
+        routerLink="/holiday-groups"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

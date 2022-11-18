@@ -6,6 +6,7 @@ import { HolidayGroupService } from 'src/app/services/holiday-group.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { LoaderService } from "../../../../shared/components/loader/loader.service";
 import { finalize } from "rxjs/operators";
+import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
 
 @Component({
   selector: 'app-holiday-group-form',
@@ -15,6 +16,12 @@ import { finalize } from "rxjs/operators";
 export class HolidayGroupFormComponent implements OnInit {
 
   holidayGroupForm!: FormGroup;
+  breadcrumbConfig: BreadcrumbConfig = {
+    title: 'Holiday Group',
+    link: '/dashboard',
+    page: 'Form'
+  };
+
   private holidayGroupId: number;
 
   constructor(

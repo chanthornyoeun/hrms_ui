@@ -1,21 +1,19 @@
 <div class="list-header">
-  <h2>Departments</h2>
-  
-  <div [formGroup]="searchForm" class="right">
-    <mat-form-field>
-      <mat-label>Search</mat-label>
-      <input matInput placeholder="Search by Name" formControlName="search">
-    </mat-form-field>
-
-    <button
-      mat-flat-button
-      color="primary"
-      matTooltip="Add new department"
-      routerLink="create"
-    >
-      <mat-icon class="icon-18">add</mat-icon>
-    </button>
-  </div>
+  <app-breadcrumb [config]="breadcrumbConfig"></app-breadcrumb>
+  <button
+    mat-flat-button
+    color="primary"
+    matTooltip="Add new department"
+    routerLink="create"
+  >
+    <mat-icon class="icon-18">add</mat-icon>
+  </button>
+</div>
+<div [formGroup]="searchForm" class="right">
+  <mat-form-field class="full-width">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Search by Name" formControlName="search" />
+  </mat-form-field>
 </div>
 <app-data-grid
   [columnConfig]="config"

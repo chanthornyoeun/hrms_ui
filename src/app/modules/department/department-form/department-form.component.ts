@@ -9,6 +9,7 @@ import { finalize } from "rxjs/operators";
 import { MatDialog } from '@angular/material/dialog';
 import { PositionDialogComponent } from '../position-dialog/position-dialog.component';
 import { Position } from 'src/app/models/position';
+import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
 
 @Component({
   selector: 'app-department-form',
@@ -20,6 +21,11 @@ export class DepartmentFormComponent implements OnInit {
   departmentForm!: FormGroup;
   private departmentId: number;
   department!: Department;
+  breadcrumbConfig: BreadcrumbConfig = {
+    title: 'Department',
+    link: '/departments',
+    page: 'Form'
+  };
 
   constructor(
     private fb: FormBuilder,

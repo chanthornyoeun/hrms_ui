@@ -1,62 +1,66 @@
-<form
-  class="form-container"
-  [formGroup]="leaveTypeForm"
-  (ngSubmit)="submitForm()"
->
-  <mat-form-field>
-    <mat-label>Type</mat-label>
-    <input
-      matInput
-      formControlName="type"
-      autocomplete="off"
-      type="text"
-      required
-      placeholder="Type"
-    />
-  </mat-form-field>
+<div class="column-wrapper">
+  <app-breadcrumb [config]="breadcrumbConfig"></app-breadcrumb>
 
-  <mat-form-field>
-    <mat-label>Allowance Days</mat-label>
-    <input
-      matInput
-      formControlName="allowanceDay"
-      autocomplete="off"
-      type="number"
-      required
-      placeholder="Allowance Days"
-    />
-  </mat-form-field>
+  <form
+    class="form-container mat-elevation-z2"
+    [formGroup]="leaveTypeForm"
+    (ngSubmit)="submitForm()"
+  >
+    <mat-form-field>
+      <mat-label>Type</mat-label>
+      <input
+        matInput
+        formControlName="type"
+        autocomplete="off"
+        type="text"
+        required
+        placeholder="Type"
+      />
+    </mat-form-field>
 
-  <mat-slide-toggle formControlName="isActive" color="primary">
-    {{ leaveTypeForm.get("isActive")?.value | activeSlider }}
-  </mat-slide-toggle>
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <textarea
-      matInput
-      formControlName="description"
-      placeholder="Description"
-      rows="15"
-    ></textarea>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Allowance Days</mat-label>
+      <input
+        matInput
+        formControlName="allowanceDay"
+        autocomplete="off"
+        type="number"
+        required
+        placeholder="Allowance Days"
+      />
+    </mat-form-field>
 
-  <div class="actions">
-    <button
-      mat-flat-button
-      type="submit"
-      color="primary"
-      matTooltip="Save"
-      [disabled]="leaveTypeForm.invalid"
-    >
-      Save
-    </button>
-    <button
-      mat-button
-      type="button"
-      matTooltip="Cancel"
-      [routerLink]="'/leave-types'"
-    >
-      Cancel
-    </button>
-  </div>
-</form>
+    <mat-slide-toggle formControlName="isActive" color="primary">
+      {{ leaveTypeForm.get("isActive")?.value | activeSlider }}
+    </mat-slide-toggle>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Description"
+        rows="15"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="actions">
+      <button
+        mat-flat-button
+        type="submit"
+        color="primary"
+        matTooltip="Save"
+        [disabled]="leaveTypeForm.invalid"
+      >
+        Save
+      </button>
+      <button
+        mat-button
+        type="button"
+        matTooltip="Cancel"
+        [routerLink]="'/leave-types'"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
