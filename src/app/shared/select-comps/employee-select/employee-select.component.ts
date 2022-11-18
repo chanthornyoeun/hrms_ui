@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, forwardRef, Injector, OnInit } from '@angular/core';
+import { Component, forwardRef, Injector, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Employee } from 'src/app/models/leave-requst';
 import { EmployeeService } from 'src/app/services/employee.service';
@@ -23,6 +23,7 @@ export class EmployeeSelectComponent implements ControlValueAccessor, OnInit {
   offset: number = 0;
   limit: number = 50;
   ngControl!: NgControl;
+  @Input() placeholder: string = 'Employee';
 
   private _value!: number;
 

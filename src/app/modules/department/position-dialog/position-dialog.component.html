@@ -1,0 +1,44 @@
+<div matDialogTitle>
+  <h1>Position</h1>
+  <button
+    mat-icon-button
+    color="warn"
+    matTooltip="Close"
+    (click)="closeDialog()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <form [formGroup]="positionForm" (ngSubmit)="submit()">
+    <mat-form-field>
+      <mat-label>Position</mat-label>
+      <input
+        matInput
+        formControlName="position"
+        autocomplete="off"
+        type="text"
+        required
+        placeholder="Position"
+      />
+    </mat-form-field>
+    <mat-slide-toggle formControlName="isActive" color="primary">
+      {{ positionForm.get("isActive")?.value | activeSlider }}
+    </mat-slide-toggle>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Description"
+        rows="15"
+      ></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button color="primary" (click)="submit()">Save</button>
+  <button mat-button color="warn" (click)="closeDialog()">Cancel</button>
+</mat-dialog-actions>

@@ -4,31 +4,27 @@ import { CommonModule } from '@angular/common';
 import { DepartmentRoutingModule } from './department-routing.module';
 import { DepartmentListComponent } from './department-list/department-list.component';
 import { DepartmentFormComponent } from './department-form/department-form.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
+import { PositionsComponent } from './positions/positions.component';
+import { MaterialCompModule } from 'src/app/shared/material-comp/material-comp.module';
+import { PositionDialogComponent } from './position-dialog/position-dialog.component';
+import { SelectCompsModule } from 'src/app/shared/select-comps/select-comps.module';
 
 
 @NgModule({
   declarations: [
     DepartmentListComponent,
-    DepartmentFormComponent
+    DepartmentFormComponent,
+    PositionsComponent,
+    PositionDialogComponent
   ],
   imports: [
     CommonModule,
     DepartmentRoutingModule,
-    MatButtonModule,
-    MatIconModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatSlideToggleModule,
+    MaterialCompModule,
+    SelectCompsModule,
     ReactiveFormsModule,
     SharedModule
   ],

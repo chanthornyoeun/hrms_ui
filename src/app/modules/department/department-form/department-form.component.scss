@@ -1,13 +1,37 @@
+.breadcrumb {
+    padding-bottom: 1rem;
+
+    a {
+        text-decoration: none;
+    }
+
+    span {
+        font-weight: normal;
+    }
+}
+
 form {
     display: flex;
     flex-direction: column;
+    padding: 1rem;
 
     mat-slide-toggle {
         margin-bottom: 1rem;
     }
-    
+
     .actions {
         display: flex;
         gap: .5rem;
+    }
+}
+
+
+.position-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+
+    .mat-h2 {
+        margin-bottom: 0;
     }
 }

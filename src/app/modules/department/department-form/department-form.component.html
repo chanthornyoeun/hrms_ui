@@ -1,4 +1,12 @@
-<form [formGroup]="departmentForm" (ngSubmit)="submitForm()">
+<div class="breadcrumb">
+  <a class="mat-h2" routerLink="/departments">Department / </a>
+  <span class="mat-h2">Form</span>
+</div>
+<form
+  class="mat-elevation-z2"
+  [formGroup]="departmentForm"
+  (ngSubmit)="submitForm()"
+>
   <mat-form-field>
     <mat-label>Name</mat-label>
     <input
@@ -10,16 +18,10 @@
       placeholder="Name"
     />
   </mat-form-field>
-  <mat-form-field>
-    <mat-label>Manager</mat-label>
-    <mat-select formControlName="managerId" placeholder="Manager">
-      <mat-option
-        *ngFor="let manager of manager$ | async"
-        [value]="manager.id"
-        >{{ manager.name }}</mat-option
-      >
-    </mat-select>
-  </mat-form-field>
+  <app-employee-select
+    formControlName="managerId"
+    placeholder="Manager"
+  ></app-employee-select>
   <mat-slide-toggle formControlName="isActive" color="primary">
     {{ departmentForm.get("isActive")?.value | activeSlider }}
   </mat-slide-toggle>
@@ -29,9 +31,26 @@
       matInput
       formControlName="description"
       placeholder="Description"
-      rows="15"
+      rows="5"
     ></textarea>
   </mat-form-field>
+
+  <mat-divider style="margin-bottom: 1rem"></mat-divider>
+
+  <div class="position-wrapper full-width">
+    <div class="mat-h2">Position</div>
+    <button
+      mat-flat-button
+      type="button"
+      color="primary"
+      matTooltip="Add new position"
+      (click)="openPositionForm()"
+    >
+      <mat-icon class="icon-18">add</mat-icon>
+    </button>
+  </div>
+  <app-positions [positions]="department?.positions || []" (edit$)="openPositionForm($event)"></app-positions>
+  <br />
 
   <div class="actions">
     <button

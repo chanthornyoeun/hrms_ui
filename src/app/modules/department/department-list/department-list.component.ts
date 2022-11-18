@@ -27,7 +27,8 @@ export class DepartmentListComponent extends Pagination<Department> implements O
       { headerText: 'Manager', field: 'managerId', renderer: record => record.manager?.firstName + ' ' + record.manager?.lastName },
       { headerText: 'Active', field: 'isActive', format: 'active' },
       { headerText: 'Created Date', field: 'createdAt', format: 'dateFormat' },
-      { headerText: 'Description', field: 'description' },
+      { headerText: 'Description', field: 'description', format: 'experpt' },
+      { headerText: 'Total Position', field: 'totalPosition', renderer: (department: Department) => department.totalPosition ? `${department.totalPosition} Position` : 'No Position' },
       { headerText: 'Actions', field: 'actions', type: 'actions' }
     ],
     rowActions: [

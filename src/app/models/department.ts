@@ -1,3 +1,5 @@
+import { Position } from "./position";
+
 export interface Department {
     id: number;
     name: string;
@@ -7,10 +9,13 @@ export interface Department {
     updatedAt: Date;
     managerId: number;
     manager: Manager;
+    totalPosition: number | null;
+    positions: Position[];
 }
 
 export interface Manager {
     id: number;
+    name: string;
     firstName: string;
     lastName: string;
     gender: string;

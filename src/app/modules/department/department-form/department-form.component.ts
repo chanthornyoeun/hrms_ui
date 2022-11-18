@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map, Observable } from 'rxjs';
 import { Department } from 'src/app/models/department';
-import { Employee } from 'src/app/models/employee';
 import { DepartmentService } from 'src/app/services/department.service';
-import { EmployeeService } from 'src/app/services/employee.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { LoaderService } from "../../../shared/components/loader/loader.service";
 import { finalize } from "rxjs/operators";
+import { MatDialog } from '@angular/material/dialog';
+import { PositionDialogComponent } from '../position-dialog/position-dialog.component';
+import { Position } from 'src/app/models/position';
 
 @Component({
   selector: 'app-department-form',
@@ -18,31 +18,30 @@ import { finalize } from "rxjs/operators";
 export class DepartmentFormComponent implements OnInit {
 
   departmentForm!: FormGroup;
-  manager$: Observable<Employee[]>;
-  private positionId: number;
+  private departmentId: number;
+  department!: Department;
 
   constructor(
     private fb: FormBuilder,
     private route: Router,
     private activatedRoute: ActivatedRoute,
     private departmentService: DepartmentService,
-    private employeeService: EmployeeService,
     private messageService: MessageService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private dialog: MatDialog
   ) {
     this.buildForm();
-    this.positionId = +activatedRoute.snapshot.paramMap.get('id')!;
-    this.manager$ = employeeService.list().pipe(map(res => res.data as Employee[]));
+    this.departmentId = +activatedRoute.snapshot.paramMap.get('id')!;
   }
 
   ngOnInit(): void {
-    if (this.positionId) {
+    if (this.departmentId) {
       this.loaderService.show();
-      this.departmentService.get(this.positionId)
+      this.departmentService.get(this.departmentId)
         .pipe(finalize(() => this.loaderService.hide()))
         .subscribe(res => {
-          const position: Department = res.data as Department;
-          this.departmentForm.patchValue(position);
+          this.department = res.data as Department;
+          this.departmentForm.patchValue(this.department);
         });
     }
   }
@@ -57,8 +56,9 @@ export class DepartmentFormComponent implements OnInit {
   }
 
   submitForm() {
-    const position: Department = this.departmentForm.value;
-    this.positionId ? this.update(this.positionId, position) : this.save(position);
+    const department: Department = this.departmentForm.value;
+    department.positions = this.department.positions;
+    this.departmentId ? this.update(this.departmentId, department) : this.save(department);
   }
 
   private save(position: Department) {
@@ -75,6 +75,21 @@ export class DepartmentFormComponent implements OnInit {
         this.messageService.show('Department has been updated successfully!');
         this.nagivateToPositionList();
       })
+  }
+
+  openPositionForm(data?: { index: number, position: Position }) {
+    const dialogRef = this.dialog.open(PositionDialogComponent, {
+      width: '1000px',
+      disableClose: true,
+      // autoFocus: false,
+      data: { ...data?.position, departmentId: this.departmentId }
+    });
+    dialogRef.afterClosed().subscribe(position => {
+      if (!position) return;
+      console.log(position);
+      (data && data.index >= 0) ? this.department.positions.splice(data.index, 1, position) : this.department.positions.push(position);
+      this.department.positions = [...this.department.positions];
+    });
   }
 
   private nagivateToPositionList() {

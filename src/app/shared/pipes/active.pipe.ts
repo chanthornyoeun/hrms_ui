@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ActivePipe implements PipeTransform {
 
   transform(value: number): string {
-    return value === 1 ? 'YES' : 'NO';
+    return value === 1 || value ? 'YES' : 'NO';
   }
 
 }
