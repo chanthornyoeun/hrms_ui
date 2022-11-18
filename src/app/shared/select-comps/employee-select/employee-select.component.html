@@ -1,10 +1,10 @@
 <mat-form-field class="full-width" appearance="outline">
-  <mat-label>Employee</mat-label>
+  <mat-label>{{ placeholder }}</mat-label>
   <mat-select
     msInfiniteScroll
     [complete]="offset === total"
     [debounceTime]="100"
-    placeholder="Employee"
+    [placeholder]="placeholder"
     (infiniteScroll)="getEmployees()"
     [(ngModel)]="value"
   >

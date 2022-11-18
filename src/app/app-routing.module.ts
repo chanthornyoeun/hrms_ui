@@ -63,7 +63,7 @@ const routes: Routes = [
       },
       {
         path: 'leave-request',
-        canActivate: [AuthorizationGuard],
+        // canActivate: [AuthorizationGuard],
         loadChildren: () => import('./modules/leave-management/leave-request/leave-request.module').then(m => m.LeaveRequestModule),
         data: {
           params: { selfLeave: 1 },

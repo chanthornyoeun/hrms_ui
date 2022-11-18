@@ -35,11 +35,11 @@ export class DashboardComponent implements OnInit {
       icon: 'person'
     },
     {
-      id: 'totalLeaveToday',
-      title: 'Today Leave',
-      counter: 10,
+      id: 'totalAbsentToday',
+      title: 'Today Absent',
+      counter: 5,
       link: {
-        text: 'See all leaves',
+        text: `See all employee's absent today`,
         url: '/employee-leave'
       },
       percentage: 0,
@@ -47,17 +47,29 @@ export class DashboardComponent implements OnInit {
       icon: 'person_off'
     },
     {
-      id: 'totalLeaveUpcoming',
-      title: 'Upcoming Leave',
-      counter: 5,
+      id: 'totalLeaveToday',
+      title: 'Today Leave',
+      counter: 10,
       link: {
-        text: 'See all upcoming leave',
+        text: `See all employee's leaves today`,
         url: '/employee-leave'
       },
       percentage: 0,
       class: 'negative',
       icon: 'person_off'
-    }
+    },
+    {
+      id: 'totalLeavePending',
+      title: 'Pending Leave',
+      counter: 5,
+      link: {
+        text: 'See all pending leaves',
+        url: '/leave-request/pending'
+      },
+      percentage: 0,
+      class: 'negative',
+      icon: 'person_off'
+    },
   ];
   isLoading: boolean = false;
 

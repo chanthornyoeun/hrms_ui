@@ -2,11 +2,11 @@
   <div class="left">
     <span class="title">{{ widget.title }}</span>
     <span class="counter">{{ widget.counter | number }}</span>
-    <span
+    <a
       class="link"
       [matTooltip]="widget.link.text"
       [routerLink]="widget.link.url"
-      >{{ widget.link.text }}</span
+      >{{ widget.link.text }}</a
     >
   </div>
   <div class="right">
