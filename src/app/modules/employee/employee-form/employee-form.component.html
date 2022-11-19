@@ -293,6 +293,17 @@
                 >
               </mat-form-field>
             </div>
+            <ng-container *ngIf="employeeId">
+              <button
+                type="button"
+                style="margin-bottom: 1rem"
+                mat-raised-button
+                (click)="resetPassword()"
+              >
+                Reset Password
+              </button>
+            </ng-container>
+
             <ng-container *ngTemplateOutlet="buttonRef"></ng-container>
           </div>
         </div>

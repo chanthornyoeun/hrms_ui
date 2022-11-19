@@ -17,4 +17,8 @@ export class UserService extends RestfulService {
     return this.http.put<ResponseDTO>(ApiEndPointEnum.DEVICE_TOKEN, { deviceToken: token });
   }
 
+  resetPassword(payload: any): Observable<ResponseDTO> {
+    return this.http.post<ResponseDTO>(ApiEndPointEnum.RESET_PASSWORD, payload);
+  }
+
 }

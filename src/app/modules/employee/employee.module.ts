@@ -38,6 +38,7 @@ import { MaterialCompModule } from 'src/app/shared/material-comp/material-comp.m
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { EmployeeCardSkeletonComponent } from './employee-views/employee-card-skeleton/employee-card-skeleton.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { ResetPasswordDailogComponent } from './reset-password-dailog/reset-password-dailog.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     CardViewComponent,
     EmployeeCardComponent,
     EmployeeViewsComponent,
-    EmployeeCardSkeletonComponent
+    EmployeeCardSkeletonComponent,
+    ResetPasswordDailogComponent
   ],
   imports: [
     CommonModule,

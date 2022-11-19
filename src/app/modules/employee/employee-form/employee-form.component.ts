@@ -17,6 +17,8 @@ import { ResponsiveService } from '../../../services/responsive.service';
 import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
 import { passwordMismatch, validateExistingUser } from '../../user-management/users/validators/custom-validator';
 import { UserService } from 'src/app/services/user.service';
+import { ResetPasswordDailogComponent } from '../reset-password-dailog/reset-password-dailog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-employee-form',
@@ -52,7 +54,8 @@ export class EmployeeFormComponent implements OnInit {
     private loaderService: LoaderService,
     private fileService: FileService,
     public responsive: ResponsiveService,
-    private userService: UserService
+    private userService: UserService,
+    private dialog: MatDialog
   ) {
     this.buildForm();
     this.department$ = this.departmentService.list({ params: this.params }).pipe(map(res => res.data as Department[]));
@@ -118,6 +121,7 @@ export class EmployeeFormComponent implements OnInit {
         })
       ]),
       user: this.fb.group({
+        id: null,
         username: ['', [Validators.required], validateExistingUser(this.userService)],
         type: [this.userTypes[0], Validators.required],
         password: ['', Validators.required],
@@ -212,6 +216,16 @@ export class EmployeeFormComponent implements OnInit {
       }
       return null;
     }
+  }
+
+  resetPassword() {
+    const dialogRef = this.dialog.open(ResetPasswordDailogComponent, {
+      width: '500px',
+      disableClose: true,
+      autoFocus: false,
+      data: { userId: this.userForm.get('id')?.value, username: this.userForm.get('username')?.value }
+    });
+    return dialogRef.afterClosed();
   }
 
 }
