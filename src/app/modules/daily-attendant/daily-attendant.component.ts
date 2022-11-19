@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { QrCodeGeneratorComponent } from './qr-code-generator/qr-code-generator.component';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Employee } from 'src/app/models/employee';
+import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
 
 
 @Component({
@@ -45,6 +46,11 @@ export class DailyAttendantComponent implements OnInit {
   currentEmp!: Employee;
   employeeId: number | null = null;
   departmentId: number | null = null;
+  breadcrumbConfig: BreadcrumbConfig = {
+    title: 'Dashboard',
+    link: '/dashboard',
+    page: 'Daily Attendant'
+  };
   private pagination: PaginationHistory;
 
   constructor(

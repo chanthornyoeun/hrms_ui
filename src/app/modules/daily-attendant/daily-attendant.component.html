@@ -1,6 +1,5 @@
 <div class="list-header">
-  <h2>Attendance</h2>
-
+  <app-breadcrumb [config]="breadcrumbConfig"></app-breadcrumb>
   <div class="actions">
     <!-- <button
       mat-flat-button
@@ -39,6 +38,31 @@
       <mat-icon class="icon-18">import_export</mat-icon>
       Export
     </button>
+  </div>
+</div>
+
+<div class="legend mat-elevation-z2">
+  <div class="item preset">
+    <div class="item">
+      <mat-icon class="mat-18" [ngStyle]="{ color: 'blue' }">checked</mat-icon>
+      <span>:</span>
+    </div>
+    <span>Present</span>
+  </div>
+  <div class="item not-present">
+    <div class="item">
+      <mat-icon class="mat-18" [ngStyle]="{ color: 'red' }">close</mat-icon>
+      <span>:</span>
+    </div>
+    <span>Not Present</span>
+  </div>
+  <div class="item leave">
+    <span>L:</span>
+    <span>Leave</span>
+  </div>
+  <div class="item pending">
+    <span>P:</span>
+    <span>Pending Leave</span>
   </div>
 </div>
 
@@ -117,28 +141,35 @@
         class="full-width attendant-wrapper"
         *ngIf="attendance.attendants | isSameDay: column as attendant"
       >
-        <ng-container *ngIf="attendant.isOnLeave; else noramlAtt">
-          <span matTooltip="Permission">P</span>
+        <ng-container *ngIf="attendant.isOnLeave; else pendingRef">
+          <span matTooltip="Leave" class="leave">L</span>
         </ng-container>
 
-        <ng-template #noramlAtt>
+        <ng-template #pendingRef>
+          <ng-container *ngIf="attendant.isPendingLeave; else weekendRef">
+            <span matTooltip="Pending" class="pending">P</span>
+          </ng-container>
+        </ng-template>
+
+        <ng-template #weekendRef>
           <ng-container *ngIf="attendant.isWeekend; else normalDay">
             <span matTooltip="Weekend">W</span>
           </ng-container>
-          <ng-template #normalDay>
-            <ng-container
-              *ngIf="
-                attendant.isAttend !== undefined && attendant.isAttend !== null
-              "
+        </ng-template>
+
+        <ng-template #normalDay>
+          <ng-container
+            *ngIf="
+              attendant.isAttend !== undefined && attendant.isAttend !== null
+            "
+          >
+            <mat-icon
+              class="mat-18"
+              [matTooltip]="attendant.isAttend ? 'Present' : 'Not Present'"
+              [ngStyle]="{ color: attendant.isAttend ? 'blue' : 'red' }"
+              >{{ attendant.isAttend ? "checked" : "close" }}</mat-icon
             >
-              <mat-icon
-                class="mat-18"
-                [matTooltip]="attendant.isAttend ? 'Attend' : 'Not Present'"
-                [ngStyle]="{ color: attendant.isAttend ? 'blue' : 'red' }"
-                >{{ attendant.isAttend ? "checked" : "close" }}</mat-icon
-              >
-            </ng-container>
-          </ng-template>
+          </ng-container>
         </ng-template>
       </div>
     </td>

@@ -83,7 +83,7 @@ const routes: Routes = [
       },
       {
         path: 'daily-attendant',
-        canActivate: [AuthorizationGuard],
+        // canActivate: [AuthorizationGuard],
         loadChildren: () => import('./modules/daily-attendant/daily-attendant.module').then(m => m.DailyAttendantModule)
       },
       {

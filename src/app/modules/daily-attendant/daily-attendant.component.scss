@@ -36,6 +36,34 @@ table {
   justify-content: center;
 }
 
-td, th {
+td,
+th {
   width: 50px;
+}
+
+.legend {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  font-size: 18px;
+}
+
+
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pending {
+  color: rgb(114, 114, 0);
+}
+
+.preset {
+  color: blue;
+}
+
+.not-present {
+  color: red;
 }
