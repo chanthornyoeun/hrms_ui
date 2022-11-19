@@ -1,269 +1,368 @@
-<mat-tab-group [disableRipple]="false">
-  <form [formGroup]="employeeForm">
-    <mat-tab label="Personal Information">
-      <div
-        class="personal-information"
-        [ngClass]="{
-          'is-handset': responsive.isHandset || responsive.isSmall
-        }"
-      >
-        <div class="item full-width">
-          <div class="profile">
-            <img
-              [src]="employeeForm.get('profilePhoto')?.value"
-              alt=""
-              (click)="fileRef.click()"
-            />
-          </div>
-          <input type="file" #fileRef (change)="upload($event.target)" />
-          <mat-form-field class="full-width">
-            <mat-label>First Name</mat-label>
-            <input
-              appFocus
-              matInput
-              formControlName="firstName"
-              autocomplete="off"
-              type="text"
-              required
-              placeholder="First Name"
-            />
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>Last Name</mat-label>
-            <input
-              matInput
-              formControlName="lastName"
-              autocomplete="off"
-              type="text"
-              required
-              placeholder="Last Name"
-            />
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>Title</mat-label>
-            <mat-select formControlName="title" placeholder="Title">
-              <mat-option *ngFor="let title of titles" [value]="title">{{
-                title
-              }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>Gender</mat-label>
-            <mat-select formControlName="gender" placeholder="Gender">
-              <mat-option *ngFor="let gender of genders" [value]="gender">{{
-                gender
-              }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>Date of Birth</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              placeholder="Date of Birth"
-              formControlName="dateOfBirth"
-              [max]="currentDate"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <mat-error
-              *ngIf="employeeForm.get('dateOfBirth')?.touched && employeeForm.get('dateOfBirth')?.errors?.['ineligibleAge']"
-            >
-              Employee must be 18 years old or older.
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>Phone Number</mat-label>
-            <input
-              matInput
-              formControlName="phone"
-              type="text"
-              required
-              placeholder="Phone Number"
-            />
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>E-mail</mat-label>
-            <input
-              matInput
-              formControlName="email"
-              type="email"
-              required
-              placeholder="example@gmail.com"
-            />
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>Marital Status</mat-label>
-            <mat-select
-              formControlName="maritalStatus"
-              placeholder="Marital Status"
-            >
-              <mat-option
-                *ngFor="let maritalStatus of maritalStatuses"
-                [value]="maritalStatus"
-                >{{ maritalStatus }}</mat-option
-              >
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="item full-width">
-          <mat-form-field class="full-width">
-            <mat-label>Department</mat-label>
-            <mat-select formControlName="departmentId" placeholder="Department">
-              <mat-option
-                *ngFor="let department of department$ | async"
-                [value]="department.id"
-                >{{ department.name }}</mat-option
-              >
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>Position</mat-label>
-            <mat-select formControlName="positionId" placeholder="Position">
-              <mat-option
-                *ngFor="let position of position$ | async"
-                [value]="position.id"
-                >{{ position.position }}</mat-option
-              >
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>Job Title</mat-label>
-            <input
-              matInput
-              formControlName="jobTitle"
-              autocomplete="off"
-              type="text"
-              required
-              placeholder="Job Title"
-            />
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>Joined Date</mat-label>
-            <input
-              matInput
-              [matDatepicker]="jdPicker"
-              placeholder="Joined Date"
-              formControlName="joinedDate"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="jdPicker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #jdPicker></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>Current Address</mat-label>
-            <textarea
-              matInput
-              formControlName="currentAddress"
-              autocomplete="off"
-              required
-              rows="10"
-              placeholder="Current Address"
-            ></textarea>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>Physical Address</mat-label>
-            <textarea
-              matInput
-              formControlName="physicalAddress"
-              autocomplete="off"
-              required
-              rows="10"
-              placeholder="Physical Address"
-            ></textarea>
-          </mat-form-field>
-          <mat-slide-toggle
-            class="full-width"
-            formControlName="isActive"
-            color="primary"
-          >
-            {{ employeeForm.get("isActive")?.value | activeSlider }}
-          </mat-slide-toggle>
-        </div>
-        <div class="item full-width">
-          <mat-card class="emergency-contact" formArrayName="emergencyContacts">
-            <mat-card-header>
-              <mat-card-title>Emergency Contact</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <div class="contact-wrapper">
-                <div
-                  class="full-width"
-                  *ngFor="
-                    let emergencyContact of emergencyContacts.controls;
-                    let i = index
-                  "
-                >
-                  <h3>{{ i === 0 ? "Primary" : "Secondary" }}</h3>
-                  <app-emergency-contact-form
-                    [emergencyForm]="emergencyContact"
-                  ></app-emergency-contact-form>
-                </div>
+<div class="column-wrapper">
+  <app-breadcrumb [config]="breadcrumbConfig"></app-breadcrumb>
+  <mat-tab-group class="mat-elevation-z2" backgroundColor="primary">
+    <form [formGroup]="employeeForm">
+      <mat-tab label="Personal Information">
+        <div
+          class="tab-container"
+          [ngClass]="{
+            'is-handset': responsive.isHandset || responsive.isSmall
+          }"
+        >
+          <div class="personal-information">
+            <div class="item full-width">
+              <div class="profile">
+                <img
+                  [src]="employeeForm.get('profilePhoto')?.value"
+                  alt=""
+                  (click)="fileRef.click()"
+                />
               </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </div>
-      <ng-container *ngTemplateOutlet="buttonRef"></ng-container>
-    </mat-tab>
-    <mat-tab label="Leave Allowance">
-      <app-leave-allowances
-        class="tab-container"
-        [leaveAllowanceFormArray]="leaveAllowances"
-        [employeeId]="employeeId"
-      ></app-leave-allowances>
-      <ng-container *ngTemplateOutlet="buttonRef"></ng-container>
-    </mat-tab>
-  </form>
-  <ng-container *ngIf="employeeId">
-    <mat-tab label="Experience">
-      <div class="tab-container">
-        <app-experience-list [employeeId]="employeeId"></app-experience-list>
-      </div>
-    </mat-tab>
-    <mat-tab label="Education">
-      <div class="tab-container">
-        <app-education-list [employeeId]="employeeId"></app-education-list>
-      </div>
-    </mat-tab>
-    <mat-tab label="Training / Seminar">
-      <div class="tab-container">
-        <app-training-list [employeeId]="employeeId"></app-training-list>
-      </div>
-    </mat-tab>
-    <mat-tab label="Family / Dependent">
-      <div class="tab-container">
-        <app-dependent-list [employeeId]="employeeId"></app-dependent-list>
-      </div>
-    </mat-tab>
-  </ng-container>
-</mat-tab-group>
+              <input type="file" #fileRef (change)="upload($event.target)" />
 
-<ng-template #buttonRef>
-  <div class="actions">
-    <button
-      mat-flat-button
-      type="submit"
-      color="primary"
-      matTooltip="Save"
-      (click)="submitForm()"
-      [disabled]="employeeForm.invalid"
-    >
-      Save
-    </button>
-    <button
-      mat-button
-      type="button"
-      color="warn"
-      matTooltip="Cancel"
-      [routerLink]="'/employees'"
-    >
-      Cancel
-    </button>
-  </div>
-</ng-template>
+              <mat-form-field class="full-width">
+                <mat-label>First Name</mat-label>
+                <input
+                  appFocus
+                  matInput
+                  formControlName="firstName"
+                  autocomplete="off"
+                  type="text"
+                  required
+                  placeholder="First Name"
+                />
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Last Name</mat-label>
+                <input
+                  matInput
+                  formControlName="lastName"
+                  autocomplete="off"
+                  type="text"
+                  required
+                  placeholder="Last Name"
+                />
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Title</mat-label>
+                <mat-select formControlName="title" placeholder="Title">
+                  <mat-option *ngFor="let title of titles" [value]="title">{{
+                    title
+                  }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Gender</mat-label>
+                <mat-select formControlName="gender" placeholder="Gender">
+                  <mat-option *ngFor="let gender of genders" [value]="gender">{{
+                    gender
+                  }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Date of Birth</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  placeholder="Date of Birth"
+                  formControlName="dateOfBirth"
+                  [max]="currentDate"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error
+                  *ngIf="employeeForm.get('dateOfBirth')?.touched && employeeForm.get('dateOfBirth')?.errors?.['ineligibleAge']"
+                >
+                  Employee must be 18 years old or older.
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Phone Number</mat-label>
+                <input
+                  matInput
+                  formControlName="phone"
+                  type="text"
+                  required
+                  placeholder="Phone Number"
+                />
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>E-mail</mat-label>
+                <input
+                  matInput
+                  formControlName="email"
+                  type="email"
+                  required
+                  placeholder="example@gmail.com"
+                />
+                <mat-error
+                  *ngIf="employeeForm.get('email')?.hasError('required')"
+                  >Email is required.</mat-error
+                >
+                <mat-error *ngIf="employeeForm.get('email')?.hasError('email')"
+                  >Invalid email format.</mat-error
+                >
+                <mat-error
+                  *ngIf="employeeForm.get('email')?.hasError('existed')"
+                  >This email is already taken.</mat-error
+                >
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Marital Status</mat-label>
+                <mat-select
+                  formControlName="maritalStatus"
+                  placeholder="Marital Status"
+                >
+                  <mat-option
+                    *ngFor="let maritalStatus of maritalStatuses"
+                    [value]="maritalStatus"
+                    >{{ maritalStatus }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="item full-width">
+              <mat-form-field class="full-width">
+                <mat-label>Department</mat-label>
+                <mat-select
+                  formControlName="departmentId"
+                  placeholder="Department"
+                >
+                  <mat-option
+                    *ngFor="let department of department$ | async"
+                    [value]="department.id"
+                    >{{ department.name }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Position</mat-label>
+                <mat-select formControlName="positionId" placeholder="Position">
+                  <mat-option
+                    *ngFor="let position of position$ | async"
+                    [value]="position.id"
+                    >{{ position.position }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Job Title</mat-label>
+                <input
+                  matInput
+                  formControlName="jobTitle"
+                  autocomplete="off"
+                  type="text"
+                  required
+                  placeholder="Job Title"
+                />
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Joined Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="jdPicker"
+                  placeholder="Joined Date"
+                  formControlName="joinedDate"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="jdPicker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #jdPicker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Current Address</mat-label>
+                <textarea
+                  matInput
+                  formControlName="currentAddress"
+                  autocomplete="off"
+                  required
+                  rows="10"
+                  placeholder="Current Address"
+                ></textarea>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Physical Address</mat-label>
+                <textarea
+                  matInput
+                  formControlName="physicalAddress"
+                  autocomplete="off"
+                  required
+                  rows="10"
+                  placeholder="Physical Address"
+                ></textarea>
+              </mat-form-field>
+              <mat-slide-toggle
+                *ngIf="!!employeeId"
+                class="full-width"
+                formControlName="isActive"
+                color="primary"
+              >
+                {{ employeeForm.get("isActive")?.value | activeSlider }}
+              </mat-slide-toggle>
+            </div>
+          </div>
+          <ng-container *ngTemplateOutlet="buttonRef"></ng-container>
+        </div>
+      </mat-tab>
+      <mat-tab label="Leave Allowance">
+        <div class="tab-container">
+          <app-leave-allowances
+            [leaveAllowanceFormArray]="leaveAllowances"
+            [employeeId]="employeeId"
+          ></app-leave-allowances>
+          <ng-container *ngTemplateOutlet="buttonRef"></ng-container>
+        </div>
+      </mat-tab>
+      <mat-tab label="User">
+        <div class="tab-container">
+          <div formGroupName="user">
+            <mat-form-field class="full-width">
+              <mat-label>Username</mat-label>
+              <input
+                matInput
+                formControlName="username"
+                autocomplete="off"
+                type="text"
+                required
+                placeholder="Username"
+                [readonly]="!!employeeId"
+              />
+              <mat-error *ngIf="userForm.get('username')?.hasError('required')"
+                >Username is required.</mat-error
+              >
+              <mat-error *ngIf="userForm.get('username')?.hasError('existed')"
+                >This username is already taken.</mat-error
+              >
+            </mat-form-field>
+
+            <mat-radio-group
+              aria-label="Select an option"
+              class="user-types"
+              formControlName="type"
+            >
+              <mat-radio-button [value]="type" *ngFor="let type of userTypes">{{
+                type
+              }}</mat-radio-button>
+            </mat-radio-group>
+
+            <div
+              class="item"
+              [ngClass]="{ 'is-small': responsive.isSmall }"
+              *ngIf="!employeeId"
+            >
+              <mat-form-field class="full-width">
+                <mat-label>Password</mat-label>
+                <input
+                  matInput
+                  formControlName="password"
+                  autocomplete="off"
+                  type="password"
+                  required
+                  placeholder="********"
+                />
+                <mat-error
+                  *ngIf="userForm.get('password')?.hasError('required')"
+                  >Password is required.</mat-error
+                >
+              </mat-form-field>
+
+              <mat-form-field class="full-width">
+                <mat-label>Confirm Password</mat-label>
+                <input
+                  matInput
+                  formControlName="confirmPassword"
+                  autocomplete="off"
+                  type="password"
+                  required
+                  placeholder="********"
+                />
+                <mat-error
+                  *ngIf="userForm.get('confirmPassword')?.hasError('required')"
+                  >Confirm Password is required.</mat-error
+                >
+                <mat-error
+                  *ngIf="
+                    userForm.get('confirmPassword')?.hasError('misMatch') &&
+                    userForm.get('confirmPassword')?.value
+                  "
+                  >Confirm Password is not match.</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <ng-container *ngTemplateOutlet="buttonRef"></ng-container>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Emergency Contact">
+        <div class="tab-container" formArrayName="emergencyContacts">
+          <div
+            class="contact-wrapper full-width"
+            *ngFor="
+              let emergencyContact of emergencyContacts.controls;
+              let i = index
+            "
+          >
+            <h2 [ngStyle]="{ 'margin-top': i === 1 ? '1rem' : '0' }">
+              {{ i === 0 ? "Primary" : "Secondary" }}
+            </h2>
+            <app-emergency-contact-form
+              [emergencyForm]="emergencyContact"
+            ></app-emergency-contact-form>
+            <mat-divider *ngIf="i === 0"></mat-divider>
+          </div>
+          <ng-container *ngTemplateOutlet="buttonRef"></ng-container>
+        </div>
+      </mat-tab>
+    </form>
+    <ng-container *ngIf="employeeId">
+      <mat-tab label="Experience">
+        <div class="tab-container">
+          <app-experience-list [employeeId]="employeeId"></app-experience-list>
+        </div>
+      </mat-tab>
+      <mat-tab label="Education">
+        <div class="tab-container">
+          <app-education-list [employeeId]="employeeId"></app-education-list>
+        </div>
+      </mat-tab>
+      <mat-tab label="Training / Seminar">
+        <div class="tab-container">
+          <app-training-list [employeeId]="employeeId"></app-training-list>
+        </div>
+      </mat-tab>
+      <mat-tab label="Family / Dependent">
+        <div class="tab-container">
+          <app-dependent-list [employeeId]="employeeId"></app-dependent-list>
+        </div>
+      </mat-tab>
+    </ng-container>
+  </mat-tab-group>
+
+  <ng-template #buttonRef>
+    <div class="actions">
+      <button
+        mat-flat-button
+        type="submit"
+        color="primary"
+        matTooltip="Save"
+        (click)="submitForm()"
+        [disabled]="employeeForm.invalid"
+      >
+        Save
+      </button>
+      <button
+        mat-button
+        type="button"
+        color="warn"
+        matTooltip="Cancel"
+        [routerLink]="'/employees'"
+      >
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+</div>

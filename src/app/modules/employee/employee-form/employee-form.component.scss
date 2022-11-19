@@ -3,7 +3,7 @@ input[type='file'] {
 }
 
 .tab-container {
-  padding: 1px;
+  padding: 1rem;
 }
 
 .personal-information {
@@ -48,6 +48,12 @@ img {
   gap: 0.5rem;
 }
 
-.mat-card-header {
-  justify-content: center;
+.column-wrapper {
+  padding-bottom: 1rem;
+}
+
+.user-types {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }

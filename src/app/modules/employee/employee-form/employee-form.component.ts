@@ -14,6 +14,9 @@ import { LoaderService } from "../../../shared/components/loader/loader.service"
 import { finalize } from "rxjs/operators";
 import { FileService } from 'src/app/services/file.service';
 import { ResponsiveService } from '../../../services/responsive.service';
+import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
+import { passwordMismatch, validateExistingUser } from '../../user-management/users/validators/custom-validator';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-employee-form',
@@ -31,6 +34,12 @@ export class EmployeeFormComponent implements OnInit {
   position$: Observable<Position[]>;
   params: HttpParams = new HttpParams().set('order', 'asc').set('limit', '100');
   currentDate: Date = new Date();
+  breadcrumbConfig: BreadcrumbConfig = {
+    title: 'Employees',
+    link: '/employees',
+    page: 'Form'
+  };
+  userTypes: string[] = ['USER', 'MANAGER', 'HR'];
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +51,8 @@ export class EmployeeFormComponent implements OnInit {
     private messageService: MessageService,
     private loaderService: LoaderService,
     private fileService: FileService,
-    public responsive: ResponsiveService
+    public responsive: ResponsiveService,
+    private userService: UserService
   ) {
     this.buildForm();
     this.department$ = this.departmentService.list({ params: this.params }).pipe(map(res => res.data as Department[]));
@@ -65,6 +75,8 @@ export class EmployeeFormComponent implements OnInit {
         this.employeeForm.patchValue(res.data);
         this.employeeForm.markAllAsTouched();
         this.generateLeaveAllowances(leaveAllowances);
+        this.removePasswordControls();
+        this.updateValidation();
       });
   }
 
@@ -80,7 +92,7 @@ export class EmployeeFormComponent implements OnInit {
       jobTitle: [null, Validators.required],
       departmentId: [null, [Validators.required]],
       positionId: [null, Validators.required],
-      email: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email], validateExistingUser(this.userService)],
       phone: [null, Validators.required],
       maritalStatus: '',
       currentAddress: '',
@@ -104,7 +116,16 @@ export class EmployeeFormComponent implements OnInit {
           address: '',
           description: ''
         })
-      ])
+      ]),
+      user: this.fb.group({
+        username: ['', [Validators.required], validateExistingUser(this.userService)],
+        type: [this.userTypes[0], Validators.required],
+        password: ['', Validators.required],
+        confirmPassword: ['', Validators.required]
+      }, {
+        validators: passwordMismatch(),
+        updateOn: 'blur'
+      })
     });
   }
 
@@ -114,6 +135,27 @@ export class EmployeeFormComponent implements OnInit {
 
   get emergencyContacts(): FormArray {
     return this.employeeForm.get('emergencyContacts') as FormArray;
+  }
+
+  get userForm(): FormGroup {
+    return this.employeeForm.get('user') as FormGroup;
+  }
+
+  private removePasswordControls() {
+    this.userForm.removeControl('password');
+    this.userForm.removeControl('confirmPassword');
+    this.userForm.clearValidators();
+    this.userForm.updateValueAndValidity();
+    this.employeeForm.updateValueAndValidity();
+  }
+
+  private updateValidation() {
+    const usernameCtl = this.userForm.get('username')!;
+    const email = this.employeeForm.get('email')!;
+    usernameCtl.clearAsyncValidators();
+    usernameCtl.updateValueAndValidity();
+    email.clearAsyncValidators();
+    email.updateValueAndValidity();
   }
 
   private generateLeaveAllowances(leaveAllowances: any[]): void {
@@ -130,6 +172,7 @@ export class EmployeeFormComponent implements OnInit {
 
   submitForm() {
     const employee: Employee = this.employeeForm.value;
+    employee.emergencyContacts = employee.emergencyContacts.filter(contact => (contact.name && contact.phoneNumber));
     this.employeeId ? this.update(this.employeeId, employee) : this.save(employee);
   }
 
