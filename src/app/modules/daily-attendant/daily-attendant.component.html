@@ -57,11 +57,11 @@
     <span>Not Present</span>
   </div>
   <div class="item leave">
-    <span>L:</span>
-    <span>Leave</span>
+    <span>P:</span>
+    <span>Permission</span>
   </div>
   <div class="item pending">
-    <span>P:</span>
+    <span>PL:</span>
     <span>Pending Leave</span>
   </div>
 </div>
@@ -142,12 +142,12 @@
         *ngIf="attendance.attendants | isSameDay: column as attendant"
       >
         <ng-container *ngIf="attendant.isOnLeave; else pendingRef">
-          <span matTooltip="Leave" class="leave">L</span>
+          <span matTooltip="Leave" class="Permission">P</span>
         </ng-container>
 
         <ng-template #pendingRef>
           <ng-container *ngIf="attendant.isPendingLeave; else weekendRef">
-            <span matTooltip="Pending" class="pending">P</span>
+            <span matTooltip="Pending Leave" class="pending">PL</span>
           </ng-container>
         </ng-template>
 
