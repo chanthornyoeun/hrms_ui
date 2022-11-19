@@ -52,6 +52,10 @@ const routes: Routes = [
         loadChildren: () => import('./modules/holiday-management/holiday/holiday.module').then(m => m.HolidayModule)
       },
       {
+        path: 'announcement',
+        loadChildren: () => import('./modules/announcement/announcement.module').then(m => m.AnnouncementModule)
+      },
+      {
         path: 'working-hours',
         canActivate: [AuthorizationGuard],
         loadChildren: () => import('./modules/working-calendar/working-calendar.module').then(m => m.WorkingCalendarModule)

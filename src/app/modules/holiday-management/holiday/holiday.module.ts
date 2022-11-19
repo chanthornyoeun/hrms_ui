@@ -8,7 +8,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DATEPICKER_PROVIDER } from "../../../config";
 import { PaginationHistoryService } from 'src/app/services/pagination-history.service';
-import { AnnouncementComponent } from './announcement/announcement.component';
 import { MaterialCompModule } from 'src/app/shared/material-comp/material-comp.module';
 
 
@@ -16,7 +15,6 @@ import { MaterialCompModule } from 'src/app/shared/material-comp/material-comp.m
   declarations: [
     HolidayFormComponent,
     HolidayListComponent,
-    AnnouncementComponent
   ],
   imports: [
     CommonModule,
