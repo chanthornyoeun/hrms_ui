@@ -30,7 +30,7 @@ export class DepartmentListComponent extends Pagination<Department> implements O
     columnDefs: [
       { headerText: 'No.', field: 'id', format: 'autonumber' },
       { headerText: 'Name', field: 'name' },
-      { headerText: 'Manager', field: 'managerId', renderer: record => record.manager?.firstName + ' ' + record.manager?.lastName },
+      { headerText: 'Manager', field: 'managerId', renderer: record => record.manager ? `${record.manager.firstName} ${record.manager.lastName}` : '' },
       { headerText: 'Active', field: 'isActive', format: 'active' },
       { headerText: 'Created Date', field: 'createdAt', format: 'dateFormat' },
       { headerText: 'Description', field: 'description', format: 'experpt' },

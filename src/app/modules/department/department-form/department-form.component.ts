@@ -19,7 +19,7 @@ import { BreadcrumbConfig } from 'src/app/models/breadcrumb-config';
 export class DepartmentFormComponent implements OnInit {
 
   departmentForm!: FormGroup;
-  private departmentId: number;
+  private departmentId: number | null = null;
   department!: Department;
   breadcrumbConfig: BreadcrumbConfig = {
     title: 'Department',
@@ -37,7 +37,7 @@ export class DepartmentFormComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.buildForm();
-    this.departmentId = +activatedRoute.snapshot.paramMap.get('id')!;
+    this.departmentId = +activatedRoute.snapshot.paramMap.get('id')! || null;
   }
 
   ngOnInit(): void {
@@ -87,12 +87,20 @@ export class DepartmentFormComponent implements OnInit {
     const dialogRef = this.dialog.open(PositionDialogComponent, {
       width: '1000px',
       disableClose: true,
-      // autoFocus: false,
       data: { ...data?.position, departmentId: this.departmentId }
     });
     dialogRef.afterClosed().subscribe(position => {
       if (!position) return;
-      console.log(position);
+      
+      if (!this.department) {
+        this.department = this.departmentForm.value;
+        this.department.positions = [];
+      }
+      
+      if (!this.departmentId) {
+        delete position.departmentId;
+      }
+
       (data && data.index >= 0) ? this.department.positions.splice(data.index, 1, position) : this.department.positions.push(position);
       this.department.positions = [...this.department.positions];
     });
